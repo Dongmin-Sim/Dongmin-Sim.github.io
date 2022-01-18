@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>django 프로젝트 생성 - Codongmin</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Dongmin"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Dongmin"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="django 프로젝트 생성 방법 django 프로젝트 구조 django 앱 생성 방법 django 앱 구조 django MVT 구조 django view"><meta property="og:type" content="blog"><meta property="og:title" content="django 프로젝트 생성"><meta property="og:url" content="http://dongmin-sim.github.io/2022/01/17/django-project001/"><meta property="og:site_name" content="Codongmin"><meta property="og:description" content="django 프로젝트 생성 방법 django 프로젝트 구조 django 앱 생성 방법 django 앱 구조 django MVT 구조 django view"><meta property="og:locale" content="ko_KR"><meta property="og:image" content="http://dongmin-sim.github.io/gallery/"><meta property="article:published_time" content="2022-01-16T15:33:36.000Z"><meta property="article:modified_time" content="2022-01-18T11:07:28.287Z"><meta property="article:author" content="Dongmin Sim"><meta property="article:tag" content="django"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="/gallery/"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://dongmin-sim.github.io/2022/01/17/django-project001/"},"headline":"django 프로젝트 생성","image":[],"datePublished":"2022-01-16T15:33:36.000Z","dateModified":"2022-01-18T11:07:28.287Z","author":{"@type":"Person","name":"Dongmin Sim"},"publisher":{"@type":"Organization","name":"Codongmin","logo":{"@type":"ImageObject","url":"http://dongmin-sim.github.io/img/logo.svg"}},"description":"django 프로젝트 생성 방법 django 프로젝트 구조 django 앱 생성 방법 django 앱 구조 django MVT 구조 django view"}</script><link rel="canonical" href="http://dongmin-sim.github.io/2022/01/17/django-project001/"><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script><!--!--><!--!--><meta name="generator" content="Hexo 5.4.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="Codongmin" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a><a class="navbar-item search" title="검색" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><div class="card-image"><span class="image is-7by3"><img class="fill" src="/gallery/" alt="django 프로젝트 생성"></span></div><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2022-01-16T15:33:36.000Z" title="2022. 1. 17. 오전 12:33:36">2022-01-16</time>&nbsp;게시 됨</span><span class="level-item"><time dateTime="2022-01-18T11:07:28.287Z" title="2022. 1. 18. 오후 8:07:28">2022-01-18</time>&nbsp;업데이트 됨</span><span class="level-item"><a class="link-muted" href="/categories/django/">django</a></span><span class="level-item">17분안에 읽기 (약 2504 단어)</span></div></div><h1 class="title is-3 is-size-4-mobile">django 프로젝트 생성</h1><div class="content"><ol>
+<li>django 프로젝트 생성 방법</li>
+<li>django 프로젝트 구조</li>
+<li>django 앱 생성 방법</li>
+<li>django 앱 구조</li>
+<li>django MVT 구조</li>
+<li>django view</li>
+</ol>
+<span id="more"></span>
+
+<br>
+
+<p>이어드림 과정을 수강하면서 사이드 프로젝트를 진행하게 되었다. 사이드 프로젝트의 백엔드는 django로 구현할 예정이며 이를 위해 django 학습 목적으로 본 글을 작성한다. django doc을 참고하여 작성하였음을 미리 밝힌다.</p>
+<br>
+
+<h2 id="django-프로젝트-생성"><a href="#django-프로젝트-생성" class="headerlink" title="django 프로젝트 생성"></a>django 프로젝트 생성</h2><p>장고 프로젝트를 생성하기 위해서는 다음과 같은 명령어를 사용해주면 된다. 프로젝트의 이름만 설정해주면 그 다음부터는 django가 알아서 자동으로 기본 코드를 생성해준다. 여기에는 데이터베이스 설정, 세부 옵션, app-설정을 포함한 django instance를 위한 설정들이 포함된다.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">django-admin startapp projectname</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>django에서는 프로젝트의 이름을 build-in python,혹은 django Component의 이름을 피할 것을 권장한다.<br>예시로 <code>django</code>라던가, <code>test</code>와 같은 naming은 충돌을 일으킬 수 있다.</p>
+</blockquote>
+<br>
+
+<h2 id="django-프로젝트-구조"><a href="#django-프로젝트-구조" class="headerlink" title="django 프로젝트 구조"></a>django 프로젝트 구조</h2><p>만일 django 프로젝트를 생성할 때 프로젝트 이름을 <code>coco</code>로 생성했을 때, 만나게될 프로젝트 구조는 다음과 같다.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">coco/</span><br><span class="line">    manage.py</span><br><span class="line">    coco/</span><br><span class="line">        __init__.py</span><br><span class="line">        settings.py</span><br><span class="line">        urls.py</span><br><span class="line">        asgi.py</span><br><span class="line">        wsgi.py</span><br></pre></td></tr></table></figure>
+
+<p><strong>root directory</strong></p>
+<ul>
+<li><code>coco/</code>는 우리 프로젝트의 root directory가 된다. 이 root directory의 이름은 django에 영향을 끼치지 않아서, 원하는 directory 이름으로 바꾸어도 무방하다.</li>
+<li><code>manage.py</code> 파일은 django와 상호작용할 수 있는 command-line utility 파일이다.</li>
+<li>root directory안에 있는 또 다른 <code>coco/</code> directory가 프로젝트를 위한 실제 파이썬 코드들이 있는 공간이다. 이곳을 project directory라고 부르겠다. 파이썬 패키지 name으로 해당 디렉토리안에 있는 파일들을 import 할 수 있다 (ex. <code>coco.urls</code>)</li>
+</ul>
+<p><strong>project directory</strong></p>
+<ul>
+<li><p><code>coco/__init__.py</code>은 빈 파일이다. 위에서 언급했듯이 해당 디렉토리를 파이썬 패키기로 묶기 위해 생성된 파일이다.</p>
+</li>
+<li><p><code>coco/settings.py</code> django project를 위한 세팅,설정을 위한 파일이다. <a target="_blank" rel="noopener" href="https://docs.djangoproject.com/en/4.0/topics/settings/">django_settings</a></p>
+</li>
+<li><p><code>coco/urls.py</code> 프로젝트를 위한 urls이 선언되는 파일이다. 우리의 django 사이트를 위한 목차 역할을 한다.</p>
+</li>
+<li><p><code>coco/asgi.py</code> 프로젝트에 사용할 ASGI 호환 웹 서버의 진입점이다.</p>
+<ul>
+<li>asgi란 무엇일까, 웹서버,프레임웤, 응용 프로그램간 호환성을 담당하는 wsgi의 정신적 계승자라고 한다. wsgi는 요청을 받고, 응답을 반환하는 단일 동기 호출 기능을 하는데, 이는 복잡한 웹 프로토콜을 처리하는데 있어서 적합하지 않다고 한다. 그래서 나온 asgi는 비동기&amp;동기 기능을 제공하며, 다양한 서버와 동기 기능의 표준을 제공해 준다고 한다. asgi/wsgi에 관해서 따로 정리가 필요하다.</li>
+</ul>
+</li>
+<li><p><code>coco/wsgi.py</code> 프로젝트에 사용할 WSGI 호환 웹 서버의 진입점이다.</p>
+<ul>
+<li>wsgi는 web server gateway interface라고 하며, web server와 web application과 대화하게 해줄 수 있는 하나의 인터페이스이다. 이에 대한 좋은 글이 있어 링크를 남겨둔다.<a target="_blank" rel="noopener" href="https://sgc109.github.io/2020/08/15/python-wsgi/">wsgi란?</a></li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>정리하자면 django-admin으로 django 프로젝트를 생성하게 되면, naming한 프로젝트 이름으로 <em>루트 디렉토리</em>가 생성되고, 루트 디렉토리 안에는 <code>manage.py</code>파일과 프로젝트 이름의 <code>프로젝트 디렉토리</code>가 생성된다.</p>
+</blockquote>
+<br>
+
+<h2 id="django-개발-서버"><a href="#django-개발-서버" class="headerlink" title="django 개발 서버"></a><strong>django 개발 서버</strong></h2><p>다음과 같은 명령어로 개발 서버를 구동할 수 있다.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python manage.py runserver</span><br></pre></td></tr></table></figure>
+
+<p>그러면 아래와 같은 메세지를 볼 수 있는데</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Performing system checks...</span><br><span class="line"></span><br><span class="line">System check identified no issues (0 silenced).</span><br><span class="line"></span><br><span class="line">You have unapplied migrations; your app may not work properly until they are applied.</span><br><span class="line">Run &#x27;python manage.py migrate&#x27; to apply them.</span><br><span class="line"></span><br><span class="line">January 17, 2022 - 15:50:53</span><br><span class="line">Django version 4.0, using settings &#x27;coco.settings&#x27;</span><br><span class="line">Starting development server at http://127.0.0.1:8000/</span><br><span class="line">Quit the server with CONTROL-C.</span><br></pre></td></tr></table></figure>
+
+<p>중간에 나오는 unapplied migrations에 관한 오류는 database migration에 관한 부분이라, 처음으로 서버를 구동했을때 나오게 되는 메세지이다.</p>
+<p>그리고 밑줄로 된 localhost:8000 주소를 클릭하면 로켓이 발사중인 화면의 django 서버를 확인할 수 있다. 그리고 이것은 개발만을 위해 사용되는 것을 의도하였으므로 실제 배포 환경에서는 사용하지 않을 것을 권장한다고 한다.</p>
+<p><strong>port 변경</strong><br><code>python manage.py runserver ____</code> 뒤에 숫자를 입력할 수도 있는데 이는, 포트 번호를 의미하는 command-line 인자이며 django는 따로 포트지정이 없을 경우 기본적으로 8000번 포트를 사용하고 있다. 따라서 포트를 변경하고 싶을 시에는 runserver 뒤에 원하는 포트 번호를 입력하면 된다. 예를 들어 8080 포트로 변경하고 싶다면 <code>python manage.py runserver 8080</code>으로 작성하면 된다.</p>
+<p>서버의 IP를 바꾸고자 할 때는 포트 앞에 :와 함께 연결될 포트를 작성해주면 된다. 모든 진입을 허용하고자 할 때는 0(0.0.0.0)을 다음과 같이 작성해주면 된다. <code>python manage.py runserver 0:8000</code><br><br></p>
+<h2 id="django-앱-생성"><a href="#django-앱-생성" class="headerlink" title="django 앱 생성"></a><strong>django 앱 생성</strong></h2><p>프로젝트를 생성해 환경을 구성했다면, 웹 어플리케이션을 작성할 준비가 되었다. 다음과 같은 명령어로 앱을 생성할 수 있다.<br>django에서 작성된 어플리케이션들은 특정한 컨벤션을 따르는 파이썬 패키지로 구성되어 있다.<br>django에서는 자동적으로 어플리케이션의 기본 구조를 생성해주기 때문에 따로 directory를 만들 필요가 없다.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">django-admin startapp appname</span><br></pre></td></tr></table></figure>
+
+<p><strong>django 프로젝트와 앱은 무엇이 다른가?</strong></p>
+<blockquote>
+<p>장고 앱은 웹 어플리케이션으로, 게시판 앱, 문의사항 앱 등처럼 웹 페이지에서의 기능적(?)단위라고 볼 수 있으며, 프로젝트는 특정 웹사이트를 위한 설정과 앱들의 콜렉션이라고 볼 수 있다. 따라서 프로젝트는 여러개의 앱들을 포함할 수 있다. 구현하고자 하는 웹페이지를 프로젝트라고 한다면, 안에 들어가는 기능이나, 구성을 앱으로 구현할 수 있다.</p>
+</blockquote>
+<br>
+
+<h2 id="django-앱-구조"><a href="#django-앱-구조" class="headerlink" title="django 앱 구조"></a><strong>django 앱 구조</strong></h2><p>앱의 구조는 다음과 같이 구성된다. root directory하단에 project directory와 같은 레벨에서 생성이 된다.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">coco/</span><br><span class="line">    manage.py</span><br><span class="line">    coco/</span><br><span class="line">    coco_app/</span><br><span class="line">        __init__.py</span><br><span class="line">        admin.py</span><br><span class="line">        apps.py</span><br><span class="line">        migrations/</span><br><span class="line">            __init__.py</span><br><span class="line">        models.py</span><br><span class="line">        tests.py</span><br><span class="line">        views.py</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h2 id="django-MVT-구조"><a href="#django-MVT-구조" class="headerlink" title="django MVT 구조"></a><strong>django MVT 구조</strong></h2><p>django는 MVT 디자인 패턴을 갖는다. 나는 디자인 패턴을 소프트웨어를 설계할 때 발생되는 문제들을 최소화하기 위해 이를 해결할 수 있는 다양한 유사한 방법들(패턴)을 재사용하기 좋은 방식으로 정리한 방법론이라고 이해를 했다. 정의된 디자인 패턴은 효율적인 의사소통의 수단으로써 사용될 수도 있다.</p>
+<blockquote>
+<p>카카오 콩을 정제한 카카오매스에 설탕 등을 첨가해 만든 달콤한 맛의 과자를 먹자 == 초콜릿(디자인 패턴)을 먹자</p>
+</blockquote>
+<p>나중에 추후에 디자인 패턴에 대해서도 정리해봐야겠다. 소프트웨어를 효율적으로 설계하기 위한 구조적 특징을 패턴화 한 것으로 이해하면 좋을 것 같다. 이러한 디자인 패턴은 이외에도 매우 많은 방식의 패턴들이 존재한다.</p>
+<p>그 중에서도 django는 MVT 디자인 패턴을 갖는다. MVT란 Model-View-Template를 의미한다. MVC(Model-View-Controller)와 같은 계열의 패턴이라고 볼 수 있을 것 같다.</p>
+<ul>
+<li><p>Model :</p>
+<ul>
+<li>DB와 관련된 부분이며, DB에 저장되는 데이터를 의미한다.</li>
+<li>SQL에서의 TABLE을 클래스로 정의한다.</li>
+<li>모델 클래스에서 저장될 데이터의 속성을 정의하고, 이를 기반으로 데이터의 CRUD가 가능하다. django 또한 flask의 sqlalchemy처럼 ORM을 이용하여 파이썬 코드로 DB를 조작하는 것이 가능하다. 물론 SQL문을 사용해야하는 경우도 종종 있다고 한다. (데이터와 관련된 필요한 기능을 최대한 클래스에서 함수로 짜라는 이야기를 들은 것 같다..)</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coco/models.py</span></span><br><span class="line"><span class="keyword">from</span> django.db <span class="keyword">import</span> models</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create your models here.</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span>(<span class="params">models.Model</span>):</span></span><br><span class="line">    name = models.CharField(max_length=<span class="number">8</span>, default=<span class="string">&#x27;&#x27;</span>, unique=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure></li>
+<li><p>View :</p>
+<ul>
+<li>MVC 패턴에서의 Controller의 역할을 한다.</li>
+<li>요청을 받아 해당 요청을 잘 처리할 수 있는 로직을 담당한다.</li>
+<li>template과 model에 연관되어, 응답으로 템플릿 렌더링 혹은 데이터를 전달해주는 기능을 할 수 있다.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coco/views.py</span></span><br><span class="line"><span class="keyword">from</span> django.http <span class="keyword">import</span> HttpResponse</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span>(<span class="params">request</span>):</span></span><br><span class="line">    <span class="keyword">return</span> HttpResponse(<span class="string">&quot;Hello, django&quot;</span>)</span><br></pre></td></tr></table></figure></li>
+<li><p>Template :</p>
+<ul>
+<li>View에서의 로직의 결과로 유저에게 화면을 보여주는 역할을 한다.</li>
+<li>html 파일이 이에 해당되며 django template 문법으로 보다 편리하게 데이터와 함께 렌더링할 수 있다.</li>
+</ul>
+</li>
+</ul>
+<br>
+
+<h2 id="django-view"><a href="#django-view" class="headerlink" title="django view"></a><strong>django view</strong></h2><br>
+
+<p>pip 처럼 npm에서 사용할 라이브러리, 패키지들을 다운로드 받는것 같음</p>
+<p><a target="_blank" rel="noopener" href="https://berkbach.com/%EC%9B%B9%ED%8C%A9-webpack-%EA%B3%BC-%EB%B0%94%EB%B2%A8-babel-%EC%9D%84-%EC%9D%B4%EC%9A%A9%ED%95%9C-react-%EA%B0%9C%EB%B0%9C-%ED%99%98%EA%B2%BD-%EA%B5%AC%EC%84%B1%ED%95%98%EA%B8%B0-fb87d0027766">webpack, babel을 이용하여 react 개발환경구성하기</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">npm init -y</span><br><span class="line">npm i webpack webpack-cli --save-dev</span><br><span class="line">npm i @babel/code babel-loader @babel/preset-env @babel/preset-react --save-dev</span><br><span class="line">npm i @babel/core babel-loader @babel/preset-env @babel/preset-react --save-dev</span><br><span class="line">npm i react react-dom --save-dev</span><br><span class="line">npm install @material-ui/core</span><br><span class="line">npm install @babel/plugin-proposal-class-properties</span><br><span class="line">npm install react-router-dom</span><br><span class="line">npm install @material-ui/icons</span><br></pre></td></tr></table></figure>
+</div><div class="article-licensing box"><div class="licensing-title"><p>django 프로젝트 생성</p><p><a href="http://dongmin-sim.github.io/2022/01/17/django-project001/">http://dongmin-sim.github.io/2022/01/17/django-project001/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>Author</h6><p>Dongmin Sim</p></div></div><div class="level-item is-narrow"><div><h6>Posted on</h6><p>2022-01-16</p></div></div><div class="level-item is-narrow"><div><h6>Updated on</h6><p>2022-01-18</p></div></div><div class="level-item is-narrow"><div><h6>Licensed under</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/django/">django</a></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2021/12/21/bj-1932/"><span class="level-item">정수 삼각형</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">댓글</h3><div id="disqus_thread"><noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div><script>var disqus_config = function () {
+            this.page.url = 'http://dongmin-sim.github.io/2022/01/17/django-project001/';
+            this.page.identifier = '2022/01/17/django-project001/';
+        };
+        (function() {
+            var d = document, s = d.createElement('script');  
+            s.src = '//' + 'dongminsim' + '.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar is-rounded" src="/gallery/me.jpeg" alt="Dongmin Sim"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">Dongmin Sim</p><p class="is-size-6 is-block">hello</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>South Korea</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">포스트</p><a href="/archives"><p class="title">9</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">카테고리</p><a href="/categories"><p class="title">5</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">태그</p><a href="/tags"><p class="title">8</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/Dongmin-Sim" target="_blank" rel="noopener">팔로우</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/Dongmin-Sim"><i class="fab fa-github"></i></a></div></div></div><!--!--><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">카테고리</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/SQLAlchemy/"><span class="level-start"><span class="level-item">SQLAlchemy</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/algorithm/"><span class="level-start"><span class="level-item">algorithm</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/django/"><span class="level-start"><span class="level-item">django</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/mongoDB/"><span class="level-start"><span class="level-item">mongoDB</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/python/"><span class="level-start"><span class="level-item">python</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></div></div></div><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">최근 글</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-01-16T15:33:36.000Z">2022-01-16</time></p><p class="title"><a href="/2022/01/17/django-project001/">django 프로젝트 생성</a></p><p class="categories"><a href="/categories/django/">django</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-12-20T20:09:48.000Z">2021-12-20</time></p><p class="title"><a href="/2021/12/21/bj-1932/">정수 삼각형</a></p><p class="categories"><a href="/categories/algorithm/">algorithm</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-12-16T18:24:51.000Z">2021-12-16</time></p><p class="title"><a href="/2021/12/17/sqlalchemy-query/">SQLAlchemy Query</a></p><p class="categories"><a href="/categories/SQLAlchemy/">SQLAlchemy</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-12-16T17:31:14.000Z">2021-12-16</time></p><p class="title"><a href="/2021/12/17/Flask/">ORM과 SQLAlchemy</a></p><p class="categories"><a href="/categories/SQLAlchemy/">SQLAlchemy</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-12-16T16:53:40.000Z">2021-12-16</time></p><p class="title"><a href="/2021/12/17/%ED%9D%99%EA%B8%B8-%EB%B3%B4%EC%88%98%ED%95%98%EA%B8%B0/">흙길 보수하기</a></p><p class="categories"><a href="/categories/algorithm/">algorithm</a></p></div></article></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">아카이브</h3><ul class="menu-list"><li><a class="level is-mobile" href="/archives/2022/01/"><span class="level-start"><span class="level-item">1월 2022</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2021/12/"><span class="level-start"><span class="level-item">12월 2021</span></span><span class="level-end"><span class="level-item tag">5</span></span></a></li><li><a class="level is-mobile" href="/archives/2021/11/"><span class="level-start"><span class="level-item">11월 2021</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">태그</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/ORM/"><span class="tag">ORM</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/SQLAlchemy/"><span class="tag">SQLAlchemy</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/algorithm/"><span class="tag">algorithm</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/django/"><span class="tag">django</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/dp/"><span class="tag">dp</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/flask/"><span class="tag">flask</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/greedy/"><span class="tag">greedy</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/math/"><span class="tag">math</span><span class="tag">1</span></a></div></div></div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.svg" alt="Codongmin" height="28"></a><p class="is-size-7"><span>&copy; 2022 Dongmin Sim</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("ko");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="맨 위로" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "이 웹 사이트는 귀하의 경험을 향상시키기 위해 Cookie를 사용합니다.",
+          dismiss: "무시",
+          allow: "허용",
+          deny: "거부",
+          link: "더 알아보기",
+          policy: "Cookie 정책",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/mhchem.js" defer></script><script>window.addEventListener("load", function() {
+            document.querySelectorAll('[role="article"] > .content').forEach(function(element) {
+                renderMathInElement(element);
+            });
+        });</script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="입력 하세요..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"입력 하세요...","untitled":"(제목 없음)","posts":"포스트","pages":"페이지","categories":"카테고리","tags":"태그"});
+        });</script></body></html>
