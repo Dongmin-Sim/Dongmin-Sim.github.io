@@ -15,7 +15,9 @@ timezone: Asia/Seoul
 # ↓ --------------------------
 
 title: Codongmin # the main title
+
 tagline: 아카이브 # it will display as the sub-title
+
 description: >- # used by seo meta and the atom feed
   codongmin의 아카이브
 
@@ -36,7 +38,7 @@ social:
   email: codongmin@gmail.com # change to your email address
   links:
     # The first element serves as the copyright owner's link
-    #- https://twitter.com/username # change to your Twitter homepage
+    # - https://twitter.com/username # change to your Twitter homepage
     - https://github.com/Dongmin-Sim # change to your GitHub homepage
     # Uncomment below to add more social links
     # - https://www.facebook.com/username

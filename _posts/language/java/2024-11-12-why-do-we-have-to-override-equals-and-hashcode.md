@@ -3,8 +3,7 @@ title: equals를 재정의할 때 왜 hashcode도  재정의해야 하나요?
 author: codongmin
 date: 2024-11-12T19:04:00
 categories:
-  - Java
-  - Common
+  - Language
 tags:
   - Java
   - Object

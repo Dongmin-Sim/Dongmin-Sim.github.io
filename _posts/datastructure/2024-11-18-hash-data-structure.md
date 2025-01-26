@@ -2,7 +2,9 @@
 title: 해시 자료구조와 HashMap이 해시 충돌을 해결하는 방법
 author: codongmin
 date: 2024-11-18T21:08:00
-categories: 
+categories:
+  - Data-Structure
+  - Hash
 tags: 
 preview: 해시 자료구조와 HashMap에서 해시 충돌을 해결하는 방법을 자세히 알아봅니다.
 image:

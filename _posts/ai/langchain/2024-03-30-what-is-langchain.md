@@ -3,7 +3,7 @@ title: 랭체인(LangChain Framework)과 핵심 개념(Core Concept)
 author: codongmin
 date: 2024-03-17T22:16:00
 categories:
-  - ai
+  - AI
   - LangChain
 tags:
   - ai
@@ -11,7 +11,7 @@ tags:
   - 글또
 image:
   path: /assets/logo/geulttoUdemy.png
-  lqip:
+  lqip: 
   alt: Geultto X Udemy
 ---
 

@@ -3,9 +3,10 @@ title: Stream 구조와 특징
 author: codongmin
 date: 2025-01-17T23:42:00
 categories:
+  - Language
   - Java
 tags: 
-preview: 자바 스트림에 대해 정리한 글입니다.
+description: 자바 스트림에 대해 정리한 글입니다.
 ---
 
 

@@ -3,15 +3,15 @@ title: 객체와 클래스, 객체를 만드는 다양한 방법
 author: codongmin
 date: 2024-11-05T21:06:00
 categories:
+  - Language
   - Java
 tags:
   - 객체
   - 자바
-preview: "객체와 클래스간의 관계, 클래스를 이루는 구성요소, 객체를 생성하는 방법들에 대해 알아봅니다."
-image: '{"path":"", "lqip":null","alt":"객체와 클래스, 객체를 만드는 다양한 방법"}'
+preview: 객체와 클래스간의 관계, 클래스를 이루는 구성요소, 객체를 생성하는 방법들에 대해 알아봅니다.
 image:
   path: /assets/img/thumbnail/how-to-make-object-thumbnail.png
-  lqip:
+  lqip: 
   alt: 객체와 클래스, 객체를 만드는 다양한 방법
 ---
 

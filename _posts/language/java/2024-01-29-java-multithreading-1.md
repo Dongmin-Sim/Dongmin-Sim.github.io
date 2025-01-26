@@ -1,13 +1,18 @@
 ---
-title: "자바 멀티쓰레드 All in One 9문답:(Part 1)"
+title: 자바 멀티쓰레드 All in One 9문답:(Part 1)
 author: codongmin
 date: 2024-02-01 22:16:00 +0800
-categories: [Java, 멀티스레딩]
-tags: [Java, MultiThreading, OS, thread]
-
+categories:
+  - Language
+  - Java
+tags:
+  - Java
+  - MultiThreading
+  - OS
+  - thread
 image:
   path: /assets/logo/geulttoUdemy.png
-  lqip:
+  lqip: 
   alt: Responsive rendering of Chirpy theme on multiple devices.
 ---
 

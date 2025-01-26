@@ -3,8 +3,8 @@ title: JUnit 기본 소개
 author: codongmin
 date: 2024-04-16T17:08:00
 categories:
-  - test
-  - junit
+  - Test
+  - JUnit
 tags:
   - test
   - junit
