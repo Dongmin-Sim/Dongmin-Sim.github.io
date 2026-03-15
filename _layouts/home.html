@@ -1,0 +1,21 @@
+---
+layout: default
+---
+
+{% if site.description and site.description != "" %}
+<p class="post-meta" style="margin-bottom: 2.5em;">{{ site.description }}</p>
+{% endif %}
+
+<ul class="post-list">
+  {% assign sorted_posts = site.posts | sort: "date" | reverse %}
+  {% for post in sorted_posts %}
+  <li class="post-list__item">
+    <div class="post-list__title">
+      <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+    </div>
+    <div class="post-list__date">
+      <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y년 %m월 %d일" }}</time>
+    </div>
+  </li>
+  {% endfor %}
+</ul>
