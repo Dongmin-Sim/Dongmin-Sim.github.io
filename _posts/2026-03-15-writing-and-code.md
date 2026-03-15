@@ -36,6 +36,18 @@ end
 
 이 함수는 별것 아닌 것처럼 보이지만, 내가 글을 다듬는 과정과 정확히 같다. 공백을 정리하고, 하나로 통일하고, 낮추는 것. Stripping away the unnecessary until only the essential remains.
 
+## 글쓰기와 코딩, 어디가 닮았나
+
+| 관점 | 글쓰기 | 코딩 | 공통 원칙 |
+|------|--------|------|-----------|
+| 초안 | 일단 거칠게 써본다 | 일단 동작하게 만든다 | 완벽보다 시작이 먼저 |
+| 퇴고 | 불필요한 문장을 지운다 | 불필요한 코드를 지운다 | 덜어내는 용기 |
+| 독자 | 읽는 사람을 의식한다 | 읽을 개발자를 의식한다 | 명확함이 최우선 |
+| 구조 | 단락과 흐름으로 정리 | 함수와 모듈로 정리 | 논리적 단위로 분리 |
+| 도구 | 메모장, 워드프로세서 | 에디터, 터미널 | 단순한 도구가 낫다 |
+
+*글쓰기와 코딩의 유사점 비교*
+
 ## 결국 같은 이야기
 
 Writing and programming are both acts of translation — taking the messy, tangled thoughts in your head and rendering them into a form that others can follow. The medium differs, but the discipline is the same.
