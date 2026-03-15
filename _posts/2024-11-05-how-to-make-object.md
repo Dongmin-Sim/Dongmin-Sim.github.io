@@ -1,5 +1,7 @@
 ---
 layout: post
+# published: false = 미발행 / true = 발행
+published: false
 title: 객체와 클래스, 객체를 만드는 다양한 방법
 date: 2024-11-05
 tags:

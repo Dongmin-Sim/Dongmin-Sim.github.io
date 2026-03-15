@@ -1,5 +1,7 @@
 ---
 layout: post
+# published: false = 미발행 / true = 발행
+published: false
 title: Parameterized Test ,테스트 메서드가 다수의 테스트 케이스를 가질 때
 date: 2024-04-26
 tags: []

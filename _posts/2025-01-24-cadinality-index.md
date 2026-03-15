@@ -1,5 +1,7 @@
 ---
 layout: post
+# published: false = 미발행 / true = 발행
+published: false
 title: 컬럼 카디널리티에 따른 인덱스 성능 비교
 date: 2025-01-24
 series: sql-optimization

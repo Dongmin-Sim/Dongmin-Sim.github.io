@@ -1,5 +1,7 @@
 ---
 layout: post
+# published: false = 미발행 / true = 발행
+published: false
 title: Gradle, 든든한 코끼리
 date: 2024-02-28
 tags:

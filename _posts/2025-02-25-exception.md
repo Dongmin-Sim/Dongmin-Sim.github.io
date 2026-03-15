@@ -1,5 +1,7 @@
 ---
 layout: post
+# published: false = 미발행 / true = 발행
+published: false
 title: 예상하지 못한 이벤트를 다루는 방법, 자바의 Exception
 date: 2025-02-25
 description: 자바의 예외와 예외처리, 좋지 못한 예외처리 패턴에 대해 정리한 글입니다.

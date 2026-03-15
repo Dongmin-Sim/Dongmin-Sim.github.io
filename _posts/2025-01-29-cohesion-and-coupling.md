@@ -1,5 +1,7 @@
 ---
 layout: post
+# published: false = 미발행 / true = 발행
+published: false
 title: 변경의 관점에서 보는 응집도와 결합도
 date: 2025-01-29
 tags: []

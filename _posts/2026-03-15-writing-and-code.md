@@ -1,5 +1,7 @@
 ---
 layout: post
+# published: false = 미발행 / true = 발행
+published: true
 title: 글쓰기와 코드, 그 사이 어딘가
 date: 2026-03-15
 tags:

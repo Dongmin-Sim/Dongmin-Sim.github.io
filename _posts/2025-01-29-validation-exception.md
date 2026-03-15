@@ -1,5 +1,7 @@
 ---
 layout: post
+# published: false = 미발행 / true = 발행
+published: false
 title: controller의 유효성 예외 잡아내기
 date: 2025-01-29
 tags: []

@@ -1,5 +1,7 @@
 ---
 layout: post
+# published: false = 미발행 / true = 발행
+published: false
 title: 스프링 데이터 유효성에 대한 모든 것 1
 date: 2025-02-07
 tags: []

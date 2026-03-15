@@ -1,5 +1,7 @@
 ---
 layout: post
+# published: false = 미발행 / true = 발행
+published: false
 title: 서블릿 컨테이너란? (Servlet Container)
 date: 2024-03-17
 tags: []

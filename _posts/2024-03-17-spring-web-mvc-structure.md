@@ -1,5 +1,7 @@
 ---
 layout: post
+# published: false = 미발행 / true = 발행
+published: false
 title: Spring Web MVC 구조 이해
 date: 2024-03-17
 tags:

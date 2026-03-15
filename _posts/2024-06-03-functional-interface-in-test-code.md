@@ -1,5 +1,7 @@
 ---
 layout: post
+# published: false = 미발행 / true = 발행
+published: false
 title: 함수형 인터페이스로 테스트 코드 리팩토링하기
 date: 2024-06-03
 tags: []

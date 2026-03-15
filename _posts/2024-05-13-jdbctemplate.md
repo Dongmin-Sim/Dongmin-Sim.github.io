@@ -1,5 +1,7 @@
 ---
 layout: post
+# published: false = 미발행 / true = 발행
+published: false
 title: jdbcTemplate 이란?
 date: 2024-05-13
 series: spring-data

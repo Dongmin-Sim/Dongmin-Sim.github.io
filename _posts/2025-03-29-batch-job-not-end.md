@@ -1,5 +1,7 @@
 ---
 layout: post
+# published: false = 미발행 / true = 발행
+published: false
 title: 배치 작업이 끝났음에도 종료되지 않는 경우.
 date: 2025-03-29
 tags: []

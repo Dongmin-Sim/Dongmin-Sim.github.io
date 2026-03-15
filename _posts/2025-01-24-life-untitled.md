@@ -1,5 +1,7 @@
 ---
 layout: post
+# published: false = 미발행 / true = 발행
+published: false
 title: 내가 행복해지는 방법들
 date: 2025-01-24
 tags: []

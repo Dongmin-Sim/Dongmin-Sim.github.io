@@ -1,5 +1,7 @@
 ---
 layout: post
+# published: false = 미발행 / true = 발행
+published: false
 title: 스프링이 빈을 등록하는 기준
 date: 2025-06-02
 description: 배치 작업에 대한 개념과 스프링 배치에 대한 전반적인 개념에 대해 다룹니다.

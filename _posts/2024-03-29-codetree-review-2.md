@@ -1,5 +1,7 @@
 ---
 layout: post
+# published: false = 미발행 / true = 발행
+published: false
 title: 글또 X 코드트리 챌린지 마무리와 다음
 date: 2024-03-29
 tags:

@@ -1,5 +1,7 @@
 ---
 layout: post
+# published: false = 미발행 / true = 발행
+published: false
 title: 글또 10기 다짐글
 date: 2024-10-06
 tags:

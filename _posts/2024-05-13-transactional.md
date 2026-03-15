@@ -1,5 +1,7 @@
 ---
 layout: post
+# published: false = 미발행 / true = 발행
+published: false
 title: "트랜잭션 처리와 @Transactional의 동작원리"
 date: 2024-05-13
 series: spring-data

@@ -1,5 +1,7 @@
 ---
 layout: post
+# published: false = 미발행 / true = 발행
+published: false
 title: 테스트 데이터 세팅
 date: 2025-03-29
 tags: []

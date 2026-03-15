@@ -1,5 +1,7 @@
 ---
 layout: post
+# published: false = 미발행 / true = 발행
+published: false
 title: Bean의 생성 과정
 date: 2025-01-29
 tags: []

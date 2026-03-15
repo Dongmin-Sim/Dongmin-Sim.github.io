@@ -1,5 +1,7 @@
 ---
 layout: post
+# published: false = 미발행 / true = 발행
+published: false
 title: TDD에 대하여
 date: 2024-06-01
 tags: []

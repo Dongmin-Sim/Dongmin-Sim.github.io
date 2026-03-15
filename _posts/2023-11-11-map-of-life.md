@@ -1,5 +1,7 @@
 ---
 layout: post
+# published: false = 미발행 / true = 발행
+published: false
 title: 2023 삶의 지도
 date: 2023-11-11
 tags:

@@ -1,5 +1,7 @@
 ---
 layout: post
+# published: false = 미발행 / true = 발행
+published: false
 title: JPA N+1 문제
 date: 2025-07-15
 tags:

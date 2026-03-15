@@ -1,5 +1,7 @@
 ---
 layout: post
+# published: false = 미발행 / true = 발행
+published: false
 title: 성능 테스트 초기 단계
 date: 2025-03-29
 series: performance-test

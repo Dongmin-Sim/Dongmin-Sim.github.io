@@ -1,5 +1,7 @@
 ---
 layout: post
+# published: false = 미발행 / true = 발행
+published: false
 title: 클래스 로딩과 언로딩.
 date: 2024-02-01
 tags:

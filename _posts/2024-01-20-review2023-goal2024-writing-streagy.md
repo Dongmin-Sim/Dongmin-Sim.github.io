@@ -1,5 +1,7 @@
 ---
 layout: post
+# published: false = 미발행 / true = 발행
+published: false
 title: "2023 회고 & 2024 목표 (+글쓰기 전략, 파이프라인 v0.1)"
 date: 2024-01-20
 tags:

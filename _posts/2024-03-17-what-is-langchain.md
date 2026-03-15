@@ -1,5 +1,7 @@
 ---
 layout: post
+# published: false = 미발행 / true = 발행
+published: false
 title: 랭체인(LangChain Framework)과 핵심 개념(Core Concept)
 date: 2024-03-17
 tags:

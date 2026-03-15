@@ -1,5 +1,7 @@
 ---
 layout: post
+# published: false = 미발행 / true = 발행
+published: false
 title: 피드 노출 기능 구현하기
 date: 2025-03-29
 tags: []

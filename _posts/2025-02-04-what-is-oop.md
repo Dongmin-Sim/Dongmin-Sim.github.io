@@ -1,5 +1,7 @@
 ---
 layout: post
+# published: false = 미발행 / true = 발행
+published: false
 title: What Is Oop
 date: 2025-02-04
 tags: []

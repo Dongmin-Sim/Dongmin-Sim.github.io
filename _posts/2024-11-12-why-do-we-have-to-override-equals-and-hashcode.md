@@ -1,5 +1,7 @@
 ---
 layout: post
+# published: false = 미발행 / true = 발행
+published: false
 title: equals를 재정의할 때 왜 hashcode도  재정의해야 하나요?
 date: 2024-11-12
 tags:

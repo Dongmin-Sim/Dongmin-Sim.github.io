@@ -1,5 +1,7 @@
 ---
 layout: post
+# published: false = 미발행 / true = 발행
+published: false
 title: "자바 멀티쓰레드 All in One 9문답:(Part 1)"
 date: 2024-02-01
 tags:

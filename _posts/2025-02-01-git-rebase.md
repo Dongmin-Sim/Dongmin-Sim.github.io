@@ -1,5 +1,7 @@
 ---
 layout: post
+# published: false = 미발행 / true = 발행
+published: false
 title: git rebase
 date: 2025-02-01
 description: git rebase 기능과 예시에 대해서 알아봅니다.

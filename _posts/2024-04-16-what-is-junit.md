@@ -1,5 +1,7 @@
 ---
 layout: post
+# published: false = 미발행 / true = 발행
+published: false
 title: JUnit 기본 소개
 date: 2024-04-16
 tags:

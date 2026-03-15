@@ -1,5 +1,7 @@
 ---
 layout: post
+# published: false = 미발행 / true = 발행
+published: false
 title: 하루하루 써내려가는 일기 (백엔드-인프라 반상회 with 글또 10기)
 date: 2024-12-10
 tags: []

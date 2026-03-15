@@ -1,5 +1,7 @@
 ---
 layout: post
+# published: false = 미발행 / true = 발행
+published: false
 title: Java 진영의 영속성 프레임워크(Persistence Framework)
 date: 2024-05-01
 series: spring-data

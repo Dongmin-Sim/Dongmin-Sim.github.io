@@ -1,5 +1,7 @@
 ---
 layout: post
+# published: false = 미발행 / true = 발행
+published: false
 title: Dive INTO 가상화 그리고 컨테이너 기술부터 도커까지
 date: 2023-12-20
 tags:

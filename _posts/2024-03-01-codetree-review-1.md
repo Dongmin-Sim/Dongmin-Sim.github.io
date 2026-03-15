@@ -1,5 +1,7 @@
 ---
 layout: post
+# published: false = 미발행 / true = 발행
+published: false
 title: 코드트리, 코테 공포증을 몰입의 시간으로 바꾸는 방법
 date: 2024-03-01
 tags:

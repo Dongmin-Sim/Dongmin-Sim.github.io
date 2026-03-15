@@ -1,5 +1,7 @@
 ---
 layout: post
+# published: false = 미발행 / true = 발행
+published: false
 title: 해시 자료구조와 HashMap이 해시 충돌을 해결하는 방법
 date: 2024-11-18
 tags: []

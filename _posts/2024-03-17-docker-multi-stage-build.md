@@ -1,5 +1,7 @@
 ---
 layout: post
+# published: false = 미발행 / true = 발행
+published: false
 title: Docker 멀티 스테이지 빌드로 스프링 애플리케이션 빌드
 date: 2024-03-17
 tags:

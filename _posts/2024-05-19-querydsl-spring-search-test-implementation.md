@@ -1,5 +1,7 @@
 ---
 layout: post
+# published: false = 미발행 / true = 발행
+published: false
 title: QueryDSL을 활용한 검색 기능의 구현, TDD를 곁들인
 date: 2024-05-19
 tags: []
