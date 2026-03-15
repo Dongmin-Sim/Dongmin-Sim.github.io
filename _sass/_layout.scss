@@ -136,12 +136,13 @@
     margin-bottom: 0;
   }
 
-  > p > img + em {
+  > p > img + em,
+  > table + p > em:only-child {
     display: block;
     text-align: center;
     font-size: 0.85em;
     color: $color-muted;
-    font-style: normal;
+    font-style: italic;
     margin-top: 0.4em;
   }
 
