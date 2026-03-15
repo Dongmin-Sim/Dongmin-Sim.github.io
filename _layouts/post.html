@@ -11,6 +11,12 @@ layout: default
       <h1 class="post-title">{{ page.title }}</h1>
     </header>
 
+    {% if page.image and page.image.path %}
+    <div class="post-thumbnail">
+      <img src="{{ page.image.path | relative_url }}" alt="{{ page.image.alt | default: page.title }}">
+    </div>
+    {% endif %}
+
     <div class="post-content">
       {{ content }}
     </div>

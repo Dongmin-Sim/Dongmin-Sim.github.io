@@ -110,6 +110,17 @@
   margin-bottom: 2.5em;
 }
 
+.post-thumbnail {
+  margin-bottom: 2.5em;
+
+  img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 4px;
+  }
+}
+
 .post-meta {
   font-size: 0.82rem;
   color: $color-muted;

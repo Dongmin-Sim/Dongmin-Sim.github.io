@@ -5,7 +5,7 @@ date: 2024-05-19
 tags: []
 description: 본 글에서는 Querydsl 의 개요와 특징에 대해서 설명합니다.
 image:
-  path: /assets/thumbnails/spring-data.png
+  path: /assets/images/thumbnails/spring-data.png
   alt: Spring Data
 ---
 ## 들어가며

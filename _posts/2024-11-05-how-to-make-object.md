@@ -7,7 +7,7 @@ tags:
   - 자바
 description: 객체와 클래스간의 관계, 클래스를 이루는 구성요소, 객체를 생성하는 방법들에 대해 알아봅니다.
 image:
-  path: /assets/thumbnails/how-to-make-object-thumbnail.png
+  path: /assets/images/thumbnails/how-to-make-object-thumbnail.png
   alt: 객체와 클래스, 객체를 만드는 다양한 방법
 ---
 # 0. 들어가며

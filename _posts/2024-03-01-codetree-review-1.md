@@ -6,7 +6,7 @@ tags:
   - 회고
   - 코드트리
 image:
-  path: /assets/thumbnails/codetree.png
+  path: /assets/images/thumbnails/codetree.png
   alt: CODETREE
 ---
 ## 들어가며

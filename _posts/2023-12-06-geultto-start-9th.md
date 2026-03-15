@@ -7,7 +7,7 @@ tags:
   - 글또
 description: 글또 9기에 참여하면서 활동 목표와 생각을 정리한 다짐글입니다.
 image:
-  path: /assets/thumbnails/geultto-social-card.png
+  path: /assets/images/thumbnails/geultto-social-card.png
   alt: 글또 9기 회고
 ---
 ## 들어가며

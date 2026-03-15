@@ -5,7 +5,7 @@ date: 2024-11-18
 tags: []
 description: 해시 자료구조와 HashMap에서 해시 충돌을 해결하는 방법을 자세히 알아봅니다.
 image:
-  path: /assets/thumbnails/hash-data-structure.png
+  path: /assets/images/thumbnails/hash-data-structure.png
   alt: 해시 자료구조와 HashMap이 해시 충돌을 해결하는 방법
 ---
 ## 🙋 **들어가며**

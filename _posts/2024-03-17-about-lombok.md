@@ -6,7 +6,7 @@ tags:
   - build
   - ci/cd
 image:
-  path: /assets/thumbnails/java.png
+  path: /assets/images/thumbnails/java.png
   alt: Gradle이란?
 ---
 ## 들어가며

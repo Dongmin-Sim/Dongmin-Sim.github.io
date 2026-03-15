@@ -5,7 +5,7 @@ date: 2024-06-09
 tags: []
 description: 테스트 더블에 대한 개념을 설명하고, Stub, Mock에 대해서 자세히 알아봅니다.
 image:
-  path: /assets/thumbnails/test.png
+  path: /assets/images/thumbnails/test.png
   alt: 테스트 관련 포스트
 ---
 ## 0. 들어가며

@@ -7,7 +7,7 @@ tags:
   - 글또
 description: 글또 9기를 마무리하며 회고한 글입니다.
 image:
-  path: /assets/thumbnails/geultto-social-card.png
+  path: /assets/images/thumbnails/geultto-social-card.png
   alt: 글또 9기 회고
 ---
 글또 회고
