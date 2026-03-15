@@ -157,14 +157,16 @@
   @media (min-width: 1100px) {
     display: block;
     position: absolute;
-    right: 0;
+    left: calc(100% + 48px);
     top: 0;
+    bottom: 0;
     width: 200px;
-    transform: translateX(calc(100% + 48px));
 
     nav {
       position: sticky;
       top: 2em;
+      max-height: calc(100vh - 4em);
+      overflow-y: auto;
     }
 
     ul {
