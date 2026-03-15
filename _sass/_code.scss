@@ -3,10 +3,11 @@
 code {
   font-family: $font-code;
   font-size: 0.875em;
-  background-color: $color-code-bg;
+  background-color: #efede8;
+  color: #4a4845;
   border: 1px solid $color-code-border;
-  border-radius: 3px;
-  padding: 0.15em 0.35em;
+  border-radius: 4px;
+  padding: 2px 6px;
 }
 
 pre {
@@ -17,6 +18,9 @@ pre {
   code {
     display: block;
     padding: 1em;
+    background-color: $color-code-bg;
+    color: inherit;
+    border: none;
     border-radius: 4px;
     font-size: 0.84em;
     line-height: 1.6;
