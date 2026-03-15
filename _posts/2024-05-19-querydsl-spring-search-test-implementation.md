@@ -280,14 +280,14 @@ java
 ### 2. TDD
 
 테스트 시작 🔴
-![Desktop View](/assets/posts/framework/spring/springData/test1.png){: width="972" height="589"}_이미지 설명_
+![Desktop View](/assets/images/querydsl-spring-search-test-implementation/test1.png){: width="972" height="589"}_이미지 설명_
 
 아마 이대로 테스트를 돌리면, 구현하지 않은 메서드에 대해 컴파일 오류가 발생할 것이다. 일단 컴파일 에러를 잡기 위해 메서드를 구현한다.
 
 Spring Custom Repository 를 생성하고, 메서드를 작성한다.
-![Desktop View](/assets/posts/framework/spring/springData/custom.png)
+![Desktop View](/assets/images/querydsl-spring-search-test-implementation/custom.png)
 ProductRepository 에서 Custom Repositor인 Custom을 상속받으면 일단 컴파일 에러는 해결된다.
-![Desktop View](/assets/posts/framework/spring/springData/productRepository.png)
+![Desktop View](/assets/images/querydsl-spring-search-test-implementation/productRepository.png)
 
 다시 테스트를 돌린다.
 
@@ -306,7 +306,7 @@ Spring Data JPA는 인터페이스에 선언된`ourProductSearchQuery` 의 이�
 Spring Data JPA에서 메서드의 이름을 보고 쿼리를 자동 생성하고
 생성할 수 없으면 이와 관련된 impl 구현체를 참조하는 것으로 보인다.
 
-![Desktop View](/assets/posts/framework/spring/springData/impl1.png)
+![Desktop View](/assets/images/querydsl-spring-search-test-implementation/impl1.png)
 
 {: width="972" height="589"}_이미지 설명_
 
@@ -314,24 +314,24 @@ Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Err
 
 이에러는 !! 때문에 발생한다. 이렇기 때문에 설정 정보를 추가해준다.
 
-![Desktop View](/assets/posts/framework/spring/springData/test2.png){: width="972" height="589"}_이미지 설명_
+![Desktop View](/assets/images/querydsl-spring-search-test-implementation/test2.png){: width="972" height="589"}_이미지 설명_
 
 테스트가 동작한다 하지만, 기대한 값이 2개지만 실제값은 0개로 테스트가 통과되지 않는다.
 
-![Pasted image 20240521173424](/assets/posts/Pasted image 20240521173424.png)
+<!-- ![Pasted image 20240521173424](/assets/posts/Pasted image 20240521173424.png) -->
 `assertThat(productList).hasSize(2);` 이 단언 메서드를 통과하지 못했다.
 
 위 단언메서드를 통과할 정도로만 구현해보자.
-![Desktop View](/assets/posts/framework/spring/springData/impl2.png){: width="972" height="589"}_이미지 설명_
+![Desktop View](/assets/images/querydsl-spring-search-test-implementation/impl2.png){: width="972" height="589"}_이미지 설명_
 
 `assertThat(productList).hasSize(2);` 통과했지만 다음 단언메서드인 `assertThat(productList).extracting(Product::getName).containsExactly("apple phone", "apple watch");` 를 통과하지 못했다.
-![Pasted image 20240521173949](/assets/posts/Pasted image 20240521173949.png)
+<!-- ![Pasted image 20240521173949](/assets/posts/Pasted image 20240521173949.png) -->
 이 역시도 테스트 코드를 통과할 정도로만 구현해보자
-![Desktop View](/assets/posts/framework/spring/springData/impl3.png){: width="972" height="589"}_이미지 설명_
+![Desktop View](/assets/images/querydsl-spring-search-test-implementation/impl3.png){: width="972" height="589"}_이미지 설명_
 
 드디어 첫번째 테스트를 통과했다.🟢
 일단, 일어나서 엉덩이 춤을 춰주자
-![Pasted image 20240521175609](/assets/posts/Pasted image 20240521175609.png)
+<!-- ![Pasted image 20240521175609](/assets/posts/Pasted image 20240521175609.png) -->
 
 리팩토링 🟠
 지금 시점에서는 별다른 리팩토링 포인트가 보이지 않는다.새로운 테스트 케이스를 하나 추가해보자
@@ -341,19 +341,19 @@ Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Err
 
 - 새로운 검색키워드를 넣고, 이것이 검색되는지를 확인하자.
 
-![Desktop View](/assets/posts/framework/spring/springData/test3.png){: width="972" height="589"}_이미지 설명_
+![Desktop View](/assets/images/querydsl-spring-search-test-implementation/test3.png){: width="972" height="589"}_이미지 설명_
 
 예상했던 대로 당연하게 실패한다.
 
-![Pasted image 20240521182015](/assets/posts/Pasted image 20240521182015.png)
+<!-- ![Pasted image 20240521182015](/assets/posts/Pasted image 20240521182015.png) -->
 
 이제는 단순히 특정값을 넘기는 것 만으로는 테스트를 통과할 수 없다.
 
-![Desktop View](/assets/posts/framework/spring/springData/impl4.png)
+![Desktop View](/assets/images/querydsl-spring-search-test-implementation/impl4.png)
 이제 querydsl 문법을 통해 구현해보자
 
 테스트를 통과했다.🟢
-![Pasted image 20240521175609](/assets/posts/Pasted image 20240521175609.png)
+<!-- ![Pasted image 20240521175609](/assets/posts/Pasted image 20240521175609.png) -->
 
 리팩토링 🟠
 구현 부분에서는 딱히 리팩토링할 부분은 보이지 않는다. 다만 테스트 코드에 여러 테스트 케이스가 추가되면서 코드가 꽤 뚱뚱해졌다. 이를 간단하게 리팩토링해보자
@@ -362,7 +362,7 @@ Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Err
 2. prodcut를 생성하고 저장하는 부분
 3. 테스트 대상 메서드와 assertions을 진행하는 부분을 메서드화할 수 있어보인다.
 
-![Desktop View](/assets/posts/framework/spring/springData/refactor1-config.png){: width="972" height="589"}_이미지 설명_
+![Desktop View](/assets/images/querydsl-spring-search-test-implementation/refactor1-config.png){: width="972" height="589"}_이미지 설명_
 
 설정을 담당하는 클래스를 재사용이 가능하게끔 별도 클래스로 빼주었다.
 
@@ -370,7 +370,7 @@ Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Err
 product를 생성하고 저장하는 부분은 `createProduct()`로
 테스트 대상 메서드와 assertions을 진행하는 부분은 `assertThatSearchByNameContainingIgnoreCase()`로 메서드를 분리주었다.
 
-![Desktop View](/assets/posts/framework/spring/springData/refactor1-impl.png){: width="972" height="589"}_이미지 설명_
+![Desktop View](/assets/images/querydsl-spring-search-test-implementation/refactor1-impl.png){: width="972" height="589"}_이미지 설명_
 
 전과 비교했을때 뚱뚱한 코드가 훨씬 간결해지고, 코드를 이해하는데 훨씬 직관적으로 변경되엇다.
 assertion 메서드는 파라미터를 봣을때 어느정도 의미 전달이 돼어보인다.
@@ -378,7 +378,7 @@ assertion 메서드는 파라미터를 봣을때 어느정도 의미 전달이 �
 이 키워드로 검색했을때 2개의 제품과 제품명일 동일한지를 확인하는 메서드임을 유츄해볼 수 있다. 만약 헷달린다면, 아래 메서드 선언부를 참고하면 금방 이해가 된다.
 
 테스트를 돌려 리팩토링 전후 차이가 없는지 확인한다.🟢
-![Pasted image 20240521175609](/assets/posts/Pasted image 20240521175609.png)
+<!-- ![Pasted image 20240521175609](/assets/posts/Pasted image 20240521175609.png) -->
 만약 여기서 통과를 하지 못했다면 리팩토링 과정 어딘가에서 실수를 했을 가능성이 있다. 그때는 다시 돌아가서 실수한 부분을 고치면 된다. 이게 바로 테스트 코드의 장점?!
 
 ### 테스트 순서에 대하여
@@ -389,7 +389,7 @@ assertion 메서드는 파라미터를 봣을때 어느정도 의미 전달이 �
 왜냐하면 그래야 코드가 점진적으로 구현될 수 있기때문이다.
 만약에 테스트하기 너무 큰 테스트의 경우 한번에 구현해야하는 양이 많기 때문에 , 각을 잡기 어려울 수 있다.
 
-![Desktop View](/assets/meme/mathmatics.gif){: width="972" height="589"}_어디부터 손대야지...?_
+<!-- ![Desktop View](/assets/meme/mathmatics.gif){: width="972" height="589"}_어디부터 손대야지...?_ -->
 
 지금 예시에서는 다음과 같은 순서로 테스트 코드 실행하고 구현했다.
 
@@ -410,7 +410,7 @@ assertion 메서드는 파라미터를 봣을때 어느정도 의미 전달이 �
 
 글을 여기까지 읽으신 분들 중 spring jpa에 익숙하신 분들은 고개를 갸우뚱 하실 수도 있을 것 같다.
 
-![Desktop View](/assets/posts/spring/springData/querydsl-search-test-implementation/findAllByNameContainingCase.png){: width="972" height="589"}_JPA 쿼리 메서드_
+![Desktop View](/assets/images/querydsl-spring-search-test-implementation/findAllByNameContainingCase.png){: width="972" height="589"}_JPA 쿼리 메서드_
 
 Spring Data JPA에서 제공하는 쿼리 메서드를 사용하면 한 줄로 위에서 구현한 쿼리를 사용할 수 있다.
 

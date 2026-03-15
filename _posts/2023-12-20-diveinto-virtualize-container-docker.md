@@ -13,7 +13,7 @@ tags:
 
  도커는 DevOps함께 거의 대부분 IT 회사에서 필수적으로 사용하는 "컨테이너 기술"이 되었습니다. 뿐만 아니라 컨테이너 관리(Orchestration)하는 기술인 쿠버네티스도 컨테이너 기술과 함께 서비스를 배포, 운영하는데 있어 필수 기술로 자리잡으며 사실상 표준이 되었습니다. 때문에 DevOps 직무 뿐만 아니라 백엔드 개발 직군에서도 이에 대한 필요 기술로 요구하는 경우도 심심치 않게 보입니다. 
 
-![Desktop View](/assets/posts/stackOverFlowServey.png){: width="972" height="589" .w-75}
+![Desktop View](/assets/images/diveinto-virtualize-container-docker/stackOverFlowServey.png){: width="972" height="589" .w-75}
 _이미지 출처 : [StackOverFlow](https://survey.stackoverflow.co/2023/#most-popular-technologies-tools-tech)_
 
 스택오버플로우의 2023 Developer Servey 중 기타 툴에 대한 서베이 항목입니다. 작년에 비해 한단계 올라서면서 가장 많은 사용자가 사용하는 툴로 자리 잡았습니다.
@@ -36,13 +36,13 @@ _이미지 출처 : [StackOverFlow](https://survey.stackoverflow.co/2023/#most-p
 
  초기에는 한정된 컴퓨팅 리소스를 한계를 극복하는 것에 초점이 맞추어 기술이 발달하기 시작했습니다. 1960년대의 컴퓨팅 리소스는 현재에 비교하면 절망적일 정도로 열악했습니다. 컴퓨터의 물리적 크기도 집채만할뿐 아니라 지원할 수 있는 컴퓨팅의 성능도 매우 한정되어 있어, 주어진 제약조건 속에서 작업을 하기 위해서는 최대한 효율적으로 자원을 사용해야만 했습니다. 
 
-![Desktop View](/assets/posts/whatIsVirtualization1.png){: width="972" height="589" .w-75}_이미지 출처 : [Redhat 가상화의 이해](https://www.redhat.com/ko/topics/virtualization/what-is-virtualization)_
+![Desktop View](/assets/images/diveinto-virtualize-container-docker/whatIsVirtualization1.png){: width="972" height="589" .w-75}_이미지 출처 : [Redhat 가상화의 이해](https://www.redhat.com/ko/topics/virtualization/what-is-virtualization)_
 
  가상화 기술이 보편화되기 전에는 엔지니어가 하나의 OS에 의존하는 애플리케이션을 개발하여야 했습니다. 이런 개발 프로세스는 시간과 비용이 많이 소요되는 단점이 존재 했었습니다. 1964년 IBM에서 시분할 기술을 사용하는 메인프레임 시스템인 CP-40을 출시했습니다. 이를 통해 동시에 두 명 이상의 사람이 컴퓨터 리소스를 공유하여 사용할 수 있는 환경이 마련되었습니다. 그리고 이를 기반으로 얼마지나지 않아 최초의 하이퍼바이저가 탄생하여 하드웨어의 가상화를 제공하게 됩니다.
 
  1972년에 IBM은 System/370을 출시했습니다. 가상 메모리 지원 기능이 있는 시스템이었습니다. 이를 통해 가상화 기술은 상용화 단계로 나아가기 시작했습니다. 이 시기에는 하이퍼바이저가 포함된 가상 시스템들이 오픈소스 프로젝트와 되어 활발하게 개발되기 시작한 무렵이었습니다.
 
-![Desktop View](/assets/posts/whatIsVirtualization2.png){: width="972" height="589" .w-75}
+![Desktop View](/assets/images/diveinto-virtualize-container-docker/whatIsVirtualization2.png){: width="972" height="589" .w-75}
 _이미지 출처 : [Redhat 가상화의 이해](https://www.redhat.com/ko/topics/virtualization/what-is-virtualization)_
 
  1990~2000년대 들어서는 가상화 기술을 활용한 서버의 컴퓨팅 리소스를 효율적으로 사용할 수 있는 다양한 솔루션들이 탄생하기 시작했습니다. 인지도 높은 VMware의 워크스테이션 솔루션이 출시되었으며, 현 AWS EC2의 기반기술이 된 Xen 오픈 소스 솔루션이 2003년에 출시되었습니다. 이후엔 VM의 관리(오케스트레이션)와 자동화 배포를 도와주는 툴들의 개발과 함께 풍성한 생태계가 구성되기 시작했습니다.
@@ -72,7 +72,7 @@ _이미지 출처 : [Redhat 가상화의 이해](https://www.redhat.com/ko/topic
 
 2000~2010년대에 들어 컨테이너 기술도 본격적으로 발전했습니다. 이러한 컨테이너 기술의 발전은 가상머신 기술보다 훨씬 적은 오버헤드로 애플리케이션 개발 및 배포 프로세스를 획기적으로 개선하고자 하는 필요성과 욕구와 함께 성장했습니다. 
 
-![Desktop View](/assets/posts/containerHistory.png){: width="972" height="589" .w-75}_컨테이너 기술의 흐름_
+![Desktop View](/assets/images/diveinto-virtualize-container-docker/containerHistory.png){: width="972" height="589" .w-75}_컨테이너 기술의 흐름_
 
 - **FreeBSD Jails** 
   - 2000년 소규모 호스팅 업테에서 자사/고객 서비스를 분리하고 보안과 관리 용이성을 위해 FreeBSD Jail이 개발되었습니다. <u>FreeBSD Jails</u>  소위 "감옥"이라고 하는 여러 개의 독립적이고 작은 시스템으로 분할하고 각 시스템에 IP 주소를 할당할 수 있는 특징이 있었습니다.
@@ -120,7 +120,7 @@ _이미지 출처 : [Redhat 가상화의 이해](https://www.redhat.com/ko/topic
 
 하드웨어 리소스를 가상화하면 관리자가 물리 리소스를 풀링할 수 있으므로 하드웨어의 범용성을 높일 수 있습니다. 유지관리 비용이 많이 들지만 중요한 애플레이션을 지원하는 레거시 인프라는 가상화를 통해 사용을 최적화할 수 있다는 장점이 있습니다.
 
-![Desktop View](/assets/posts/virtualization.png){: width="972" height="589" }
+![Desktop View](/assets/images/diveinto-virtualize-container-docker/virtualization.png){: width="972" height="589" }
 _이미지 출처 : [VMware 'Virtualization Overview'](chrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/https://www.vmware.com/pdf/virtualization.pdf)_
 
 - 하나의 물리머신에서 복수의 시스템을 동시 운영할 수 있음
@@ -136,7 +136,7 @@ _이미지 출처 : [VMware 'Virtualization Overview'](chrome-extension://efaidn
 
  하이퍼바이저는 가상화 방법에 따라 분류됩니다. 
 
-![Desktop View](/assets/posts/hypervisor.png){: width="972" height="589" }
+![Desktop View](/assets/images/diveinto-virtualize-container-docker/hypervisor.png){: width="972" height="589" }
 _이미지 출처 : [[가상화] 하이퍼바이저와 가상화](https://suyeon96.tistory.com/52)_
 
 ||Type 1(Native/Bare Metal)|Type 2(Hosted)|
@@ -145,7 +145,7 @@ _이미지 출처 : [[가상화] 하이퍼바이저와 가상화](https://suyeon
 | 장점 | 별도의 OS가 없이 하드웨어에<br /> 바로 접근하므로, Type 2보다 오버헤드가 적음. |              가상의 하드웨어를 실행하므로, Host              |
 | 단점 |        하드웨어를 제어/관리할 컴퓨터나 콘솔이 필요함.        | 하드웨어와 하이퍼바이저 중간에 Host OS가 존재하기 <br /> 때문에 Type1에 비해 오버헤드가 큼. |
 
-![Desktop View](/assets/posts/HyperviseurType.svg.png){: width="972" height="589" .w-50}
+![Desktop View](/assets/images/diveinto-virtualize-container-docker/HyperviseurType.svg.png){: width="972" height="589" .w-50}
 _이미지 출처 : [위키피디아 하이퍼바이저](https://commons.wikimedia.org/wiki/File:Hyperviseur.svg)_
 
 ### 가상머신
@@ -200,7 +200,7 @@ _이미지 출처 : [위키피디아 하이퍼바이저](https://commons.wikimed
 
 프로세스를 격리 시켜주는 기술들이 만들어지면서 각각의 애플리케이션을 독립적인 환경에서 실행시킬 수 있게 되었습니다. 그로부터 몇 년후 이 기술들을 집약시켜 Linux 컨테이너 관리자의 최초의 구현체인 LXC(LinuX Container)가 탄생합니다.
 
-![Desktop View](/assets/posts/lcx.webp){: width="972" height="589" }
+![Desktop View](/assets/images/diveinto-virtualize-container-docker/lcx.webp){: width="972" height="589" }
 _이미지 출처 : [Oracle Linux의 LXC 이해](https://forums.oracle.com/ords/apexds/post/understanding-lxc-and-docker-containers-on-oracle-linux-7995)_
 
 그리고 LCX를 활용하여 세상에 탄생한 것이 바로 도커였습니다. 앞서 설명한 것처럼 도커 이전에도 컨테이너 기술(LCX)은 존재했습니다. 다만, 도커는 일반 사용자도 이를 잘 활용할 수 있도록, 계층화된 이미지와 간편한 CLI, 컨테이너 이미지 저장소 같은 기능들을 추가하여 선보였습니다.
@@ -221,7 +221,7 @@ _이미지 출처 : [Oracle Linux의 LXC 이해](https://forums.oracle.com/ords/
 
 ## 도커란? 
 
-![Desktop View](/assets/posts/01-primary-blue-docker-logo.png){: width="972" height="589" .w-75}
+![Desktop View](/assets/images/diveinto-virtualize-container-docker/01-primary-blue-docker-logo.png){: width="972" height="589" .w-75}
 _이미지 출처 : [도커](https://www.docker.com/company/newsroom/media-resources/)_
 
 컨테이너 기술을 사용하여 애플리케이션과 런타임 환경을 더 쉽게 만들고 실행하고 배포할 수 있도록 지원하는 도구입니다. 
@@ -292,22 +292,22 @@ _가상 머신과 도커 컨테이너_
 
 #### CPU
 
-![Desktop View](/assets/posts/CPUTest1.png){: width="972" height="589" .w-75}_최대 소수 연산 속도 비교_
+![Desktop View](/assets/images/diveinto-virtualize-container-docker/CPUTest1.png){: width="972" height="589" .w-75}_최대 소수 연산 속도 비교_
 
 CPU의 연산 성능을 비교하기 위해 최대 소수 연산에 필요한 시간을 측정한 테스트 입니다. 도커 컨테이너와 가상머신을 비교하였을때 작업을 수행하는데 있어 도커가 훨씬 적은 시간이 소요되는 것을 볼 수 있습니다. 이는 하이퍼바이저의 존재여부에 따른 결과로 보입니다.
 
-![Desktop View](/assets/posts/CPUTest2.png){: width="972" height="589" .w-75}_Zip 압축 속도 비교_
+![Desktop View](/assets/images/diveinto-virtualize-container-docker/CPUTest2.png){: width="972" height="589" .w-75}_Zip 압축 속도 비교_
 
 10GB의 파일 크기를 압축하는데 필요한 시간을 측정한 압축 속도 비교 결과입니다. 대량의 파일 압축을 수행할때, 도커 컨테이너의 성능이 가상 머신에 비해 훨씬 빠른 것으로 나타났습니다.
 
 #### Memory
 
-![Desktop View](/assets/posts/memoryTest.png){: width="972" height="589" .w-75}_메모리 성능 비교_
+![Desktop View](/assets/images/diveinto-virtualize-container-docker/memoryTest.png){: width="972" height="589" .w-75}_메모리 성능 비교_
 메모리 성능을 측정하는 데 필요한 4개의 하위 테스트(복사, 크기 조정, 추가, 트라이어드(추가 + 크기 조정 조합))로 이루어집니다. 데이터를 복사하고 크기를 늘리고, 조정하는 작업들의 성능을 측정하는 지표들에서 도커 컨테이너가 가상머신에 비해 압도적인 성능을 보여줍니다.
 
 #### Disk I/O
 
-![Desktop View](/assets/posts/diskIoTest.png){: width="972" height="589" .w-75}_Full screen width and center alignment_
+![Desktop View](/assets/images/diveinto-virtualize-container-docker/diskIoTest.png){: width="972" height="589" .w-75}_Full screen width and center alignment_
 하드디스크의 읽기/쓰기 성능을 측정하기 위해 레코드 크기 1MB, 파일크기 4GB를 기준으로 가상머신의 디스크 I/O 성능이 도커 컨테이너의 성능 대비 54% 이상 낮은 모습을 보여줍니다.
 
 ### 편의성

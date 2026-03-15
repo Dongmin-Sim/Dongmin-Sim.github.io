@@ -82,7 +82,7 @@ kpt 회고의 좋은점은 좋았던 부분은 계속 이어가고, 개선이 �
 
 #### Keep-2, 사람냄새나는 커뮤니티
 
-![Desktop View](/assets/posts/review/geultto/circle.png){: width="972" height="589" .w-50}_다양한 소모임_
+![Desktop View](/assets/images/geultto-end-9th/circle.png){: width="972" height="589" .w-50}_다양한 소모임_
 
 글또에는 굉장히 많은 소모임 활동들이 존재한다. 주로 접미사로 `-또` 를 많이 붙이는 경향이 있다 😄
 글 작성하는 것 외에도, 여러 소모임활동들을 둘러보기도 하고 참여도 해보면서 여러 사람들을 많이 만날 수 있었다. 또 만나다보면 내가 처음 도전해보는 분야들도 있고, 같이 어울리기도하면서 글또를 보다 사람냄새나는 커뮤니티로 느껴지게끔 하는 역할을 해준 것 같다.
@@ -92,7 +92,7 @@ kpt 회고의 좋은점은 좋았던 부분은 계속 이어가고, 개선이 �
 또 글또 안에서는 자유롭게 스터디나 프로젝트, 모임등을 열 수 있고 참여할 수 있다.
 꾸준히 참여했던 스터디는 `도쿠스터디`, `독서모임`, `클린코드-스터디` 였었다.
 
-![Desktop View](/assets/posts/review/geultto/backend.jpg){: width="972" height="589"}_백엔드 반상회 connectto_
+![Desktop View](/assets/images/geultto-end-9th/backend.jpg){: width="972" height="589"}_백엔드 반상회 connectto_
 
 소모임 뿐만 아니라 글또에는 각 분야별 모임인 빌리지가 존재한다. 데이터/AI 빌리지, 백엔드 빌리지, 프론트 빌리지 그리고 각 빌리지마다 반상회를 열어 발표와 여러 네트워크를 진행한다.
 나느 총 2번의 반상회를 참여했었는데, 첫번째는 백엔드, 두번때는 프론트엔드 반상회에 참여했었다.
@@ -182,7 +182,7 @@ kpt 회고의 좋은점은 좋았던 부분은 계속 이어가고, 개선이 �
 
 마지막으로 성윤님의 글또 종료 공지로 마무리 지으려고 한다. OT 때도 성윤님이 해주신 말들이 참 마음에 와닿았는데, 그 여운이 마지막까지 이어지는 것 같다.
 
-![Desktop View](/assets/posts/review/geultto/last-announcement.png){: width="972" height="589"}_마지막 공지_
+![Desktop View](/assets/images/geultto-end-9th/last-announcement.png){: width="972" height="589"}_마지막 공지_
 
 마지막 문장이 참 와닿았다.
 <br>

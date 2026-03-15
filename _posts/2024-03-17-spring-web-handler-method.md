@@ -39,7 +39,6 @@ Spring 에서 사용하는 HandlerMethod 에 대해서 알아보려고 한다.
 
 그러면 서버는 어떻게 요청들을 처리할까? 
 
-![Desktop View](/assets/posts/이미지파일.png){: width="972" height="589" .w-50 }_이미지 설명_
 
 - 여러 API 들을 만들어놓고 한 곳에서 모두 처리할까?
 - 아니면 API마다 이것을 담당하는 "**무언가**"을 **매핑**해서 처리할까?
@@ -62,7 +61,7 @@ Spring 에서 사용하는 HandlerMethod 에 대해서 알아보려고 한다.
 
 
 
-![Pasted image 20240318170752](/assets/posts/Pasted image 20240318170752.png)
+<!-- ![Pasted image 20240318170752](/assets/posts/Pasted image 20240318170752.png) -->
 
 
 
@@ -119,7 +118,7 @@ public String getBoard(
 spring 에서는 다음 어노테이션들로 핸들러 메서드와 매핑이 가능 + class(Controller)와 Method에 다 사용가능 
 
 일종의 정보 + filter 역할을 겸함. 
-![Pasted image 20240318172114](/assets/posts/Pasted image 20240318172114.png)
+<!-- ![Pasted image 20240318172114](/assets/posts/Pasted image 20240318172114.png) -->
 - 정보
 	- name : 뷰 템플릿에서 식별할 때 쓰는 이름, 템플릿 엔진을 사용하지 않고 뷰를 구현하면 그다지 사용할 일이 적음. 기본적으로 내부 생성해줌. (컨트롤러의 대분자 + # + 메서드 이름)
 	- value, path : URI (기본 애트리뷰트, 바로 값을 입력해도됨. )

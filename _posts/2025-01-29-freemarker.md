@@ -34,7 +34,7 @@ tags: []
 - Miscellaneous : Node, Markup output
 
 
-![Pasted image 20240504061902](/assets/posts/Pasted image 20240504061902.png)
+<!-- ![Pasted image 20240504061902](/assets/posts/Pasted image 20240504061902.png) -->
 
 
 

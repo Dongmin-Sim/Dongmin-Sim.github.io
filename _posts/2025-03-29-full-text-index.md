@@ -97,7 +97,7 @@ limit 0,10;
 ```
 
 
-![Desktop View](/assets/posts/project/devtribe/full-text-index-no-order-by.png){: width="1072" height="589" }
+![Desktop View](/assets/images/full-text-index/full-text-index-no-order-by.png){: width="1072" height="589" }
 
 그런데 만약, 이렇게 조회된 결과를 `id` 순으로 정렬해야해서 다음과 같이 `order by` 절을 명시적으로 사용하게 되면, 유사도를 기준으로 정렬된 관련도 정렬은 무시되고, `id` 순으로 정렬되게 됩니다.
 
@@ -110,7 +110,7 @@ order by id desc
 limit 0,10;
 ```
 
-![Desktop View](/assets/posts/project/devtribe/full-text-index-order-by.png){: width="1072" height="589" }
+![Desktop View](/assets/images/full-text-index/full-text-index-order-by.png){: width="1072" height="589" }
 
 조회 결과로 나온 행들은 기존에 의도하던 전문검색의 결과와는 많이 관련성이 낮은 건들이 조회될 가능성이 매우 높습니다. 때문에 FullText index를 사용하고자 할때는 `order by` 절의 유무에 따라 조회 결과가 달라질 수 있음을 유념해야합니다.
 

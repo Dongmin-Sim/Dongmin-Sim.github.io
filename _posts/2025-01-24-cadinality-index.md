@@ -36,8 +36,8 @@ order by count desc
 - 의사 ID 1을 가진, 퇴원 일자별 환자 수
 
 데이터 분포
-![Pasted image 20240621200148](/assets/posts/Pasted image 20240621200148.png)
-![Pasted image 20240621201530](/assets/posts/Pasted image 20240621201530.png)
+<!-- ![Pasted image 20240621200148](/assets/posts/Pasted image 20240621200148.png) -->
+<!-- ![Pasted image 20240621201530](/assets/posts/Pasted image 20240621201530.png) -->
 
 Index : doctorId, discharge, complex(doctorId, dischargeDate)
 
@@ -78,9 +78,9 @@ id,select_type,table,partitions,type,possible_keys,key,key_len,ref,rows,filtered
 --- 
 데이터 분포
 
-![Pasted image 20240621202527](/assets/posts/Pasted image 20240621202527.png)
+<!-- ![Pasted image 20240621202527](/assets/posts/Pasted image 20240621202527.png) -->
 
-![Pasted image 20240621202541](/assets/posts/Pasted image 20240621202541.png)
+<!-- ![Pasted image 20240621202541](/assets/posts/Pasted image 20240621202541.png) -->
 
 
 
@@ -121,9 +121,9 @@ id,select_type,table,partitions,type,possible_keys,key,key_len,ref,rows,filtered
 ---
 데이터 분포
 
-![Pasted image 20240621204255](/assets/posts/Pasted image 20240621204255.png)
+<!-- ![Pasted image 20240621204255](/assets/posts/Pasted image 20240621204255.png) -->
 
-![Pasted image 20240621202541](/assets/posts/Pasted image 20240621202541.png)
+<!-- ![Pasted image 20240621202541](/assets/posts/Pasted image 20240621202541.png) -->
 
 
 
@@ -163,7 +163,7 @@ id,select_type,table,partitions,type,possible_keys,key,key_len,ref,rows,filtered
 ```
 
 ---
-![Pasted image 20240621205805](/assets/posts/Pasted image 20240621205805.png)
+<!-- ![Pasted image 20240621205805](/assets/posts/Pasted image 20240621205805.png) -->
 
 
 인덱스 무 - 실행 계획
@@ -196,7 +196,7 @@ id,select_type,table,partitions,type,possible_keys,key,key_len,ref,rows,filtered
 
 ---
 
-![Pasted image 20240621210845](/assets/posts/Pasted image 20240621210845.png)
+<!-- ![Pasted image 20240621210845](/assets/posts/Pasted image 20240621210845.png) -->
 
 
 인덱스 무 - 실행 계획

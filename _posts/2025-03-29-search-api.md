@@ -76,7 +76,7 @@ Like 패턴 검색으로는 너무 느림.
 
 그런데 생각해보니 키워드 검색을 하는 경우에 사용자가 가장 기대하는 결과 값은 내가 입력한 값과의 연관성이 높은 글일 것. 
 
-![Pasted image 20250704164701](/assets/posts/Pasted image 20250704164701.png)
+<!-- ![Pasted image 20250704164701](/assets/posts/Pasted image 20250704164701.png) -->
 
 
 

@@ -9,13 +9,13 @@ tags: []
 다가오는 연말.. 글또에서 백엔드-인프라 반상회를 열렸다. 어쩌면,, 글또의 마지막 반상회가 될지도 몰라 신청했다.
 백엔드-인프라 반상회는 12월 5일 목요일 우아한 형제들, 우테코 교육장에서 진행됐다. 지난 9기때 반상회 준비위하면서 처음 만났던 장소였어서 반가웠다.
 
-![Desktop View](/assets/posts/review/geultto/geultto-backend-infra-seminar-24/seminar-entrance.jpeg){: width="972" height="589" .w-50}_우테코 교육장_
+![Desktop View](/assets/images/geultto-backend-infra-seminar-24/seminar-entrance.jpeg){: width="972" height="589" .w-50}_우테코 교육장_
 
 지난 9기에는 운영진 분들을 도와 반상회 준비위원회로 참여했었었는데 10기에서는 온전히 참여자로 글또를 즐기고 싶었다. 참여자로 반상회를 들어가니 또 다른 시선이어서 재밌었다. 마치 걸어왔던 길을 거꾸로도 가보는 것 같은 기분이랄까. 하나하나 준비해주시느라 고생많으셨을 거라 생각되어서 시간내주셔서 준비해주셨음에 감사했다.
 
 ## 🎤 발표세션
 
-![Desktop View](/assets/posts/review/geultto/geultto-backend-infra-seminar-24/seminar-start.jpeg){: width="972" height="589" .w-75}_글또 대장 성윤님👍_
+![Desktop View](/assets/images/geultto-backend-infra-seminar-24/seminar-start.jpeg){: width="972" height="589" .w-75}_글또 대장 성윤님👍_
 
 글또 10기 백엔드-인프라 반상회의 발표세션은 성윤님의 인사말을 시작으로 총 세 분의 연사분들의 발표로 진행되었다.
 
@@ -63,7 +63,7 @@ tags: []
 
 발표가 마무리 된 이후에는 반상회 참여인원들과 각자 조를 이뤄 네트워크를 가졌다. 글또에서 슬랙으로 자주 뵙던 분들도 계셔서 속으로 반가웠었다. 운영진 분들께서 비슷한 도메인과 관심있는 주제로 여러 글또 분들을 묶어주신 것 같았다. 간단한 자기소개와 함께 현재 관심있는 분야와 글또이야기를 나눴다. 언제나 네트워크에서 아쉬운 것은 서로 이야기할 수 있는 시간이 많이 적었다는 것,, 다음 만남을 약속하면서 글또의 마지막 백엔드-인프라 반상회를 마무리했다.
 
-![Desktop View](/assets/posts/review/geultto/geultto-backend-infra-seminar-24/seminar-gift.jpeg){: width="972" height="589" .w-50}_연말 꽃단장한 글또와 훈훈한 사은품까지_
+![Desktop View](/assets/images/geultto-backend-infra-seminar-24/seminar-gift.jpeg){: width="972" height="589" .w-50}_연말 꽃단장한 글또와 훈훈한 사은품까지_
 
 ## 반상회를 참여하고 나서
 

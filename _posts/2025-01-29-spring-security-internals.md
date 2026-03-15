@@ -5,7 +5,7 @@ date: 2025-01-29
 tags: []
 ---
 
- ![Pasted image 20240806142255](/assets/posts/Pasted image 20240806142255.png)
+<!--  ![Pasted image 20240806142255](/assets/posts/Pasted image 20240806142255.png) -->
 
 - SecurityContextHolder
 	- SecurityContext를 제공하는 static 메소드(getContext)를 지원합니다. 

@@ -354,7 +354,7 @@ public class Evnet {
 }
 ```
 
-![Pasted image 20240501012948](/assets/posts/Pasted image 20240501012948.png)
+<!-- ![Pasted image 20240501012948](/assets/posts/Pasted image 20240501012948.png) -->
 
 ---
 

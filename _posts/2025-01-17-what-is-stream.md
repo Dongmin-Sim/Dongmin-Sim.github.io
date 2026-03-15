@@ -81,7 +81,7 @@ Stream은 기본적으로 데이터 소스를 필요로 한다.
 그리고 이 2가지를 결합하여서 **스트림 파이프 라인**을 형성한다.
 그림으로 나타내면 다음과 같다. 
 
-![Desktop View](/assets/posts/language/java/2025-01-19-what-is-stream/stream-structure.png){: width="972" height="589"}_스트림 구조_
+![Desktop View](/assets/images/what-is-stream/stream-structure.png){: width="972" height="589"}_스트림 구조_
 
 
 ### 데이터 소스 (Data Source)

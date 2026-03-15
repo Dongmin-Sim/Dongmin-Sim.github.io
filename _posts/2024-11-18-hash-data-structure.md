@@ -30,7 +30,7 @@ tags: []
 ## 🛄 **물품 보관소**
 
 
-![Desktop View](/assets/posts/datastructure/hash/hash-example.png){: width="972" height="589" .w-80}_물품보관소_
+![Desktop View](/assets/images/hash-data-structure/hash-example.png){: width="972" height="589" .w-80}_물품보관소_
 
 물품을 대신 보관해주는 물폼보관소를 통해 해시 자료구조의 전체적인 구성을 이해해보자.    
 이 물품보관소는 다음과 같은 단계로 물품을 보관하고, 다시 돌려준다. 
@@ -101,7 +101,7 @@ tags: []
 왜 이런일이 발생할까? 해시함수가 고장나거나 잘못된 것이 아닐까?
 
 
-![Desktop View](/assets/posts/datastructure/hash/collision.png){: width="972" height="589"}_해시 충돌_
+![Desktop View](/assets/images/hash-data-structure/collision.png){: width="972" height="589"}_해시 충돌_
 
 발생원인은 "고정 크기의 출력값"에 있다.
 해시 충돌은 해시 테이블의 크기가 유한하기 때문에 발생하는 문제이다.
@@ -125,7 +125,7 @@ tags: []
 충돌이 발생한 데이터를 같은 버킷안에 연결 리스트 형태로 구현되어 데이터를 저장한다.
 실제 Java의 HashMap에서는 이 방식을 통해서 해시 충돌을 해결한다.
 
-![Desktop View](/assets/posts/datastructure/hash/chaining.png){: width="972" height="589"}_체이닝 예시_
+![Desktop View](/assets/images/hash-data-structure/chaining.png){: width="972" height="589"}_체이닝 예시_
 
 이렇게 되면, 해시 충돌이 발생하더라도, 동일 버킷에 데이터를 연결시켜 저장할 수 있다.
 
@@ -223,7 +223,7 @@ Java 8 버전부터는 `HashMap`은 **해시 충돌이 많이 발생할 경우**
 
 **1. 첫 번째 데이터 삽입**
 
-![Desktop View](/assets/posts/datastructure/hash/put-first-data.png){: width="972" height="589" .w-75}_데이터 삽입 시 메서드 호출과정_
+![Desktop View](/assets/images/hash-data-structure/put-first-data.png){: width="972" height="589" .w-75}_데이터 삽입 시 메서드 호출과정_
 
 `HashMap` 에 `put()` 을 통해 데이터를 삽입하면 내부적으로 `putVal()` 메서드를 호출하는 데 이때 외부에서 받은 `key` 값을 내부 `hash()` 함수를 통해 해시 값으로 변환해서 `putVal()` 의 인자로 넘겨주도록 설계되어 있다.
 
@@ -250,7 +250,7 @@ static final int hash(Object key) {
 
 그림으로 보자면 다음과 같은 구조로 표현해볼 수 있다. 
 
-![Desktop View](/assets/posts/datastructure/hash/collision-resolution.png){: width="972" height="589"}_충돌 해결 과정: 체이닝 방식_
+![Desktop View](/assets/images/hash-data-structure/collision-resolution.png){: width="972" height="589"}_충돌 해결 과정: 체이닝 방식_
 
 위 그림에서 표현한 실제 데이터의 삽입과정을 `putVal()` 메서드에서 담당한다.   
 `putVal()` 메서드의 흐름을 요약해보면 다음과 같다. 

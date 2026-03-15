@@ -50,7 +50,7 @@ feature/a에서 분기된 브랜치 feature/b
 feature/a가 Main에 머지되고, 
 feature/b를 main에 rebase 이후에 
 feature/b를 -> main에 three-way merge할 경우  다음과 같은 그래프로 관리 가능 
-![Pasted image 20250207171110](/assets/posts/Pasted image 20250207171110.png)
+<!-- ![Pasted image 20250207171110](/assets/posts/Pasted image 20250207171110.png) -->
 
 pr에서 일반 머지 
 

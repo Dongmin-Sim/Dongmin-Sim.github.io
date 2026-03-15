@@ -65,7 +65,7 @@ Martin Fowler의 블로그 글인 [Unit Test](https://martinfowler.com/bliki/Uni
 
 이 테스트에서 검증하려고 하는 주요 관심사는 4번이다. 하지만 4번을 수행하기 위해 앞서 1,2,3 그리고 5번의 과정이 동반된다. 이는 테스트 하고자 하는 기능이 1,2,3,5번 과정에 의존적이라는 말과도 동일하다.
 
-![Desktop View](/assets/posts/test/what-is-test-double/sociable-tests.png){: width="972" height="589" .w-50}_Sociable Tests 예시_
+![Desktop View](/assets/images/what-is-test-double/sociable-tests.png){: width="972" height="589" .w-50}_Sociable Tests 예시_
 이러한 테스트를 **Sociable Tests** 라고 저자는 구분한다.
 
 하지만, 만일 1번이나 2번 과정에서 어떠한 연유 때문에 테스트가 실패하게 된다면, **조회된 데이터를 바탕으로 *평균 구매 금액을 계산*한다.** 라는 테스트의 주된 관심사를 확인하기란 여간 쉬운일이 아닐 것이다.
@@ -73,7 +73,7 @@ Martin Fowler의 블로그 글인 [Unit Test](https://martinfowler.com/bliki/Uni
 때문에 이는 독립적 테스트로 볼 수 없다. 변수들간의 **의존관계**가 생기기 때문에 이는 의존적 테스트로 봐야한다.
 
 만약에 테스트 대상을 둘러싼 모든 변수들을 통제할 수 있는 독립적 테스트를 구성할 수 있다면, 어떨까?
-![Desktop View](/assets/posts/test/what-is-test-double/solitary-tests.png){: width="972" height="589" .w-50}_Solitary tests 예시_
+![Desktop View](/assets/images/what-is-test-double/solitary-tests.png){: width="972" height="589" .w-50}_Solitary tests 예시_
 
 이러한 테스트를 **Solitary Test**라고 구분한다.
 대신에 앞선 1, 2, 3, 5번 과정을 대신 해줄 **어떤 무언가**가 필요하다.
@@ -142,7 +142,7 @@ public class WeatherServiceImpl implements WeatherService {
 노트북을 서울지역으로 들고 나가서, 우박이 내릴때 테스트 실행 버튼을 눌러야할까? 설사 가능하다해도 테스트 비용이 만만치 않을것으로 예상된다. 만약 우박이 아니라 천둥번개, 돌풍과 같은 다른 상황은 또 어떻게 테스트할까? 또 하필 그때 네트워크가 불안정하다면?
 
 이때 테스트 더블을 사용해서 실제 위치나 날씨 정보에 대한 외부 의존성을 **대신**해줄 수 있다.
-![Desktop View](/assets/posts/test/what-is-test-double/stub-example.png){: width="972" height="589"}_Stub 예시_
+![Desktop View](/assets/images/what-is-test-double/stub-example.png){: width="972" height="589"}_Stub 예시_
 
 실제 외부 서비스와 통신하는 부분을 대신해서 서울 지역에 대한 위치 정보를 받아오는 부분을 별도의 내부 해시맵을 가진 **별도의 클래스**를 구현함으로써 대체가 가능하다.
 이 클래스에서는 지정된 `input`에 대해 예상되는 정적인 `output`을 내보내주기만 하면 된다.
@@ -213,7 +213,7 @@ public class LocationAPIServiceStub implements LocationAPIService {
 `Mock`은 실제 객체의 동작을 모방하는 객체(Mock Object)를 말한다.
 
 위에서 Stub은 실제 객체를 구현하여 동작방식이 미리 구현된 메소드로 우회하는 방식이라면, Mock은 실제 객체를 본떠 마치 메소드의 입력과 출력에 내가 원하는 모듈을 끼워넣는 것 같은 느낌이다.
-![Desktop View](/assets/posts/test/what-is-test-double/mock-example.png){: width="972" height="589"}_Mock 예시_
+![Desktop View](/assets/images/what-is-test-double/mock-example.png){: width="972" height="589"}_Mock 예시_
 
 위의 그림으로 표시한 것처럼 Mock 객체의 메소드의 입력과 출력을 내가 원하는대로 구성할 수 있다. 그리고 실제로 이 메소드가 호출되었는지 안되었는지 확인할 수 도 있다. 이를 코드로 확인해보자.
 
@@ -373,7 +373,7 @@ class Together {
 
 > 두 남녀가 헤어지기전 중요한 대화를 나누고 있다. 두 남녀 뒷편으로 기차가 지나가고 있다.
 
-![Desktop View](/assets/posts/test/what-is-test-double/movie-example.jpeg){: width="972" height="589" .w-50}_예시_
+![Desktop View](/assets/images/what-is-test-double/movie-example.jpeg){: width="972" height="589" .w-50}_예시_
 
 여기서 감독에게 중요한 것은 해당 장면의 대사와 배우들의 연기가 장면에 적절한지, 어울리는지를 검증하는 것일 것이다.  
 연출자가 원하는 그림이 나오는지 확인하고 싶을 뿐, 배경은 비교적 덜 중요하다.

@@ -42,7 +42,7 @@ tags: []
 
 테스트 구성도는 다음과 같습니다.
 
-![Desktop View](/assets/posts/project/devtribe/test-system-architecture.png){: width="1072" height="589" }_테스트 구성도_
+![Desktop View](/assets/images/performance-test-2/test-system-architecture.png){: width="1072" height="589" }_테스트 구성도_
 
 현재 구조는 애플리케이션 단일 서버와 데이터베이스로 연결되어있는 구조이며, nGrinder를 통해서 부하를 시스템에 가할 예정입니다. 
 
@@ -124,7 +124,7 @@ Phase-2의 **피크 테스트**에서 목표했던 TPS와 응답시간을 충족
 왜 이런 테스트 결과가 나왔는지 테스트 중 기록된 모니터링 내용을 보면서 원인을 파악해보겠습니다.
 첫번째로 할 수 있는 것은 **현재 시스템의 병목지점**을 찾는 것. 
 
-![Desktop View](assets/posts/project/devtribe/phase-2-cpu-usage.png){: width="1072" height="589" }_CPU 사용률_
+![Desktop View](/assets/images/performance-test-2/phase-2-cpu-usage.png){: width="1072" height="589" }_CPU 사용률_
 
 먼저 서버의 상태정보부터 확인해봅니다. 좌측은 애플리케이션 서버의 `CPU 사용률`을 나타낸 그래프이고, 우측은 DB 서버의 `CPU 사용률`을 나타낸 그래프입니다. 제일 먼저 눈에 띄는 점은 Application 서버와 DB서버의 `CPU 사용률`에서 큰 차이가 발생했다는 점이었습니다. 애플리케이션 서버의 `CPU 사용률`은 꾸준하게 20% 아래를 유지하고 있지만, DB 서버의 경우 꽤 높은 `CPU 사용률`을 보이고 있습니다.
 
@@ -134,12 +134,12 @@ CPU 사용률이 100%라는 것은 CPU가 쉴새없이 일을 처리하고 있�
 
 만일 DB 서버에서 병목이 발생했다면, 사용 가능한 DB 커넥션풀도 모두 고갈되었을 확률이 높습니다. 
 
-![Desktop View](assets/posts/project/devtribe/phase-2-connection-pool.png){: width="1072" height="589" }_DB 커넥션 풀_
+![Desktop View](/assets/images/performance-test-2/phase-2-connection-pool.png){: width="1072" height="589" }_DB 커넥션 풀_
 
 예상했던 대로 이전에도 간간히 MAX 커넥션 사용률을 보이다, 특정 시점에 DB 커넥션풀을 모두 소진하고, Pending 요청수도 계속 증가하면서 지속되는 것을 확인할 수 있었습니다. `Pending`은 커넥션 풀에서 DB 커넥션을 획득하려고 대기 중인 요청의 수를 나타냅니다. 
 
 그와 비슷한 시기에, 존재하던 톰캣 스레드도 모두 busy 상태로 block이 되면서 Application 서버에서도 더 이상의 추가적인 요청 처리가 어려운 상태로 대기 중이었을 가능성이 높습니다. 
-![Desktop View](assets/posts/project/devtribe/phase-2-tomcat-threads.png){: width="1072" height="589" }_DB 커넥션 풀_
+![Desktop View](/assets/images/performance-test-2/phase-2-tomcat-threads.png){: width="1072" height="589" }_DB 커넥션 풀_
 
 
 그렇다면 예상되는 시나리오는 다음과 같습니다.
@@ -148,7 +148,7 @@ CPU 사용률이 100%라는 것은 CPU가 쉴새없이 일을 처리하고 있�
 - 애플리케이션의 해당 요청 스레드가 응답을 기다리며 `waiting` 상태
 - TPS 하락 (처리 완료까지 시간이 길어지므로 초당 완료 수가 줄어듦)
 
-![Pasted image 20250715005606](/assets/posts/project/devtribe/Pasted image 20250715005606.png)
+![Pasted image 20250715005606](/assets/images/performance-test-2/Pasted image 20250715005606.png)
 
 예상대로 DB 서버의 CPU 사용률이 100%를 사용하고 있을 지점에 TPS가 급격하게 하락하면서, Latency 지표들도 급격하게 올라갔음을 알 수 있습니다. 
 

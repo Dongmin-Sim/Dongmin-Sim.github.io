@@ -27,7 +27,7 @@ tags:
 
 > **nga za‘u ftu peseng?**
 
-![Desktop View](/assets/meme/same-picture.jpg){: width="972" height="589" .w-50}_???_
+<!-- ![Desktop View](/assets/meme/same-picture.jpg){: width="972" height="589" .w-50}_???_ -->
 
 어느날 외계인이 지구에 도착해 다음과 같은 말을 뱉었을 때, 우리는 이를 이해할 수 없다. 기껏해야 비슷한 발음의 단어를 찾아보겠지만, 그것은 그들이 의도하는 의미와는 매우 다를 확률이 높다.
 
@@ -59,7 +59,7 @@ tags:
 
 앞서 설명한 실행 가능한 소프트웨어가 되려면 소스코드가 단순히 번역 뿐 아니라 코드들 간의 서로 의존하고 있는 순서가 올바른지, 해당 소스코드가 에러를 발생시키지는 않는지 이를 확인하고 테스트하는 과정도 필요하다. 그렇지 않으면 이는 실행 가능한 소프트웨어가 될 수 없기 때문이다.
 
-![Desktop View](/assets/meme/right.jpg){: width="972" height="589" .w-50}_좋은 대화였어_
+<!-- ![Desktop View](/assets/meme/right.jpg){: width="972" height="589" .w-50}_좋은 대화였어_ -->
 
 만일 외계인이 "당신들은 위험한 존재입니까?" 라는 질문을 뱉었는데, 단순한 단어(위험)의 번역과 나열로 잘못 오해하고 그들에게 위험하고 무례한 대답을 해버린다면 어쩌면 친구가 되었을지도 모르는 외계인은 거대한 우주선으로 올라가 정수리에 무자비한 빔을 때려버리는 극단적인 상황이 벌어질 수 있다.
 
@@ -110,7 +110,7 @@ DSL이란 ?
 
 #### 성능
 
-![Desktop View](/assets/posts/gradle-performance.png){: width="972" height="589" .w-50}_gradle, maven 성능 비교 (이미지 출처 : [maven vs gradle](https://gradle.org/maven-vs-gradle/))_
+![Desktop View](/assets/images/what-is-gradle/gradle-performance.png){: width="972" height="589" .w-50}_gradle, maven 성능 비교 (이미지 출처 : [maven vs gradle](https://gradle.org/maven-vs-gradle/))_
 
 - Gradle은 증분 빌드, 빌드 캐싱, 병렬 실행과 같은 최적화의 이점을 활용하면서 신뢰할 수 있는 결과를 생성.
   - 속도 이점
@@ -164,7 +164,7 @@ Gradle은 크게 5가지의 개념을 가지고 있다. 핵심 컨셉과 개념�
 
 다음과 같이 빌드 스크립트에 <u>직접 자신만의 task</u>를 정의할 수 있다. 다음 task는 `print say hello`라는 이름의 task로 콘솔창에 프린트하는 간단한 기능을 가진 task이다. 이때 스크립트에 task를 정의하게 되는데 이때 사용하는 언어가 위에서 언급한 groovy 문법이다.
 
-![Desktop View](/assets/posts/gradle-custom-task.png){: width="972" height="589"}_custom task_
+![Desktop View](/assets/images/what-is-gradle/gradle-custom-task.png){: width="972" height="589"}_custom task_
 
 또 다른 예시는 <u>자바 플러그인</u> 내에 속해 있는 Task들중 `jar`이라는 task가 존재하는데, `jar` task는 'main' 소스 디렉토리에 연결된 클래스와 리소스를 기반으로 JAR 파일(Java 배포용 패키지 파일)로 어셈블하는 역할을 한다.
 
@@ -388,7 +388,7 @@ Gradle은 빌드전에 Task 그래프를 그리는데, 빌드에 속하는 모�
 
 목표하는 타겟 구조는 다음과 같다.
 
-![Desktop View](/assets/posts/gradle-multi-module.png){: width="972" height="589"}
+![Desktop View](/assets/images/what-is-gradle/gradle-multi-module.png){: width="972" height="589"}
 
 예시 상황은 다음과 같다. 가상의 스프링 프로젝트를 생성하려고 하는데 별도의 2가지 모듈로 분리하여 관리하고자 한다.
 

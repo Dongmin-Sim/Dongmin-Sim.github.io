@@ -14,7 +14,7 @@ tags:
 
 실시간으로 입력되는 센서의 데이터를 보여주는 뷰어 프로그램을 만드는 요구사항이 있었습니다. 분석해보니 프로그램에 필요한 주요한 기능은 센서와 통신하는 부분, 각 센서들의 health check 기능, 데이터를 받아서 처리하는 기능, 화면 뷰에 띄워주는 기능들이 요구 되었습니다. 처음에 이를 모두 직렬적으로 짜다보니 센서의 통신이 문제가 생기면 프로그램이 모두 멈춰버리거나 연산이 많이 필요한 부분에서 병목이 걸려 응답성이 매우 불편해져버리는 단점이 있었습니다. 그래서 당시에 이를 병렬적으로 처리하고 싶은 마음에 겁도없이(?) 통신과, 처리, 뷰를 각각 따로 처리하는 로직을 이것저것 뒤져가며 구현했던것 같습니다.
 
-![Desktop View](/assets/meme/dontTouchIt.png){: width="972" height="589" .w-50}_물론 이러면 안되겠죠..?_
+<!-- ![Desktop View](/assets/meme/dontTouchIt.png){: width="972" height="589" .w-50}_물론 이러면 안되겠죠..?_ -->
 
 당시에는 급한 마음도 있었고, 일단 구현이 먼저였던 터라 멀티스레드에 대해서 깊게 공부하고 적용해볼 시간이 적었었는데, 감사하게도 글또 과정에서 유데미와 협업하는 챌린지를 열어주셨습니다. 덕분에 유데미에 제공하는 강의 수강 기회를 받을 수 있었고 저는 Java 멀티스레딩 관련된 강의를 선택했습니다. 이런 기회를 만들어주신 글또 운영진, 유데미에게 너무 감사하다는 인사를 드리고 싶습니다.
 
@@ -47,7 +47,7 @@ tags:
 위에서 제가 경험했던 프로그램의 예시를 들어서 설명해보려고 합니다.  
 뷰어 프로그램은 다음와 같은 순서를 가지고 실행이 됩니다.
 
-![Desktop View](/assets/posts/singleThread.png){: width="972" height="589"}_싱글스레드_
+![Desktop View](/assets/images/java-multithreading-1/singleThread.png){: width="972" height="589"}_싱글스레드_
 
 저는 개인적으로 "**흐름**"이라는 표현으로 이해하는 것이 더 편했습니다. 위의 표시된 단계들은 **"데이터를 눈으로 확인하기"**위한 프로그램의 목표를 수행하기 위해 필요한 일련의 **작업**들입니다. 위의 예시는 이 프로그램의 목표를 달성하기 위한 (1, 2, 3)단계가 프로그램 관점에서는 하나의 큰 작업 단위가 되는 것이지요. 프로그램은 이를 반복 수행합니다. 시작지점부터 끝지점까지의 실행 흐름이라고 볼 수 있습니다.
 
@@ -55,7 +55,7 @@ tags:
 
 그리고 프로그램이 메모리에 올라가 프로세스에서 가장 먼저 작업을 실행하는 스레드를 "메인스레드" 라고 부릅니다. 이렇게 하나의 스레드만을 가지고 한번에 한작업을 수행하는 방식을 <u>싱글스레드(Single Thread)</u>라고 합니다. 굉장히 직관적인 이름입니다.
 
-![Desktop View](/assets/posts/multiThread.png){: width="972" height="589"}_멀티스레드_
+![Desktop View](/assets/images/java-multithreading-1/multiThread.png){: width="972" height="589"}_멀티스레드_
 
 멀티스레드는 더 간단합니다. 프로세스에 스레드가 여러개 있으면 <u>멀티스레드</u>입니다. 프로그램의 작업 흐름이 하나에서 두개가 되거나 이보다 더 많아지는 것입니다.
 
@@ -71,7 +71,7 @@ tags:
 
 다음과 같은 경험들이 떠오를 수 있습니다.
 
-![Desktop View](/assets/posts/badResponsiveness.png){: width="972" height="589"}_좋지 않은 응답성의 예시_
+![Desktop View](/assets/images/java-multithreading-1/badResponsiveness.png){: width="972" height="589"}_좋지 않은 응답성의 예시_
 
 - 고객 서비스를 받기 위해 하루 반나절 기다리는 일
 - 메시지를 답장받는데 걸리는 시간이 늦어질때
@@ -79,7 +79,7 @@ tags:
 
 이러한 좋지 않은 응답성은 프로덕트나, 애플리케이션의 고객들에게 불편한 경험을 심어줄수 있습니다.
 
-![Desktop View](/assets/posts/responsivenessResearch.png){: width="972" height="589"}_Google SOASTA Research 2017_
+![Desktop View](/assets/images/java-multithreading-1/responsivenessResearch.png){: width="972" height="589"}_Google SOASTA Research 2017_
 
 실제로 이와 관련한 [구글 리서치 통계](https://www.thinkwithgoogle.com/marketing-strategies/app-and-mobile/page-load-time-statistics/)가 있습니다. 페이지의 로딩시간이 1초에서 <u>3초</u>로 길어질 경우 <u>이탈률이 32% 증가</u>한다는 통계입니다. 고객 이탈이 늘어날 경우 해당 애플리케이션의 수익 발생 가능성이 줄어들고 손해로 이어질 가능성이 높기 때문에 좋지 않은 응답성은 비지니스에 치명적입니다.
 
@@ -92,7 +92,7 @@ tags:
 
 여러 개의 스레드로 빠른 멀티태스킹을 구현하면 마치 여러 개의 작업이 동시에 실행되는 것과 같은 효과로 보여집니다. 이러한 멀티태스킹을 동시성이라고 합니다. 다음 그림처럼 매우 빠르게(사람이 인지하지 못하는 수준) 조금씩 번갈아가며 작업을 처리하는 것을 의미합니다.
 
-![Desktop View](/assets/posts/concurrencyParallelism.png){: width="972" height="589" .w-50}_동시성과 병렬성 차이 예시_
+![Desktop View](/assets/images/java-multithreading-1/concurrencyParallelism.png){: width="972" height="589" .w-50}_동시성과 병렬성 차이 예시_
 
 여기서 설명하는 동시성은 병렬성과는 다릅니다. 병렬성을 설명하려는 것은 아니지만, 만일 아래 그림처럼 멀티코어로 여러개의 작업 처리한다면 완전하게 동시에 실행할 수 있을겁니다.
 
@@ -101,7 +101,7 @@ tags:
 
 이러한 동시성을 활용하여 멀티스레딩이 **성능에 미치는 영향**을 다음과 같이 정리해볼 수 있습니다.
 
-![Desktop View](/assets/posts/multiThreadConcurrency.png){: width="972" height="589"}_동시 처리_
+![Desktop View](/assets/images/java-multithreading-1/multiThreadConcurrency.png){: width="972" height="589"}_동시 처리_
 
 1. **여러 작업을 "동시에" 처리할 수 있습니다.**
 
@@ -165,7 +165,7 @@ public interface Runnable {
 
 Runnable 인터페이스는 추상메서드로 run() 메서드를 가지고 있습니다. 이는 스레드가 작업하게될 일종의 "**작업정의서 양식**"이 됩니다. 그리고 Runnable를 상속받은 구현 클래스의 run 메서드에서 실행되는 코드는 스레드가 실제로 작업하게 되는 "**작업정의서**"가 되게 됩니다.
 
-![Desktop View](/assets/posts/threadRunnable.png){: width="972" height="589"}_thread와 runnable_
+![Desktop View](/assets/images/java-multithreading-1/threadRunnable.png){: width="972" height="589"}_thread와 runnable_
 
 정말로 그런지 Thread 클래스의 run 메서드를 보겠습니다.
 
@@ -267,7 +267,7 @@ public class Main {
 
 ## 3. 멀티스레드는 위험한가요? 왜죠?
 
-![Desktop View](/assets/meme/multithreadingPuppies.png){: width="972" height="589" .w-50}_멀티스레딩의 기대와 현실_
+<!-- ![Desktop View](/assets/meme/multithreadingPuppies.png){: width="972" height="589" .w-50}_멀티스레딩의 기대와 현실_ -->
 
 멀티스레드를 사용하면서 문제가되는 케이스는 어떨 때 일까요? 바로 다음과 같습니다.
 
@@ -282,7 +282,7 @@ public class Main {
 
 프로세스의 구조를 살펴보겠습니다. 프로세스에서의 메모리영역은 크게 2가지로 나뉘집니다. 하나는 스택, 하나는 힙입니다.
 
-![Desktop View](/assets/posts/processStruct.png){: width="972" height="589" }
+![Desktop View](/assets/images/java-multithreading-1/processStruct.png){: width="972" height="589" }
 
 #### 스택(Stack)
 
@@ -307,7 +307,7 @@ public class Main {
 
 > 둘 이상의 스레드가 공유자원을 병행적으로 읽거나 쓰는 동작을 할때 접근 순서(스레드 스케쥴링)나 시점에 따라 실행 결과가 달라지게 됩니다. 이를 **경쟁상태(race condition)**라고 합니다.
 
-![Desktop View](/assets/posts/raceCondition.png){: width="972" height="589" }
+![Desktop View](/assets/images/java-multithreading-1/raceCondition.png){: width="972" height="589" }
 
 - 경쟁상태는 공유 자원에 비원자적 연산이 동시에 실행될경우 발생할 수 있습니다.
 - 위의 그림에서 공유자원인 Money에 증가연산을 하는 스레드와 감소연산을 하는 경우가 있습니다.

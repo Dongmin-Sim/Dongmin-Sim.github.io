@@ -172,7 +172,7 @@ public native int hashCode();
 
 해시 기반 컬렉션에서  `equals()`와 `hahscode()`와 관련된 문제가 발생하는 가장 큰 원인은, 해시 기반 컬렉션의 동작방식과 깊은 연관이 있다. 정확히 말하면 동작과정에서 객체를 서로 비교해야만 하기 때문이다.
 
-![Desktop View](/assets/posts/language/java/2024-11-12-why-do-we-have-to-override-equals-and-hashcode/hashtable.png){: width="972" height="589" .w-75}_해시테이블 (출처:[해시 테이블 - 위키피디아](https://en.wikipedia.org/wiki/Hash_table))_
+![Desktop View](/assets/images/why-do-we-have-to-override-equals-and-hashcode/hashtable.png){: width="972" height="589" .w-75}_해시테이블 (출처:[해시 테이블 - 위키피디아](https://en.wikipedia.org/wiki/Hash_table))_
 
 해시 기반 자료구조는 그림과 같이 `key`와 이에 대응되는 `value` 값을 저장하도록 설계되었으며, 이러한 특성 덕분에 빠르게 데이터를 조회할 수 있다. 
 
@@ -197,7 +197,7 @@ public static void main(String[] args) {
 > 해시 자료구조에 대해 생소하거나, 왜 충돌이라는 것이 발생하는지 알고싶다면   
 👉 [해시 자료구조와 Java HashMap이 해시 충돌을 해결하는 방법](https://dongmin-sim.github.io/posts/hash-data-structure/)  
 
-![Desktop View](/assets/posts/language/java/2024-11-12-why-do-we-have-to-override-equals-and-hashcode/hashtable-chaining.png){: width="972" height="589"}_해시 충돌 발생 시 (출처:[해시 테이블 - 위키피디아](https://en.wikipedia.org/wiki/Hash_table))_
+![Desktop View](/assets/images/why-do-we-have-to-override-equals-and-hashcode/hashtable-chaining.png){: width="972" height="589"}_해시 충돌 발생 시 (출처:[해시 테이블 - 위키피디아](https://en.wikipedia.org/wiki/Hash_table))_
 
 해시함수에서 서로 다른 `key`에 대해 동일한 해시값을 반환하여, 버킷의 인덱스 주소가 같아져버리는 상황을 해시충돌이라한다. 해시 충돌이 발생할 경우 다음과 같은 순서로 해시 충돌을 해결하려한다.
 
@@ -229,7 +229,7 @@ final V putVal(int hash, K key, V value, boolean onlyIfAbsent, boolean evict){
 
 이를 그림으로 표현하면 다음과 같다. 
 
-![Desktop View](/assets/posts/language/java/2024-11-12-why-do-we-have-to-override-equals-and-hashcode/push.png){: width="972" height="589"}_`HashMap`의  데이터 삽입 과정 흐름도_
+![Desktop View](/assets/images/why-do-we-have-to-override-equals-and-hashcode/push.png){: width="972" height="589"}_`HashMap`의  데이터 삽입 과정 흐름도_
 
 **동일 비교 시행**에서 동일하다고 판단되는 객체가 있다면, 이를 업데이트하고 그렇지 않다면 비로소 `HashMap`에 새로운 객체로 저장하게 된다.
 
@@ -246,8 +246,8 @@ final V putVal(int hash, K key, V value, boolean onlyIfAbsent, boolean evict){
 #### equals를 잘못 오버라이드하면?
 동등한 객체이여야 하지만 `equals()`가 참이 아니라면 어떻게 될까?
 
-![Desktop View](/assets/posts/language/java/2024-11-12-why-do-we-have-to-override-equals-and-hashcode/wrong-equals.png){: width="972" height="589" .w-75}_잘못된 equals_
-![wrong-equals](/assets/posts/language/java/2024-11-12-why-do-we-have-to-override-equals-and-hashcode/wrong-equals.png)
+![Desktop View](/assets/images/why-do-we-have-to-override-equals-and-hashcode/wrong-equals.png){: width="972" height="589" .w-75}_잘못된 equals_
+![wrong-equals](/assets/images/why-do-we-have-to-override-equals-and-hashcode/wrong-equals.png)
 - 논리적으로 동등함을 보장하지 못한다면, 중복 값이 저장될 수 있다. 
 - 같은 해시값을 가지는 바람에 버킷에 중복 저장되어 버킷의 길이가 길어질 수 있다.
 - 이 경우 `HashMap`에 저장한 객체를 조회하는 것이 불가능할 수 있다.
@@ -257,7 +257,7 @@ final V putVal(int hash, K key, V value, boolean onlyIfAbsent, boolean evict){
 #### hashcode를 잘못 오버라이드하면?
 동등한 객체이여야 하지만 다른 `hashCode()`가 나온다면 어떻게 될까?
 
-![Desktop View](/assets/posts/language/java/2024-11-12-why-do-we-have-to-override-equals-and-hashcode/wrong-hashcode.png){: width="972" height="589" .w-75}_잘못된 hashCode_
+![Desktop View](/assets/images/why-do-we-have-to-override-equals-and-hashcode/wrong-hashcode.png){: width="972" height="589" .w-75}_잘못된 hashCode_
 
 - 이 경우 역시 논리적으로 동등한 두 객체가 중복 저장될 수 있다. 
 - 두 객체가 다른 해시 코드를 가져 다른 버킷에 저장될 수 있다. 

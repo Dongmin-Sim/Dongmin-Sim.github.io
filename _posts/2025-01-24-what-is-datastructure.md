@@ -23,7 +23,6 @@ tags: []
 
 - 같은 타입의 원소를 순차적으로 배치
 
-![Desktop View](/assets/posts/이미지파일.png){: width="972" height="589"}_이미지 설명_
 
 #### 관리 장점
 - 가까워서 계산이 가능함.
@@ -42,7 +41,6 @@ tags: []
 #### 배치 모양
 - 
 
-![Desktop View](/assets/posts/이미지파일.png){: width="972" height="589"}_이미지 설명_
 
 #### 관리 장점
 - 

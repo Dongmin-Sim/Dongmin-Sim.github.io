@@ -41,7 +41,7 @@ LangChain 공식문서에 따르면 다음과 같은 Task를 수행할 수 있�
 
 언어모델을 이용하여 몇가지 예시에 대한 맥락을 파악하거나, 제공된 맥락에 따라 답변하는 방법 등 추론을 하는 Task를 수행하는 어플리케이션을 개발할때 LangChain Framwork를 고려해볼 수 있는 것이다.
 
-![Desktop View](/assets/posts/ai/langchain/langchain-do.png){: width="972" height="589"}_LangChain_
+![Desktop View](/assets/images/what-is-langchain/langchain-do.png){: width="972" height="589"}_LangChain_
 
 LangChain은 기본적으로 **여러 외부 소스**(Google, Wikipedia, 검색 Api 등)을 **LLM**과 연결해줄 수 있다.
 이때 여러 기능을 하는 **명령어**들 끼리 엮어서 사용할 수가 있는데, 이것이 LangChain에서 말하는 **Chain**이라는 개념이다. 뒤에서 다룰 LLM, Tool이나, 데이터 전처리와 같은 단계들의 **시퀀스**를 의미한다.
@@ -52,7 +52,7 @@ Chain을 사용하면 여러 구성 요소를 결합하여 하나의 **종합적
 
 ### LangChain Logo
 
-![Desktop View](/assets/posts/ai/langchain/LangChainLogo.png){: width="972" height="589" .w-50}_LangChain Logo_
+![Desktop View](/assets/images/what-is-langchain/LangChainLogo.png){: width="972" height="589" .w-50}_LangChain Logo_
 
 LangChain의 로고에 뜬금없이 왠 **앵무새**가 있을까? 궁금증을 떠올려본 독자들을 위해서 준비했다.
 
@@ -111,7 +111,7 @@ LangChain 은 다음과 같은 주요 모듈로 이루어져 있다. 각 모듈�
 
 ### Problem Context
 
-![Desktop View](/assets/posts/ai/langchain/chatgpt-langchain.png){: width="972" height="589"}_예를 들면 이런 경우..?_
+![Desktop View](/assets/images/what-is-langchain/chatgpt-langchain.png){: width="972" height="589"}_예를 들면 이런 경우..?_
 
 만약 **최신 날짜를 기준으로 정보**를 알고 싶다면 어떻게 해야할까(최신 기사, 최신 동향 등)
 언어 모델(LLM)은 특정한 날짜를 기준으로 훈련을 받음, 이러한 종류의 task에는 최신 데이터가 언어 모델(LLM)의 훈련 셋에 포함되어 있지 않았었기 때문에, 다시 말해 **배운적이 없기 때문에 답변이 불가능**하다.
@@ -134,7 +134,7 @@ Agent는 언어 모델(LLM)을 통해 **수행할 작업과 순서를 결정**�
 
 예를 들어 Agent는 언어 모델(LLM)을 사용하여 다음과 같은 작업들을 수행할 수 있음.
 
-![Desktop View](/assets/posts/ai/langchain/langchain-core-idea.png){: width="972" height="589"}_Agent 동작 예시_
+![Desktop View](/assets/images/what-is-langchain/langchain-core-idea.png){: width="972" height="589"}_Agent 동작 예시_
 
 **상황 : 수행하려고 하는 작업이 있고, 이를 수행할 Agent를 정의하는 상황**
 
@@ -163,7 +163,7 @@ Agent에게 작업을 맡기면, Agent는 가장 먼저 과제를 달성하고, 
 이는 **Chain-of-Thought(CoT)** 생각의 사슬, 기본적으로 언어모델의 추론을 돕고 추론과정을 나타내는 **프롬프트 엔지니어링 테크닉**을 통해 가능하다. 'Chain-of-Thought Prompting Elicits Reasoning in Large Language Models'[(논문 링크)](https://arxiv.org/pdf/2201.11903.pdf) 라는 논문에서 나온 개념으로 **언어모델의 큰 성능 향상**을 불러왔다.
 
 
-![Desktop View](/assets/posts/ai/langchain/chain-of-thought.png){: width="972" height="589"}_프롬프트 구성 예시_
+![Desktop View](/assets/images/what-is-langchain/chain-of-thought.png){: width="972" height="589"}_프롬프트 구성 예시_
 
 간단하게 이 테크닉에 대해 요약하자면, 문제의 원인과 결과에 대해 과정을 풀어서 나아가다보면, 실제 정답에 더 잘 도달할 수 있다는 개념으로 "문제-정답"(도표 좌측 "Standard Prompting") 보다 **"문제-과정-정답"**(도표 우측 <u>"Chain-of-Thought Prompting"</u>) 형태로 프롬프트를 구성하는 것이다.
 

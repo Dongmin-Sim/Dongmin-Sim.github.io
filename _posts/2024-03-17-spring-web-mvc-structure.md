@@ -9,7 +9,7 @@ tags:
 ## 들어가며
 
 
-![Desktop View](/assets/posts/spring/mvc/spring-web-mvc-architecture.png){: width="972" height="589"}_이미지 설명_
+![Desktop View](/assets/images/spring-web-mvc-structure/spring-web-mvc-architecture.png){: width="972" height="589"}_이미지 설명_
 
 
 ### 전체 구조
@@ -134,7 +134,7 @@ AnnotationConfigWebApplicationContext는 다음과 같은 역할을 수행합니
 
 ### Web application context 구분
 
-![Pasted image 20240319163846](/assets/posts/Pasted image 20240319163846.png)
+<!-- ![Pasted image 20240319163846](/assets/posts/Pasted image 20240319163846.png) -->
 
 ### 서블릿 WebApplicationContext
 

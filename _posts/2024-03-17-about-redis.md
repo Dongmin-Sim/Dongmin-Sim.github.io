@@ -54,10 +54,10 @@ In-memory DB
 	- 혼합해서 사용하기도함 (Cache용)
 	- Redis의 영속성을 확보하기 위해 백업 기능등을 추가적으로 사용
 
-![Pasted image 20240320231336](/assets/posts/Pasted image 20240320231336.png)
+<!-- ![Pasted image 20240320231336](/assets/posts/Pasted image 20240320231336.png) -->
 
 
-![Pasted image 20240320231751](/assets/posts/Pasted image 20240320231751.png)
+<!-- ![Pasted image 20240320231751](/assets/posts/Pasted image 20240320231751.png) -->
 
 ## Key-Value store 로서의 Redis
 
@@ -75,7 +75,7 @@ Key-Value 구조 ?
 
 Map에 DBMS 기능을 달아놨다 라고 생각하면 편함
 
-![Pasted image 20240320232059](/assets/posts/Pasted image 20240320232059.png)
+<!-- ![Pasted image 20240320232059](/assets/posts/Pasted image 20240320232059.png) -->
 
 
 #### Key-Value Store 장점
@@ -98,7 +98,7 @@ Map에 DBMS 기능을 달아놨다 라고 생각하면 편함
 ## Redis 등장과 활용 
 #### 등장
 
-![Pasted image 20240320233024](/assets/posts/Pasted image 20240320233024.png)
+<!-- ![Pasted image 20240320233024](/assets/posts/Pasted image 20240320233024.png) -->
 - Redis Labs 클러스터, 분산환경에 대한 더 적극적인 기능과 지원.
 
 ### 활용 
@@ -170,12 +170,12 @@ NoSLQ의 등장 배경
 - Wide-Column 등 
 
 ### NoSQL DB 종류
-![Pasted image 20240320234719](/assets/posts/Pasted image 20240320234719.png)
+<!-- ![Pasted image 20240320234719](/assets/posts/Pasted image 20240320234719.png) -->
 
 
 ## Redis의 특성
 
-![Pasted image 20240320235028](/assets/posts/Pasted image 20240320235028.png)
+<!-- ![Pasted image 20240320235028](/assets/posts/Pasted image 20240320235028.png) -->
 - 확장된 힙의 역할
 - DBMS 역할
 - 미들웨어 역할도 함. 
@@ -273,7 +273,7 @@ key : value 에서 value에 다양한 데이터 타입을 지원함.
 - 결과가 true 일 경우 1, false 일 경우 0 
 
 ## Hash
-![Pasted image 20240321163131](/assets/posts/Pasted image 20240321163131.png)
+<!-- ![Pasted image 20240321163131](/assets/posts/Pasted image 20240321163131.png) -->
 - 하나의 key 하위에 여러개의 field-value 쌍을 저장할 수 있음
 	- json 형태를 그대로 string 저장해도 되지만, 
 	- 특정 필드에 접근하려면 json 형식의 string 꺼내서 parsing 해야하는 과정이 필요함. 
@@ -297,7 +297,7 @@ key : value 에서 value에 다양한 데이터 타입을 지원함.
 
 
 ## Sorted Set
-![Pasted image 20240321164514](/assets/posts/Pasted image 20240321164514.png)
+<!-- ![Pasted image 20240321164514](/assets/posts/Pasted image 20240321164514.png) -->
 - Set과 유사하게 유니크한 값의 집합
 - 각 값은 연관된 score를 가지고 정렬되어 있음
 - 정렬된 상태이기 때문에 빠르게 최소/최대값을 구할 수 있음.
@@ -316,7 +316,7 @@ key : value 에서 value에 다양한 데이터 타입을 지원함.
 
 
 ## Bitmap
-![Pasted image 20240321165357](/assets/posts/Pasted image 20240321165357.png)
+<!-- ![Pasted image 20240321165357](/assets/posts/Pasted image 20240321165357.png) -->
 - 비트 벡터를 사용해 N개의 Set을 공간 효율적으로 저장 
 - 하나의 비트맵이 가지는 공간은 4byte(Integer)
 - 비트 연산 가능
@@ -350,7 +350,7 @@ key : value 에서 value에 다양한 데이터 타입을 지원함.
 
 
 ## Redis 연동 
-![Pasted image 20240321171652](/assets/posts/Pasted image 20240321171652.png)
+<!-- ![Pasted image 20240321171652](/assets/posts/Pasted image 20240321171652.png) -->
 - Lettuce : 가장 많이 사용되는 라이브러리로, Spring Data Redis에 내장되어 있음. 
 - Spring Data Redis는 Redis Template 라는 Redis 조작 추상레이어를 제공함.
 

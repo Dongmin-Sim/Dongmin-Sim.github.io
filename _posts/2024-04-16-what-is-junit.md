@@ -114,15 +114,15 @@ JUnit의 테스트 라이프 사이클은 아래서 설명할 어노테이션들
 2. 중복 코드 방지
    - 여러 테스트 코드에서 반복적으로 필요한 코드를 한 곳에서 관리할 수 있다.
 
-![Desktop View](/assets/posts/test/junit/what-is-junit5/junit-lifecycle.png){: width="972" height="589"}_테스트라이프 사이클_
+![Desktop View](/assets/images/what-is-junit/junit-lifecycle.png){: width="972" height="589"}_테스트라이프 사이클_
 
 위의 라이프 사이클이 정말로 수행되는지를 간단한 테스트 코드를 통해 확인할 수 있다.
 
-![Desktop View](/assets/posts/test/junit/what-is-junit5/lifecycle-testcode.png){: width="972" height="589"}_테스트 코드_
+![Desktop View](/assets/images/what-is-junit/lifecycle-testcode.png){: width="972" height="589"}_테스트 코드_
 
 print되는 메시지로 미루어보았을때, 대략적인 실행결과를 예측해볼 수 있다.
 
-![Desktop View](/assets/posts/test/junit/what-is-junit5/result.png){: width="972" height="589"}_실행결과_
+![Desktop View](/assets/images/what-is-junit/result.png){: width="972" height="589"}_실행결과_
 
 ### 1. @BeforeAll (static)
 
@@ -180,11 +180,11 @@ print되는 메시지로 미루어보았을때, 대략적인 실행결과를 예
 
 위와 같은 구조로 테스트 클래스 안에 중첩 클래스를 두어 별도의 테스트 그룹으로 환경을 세팅하는 것도 가능하다. 예를 들면 다음과 같은 구조로도 가능하다.
 
-![Desktop View](/assets/posts/test/junit/what-is-junit5/nest.png){: width="972" height="589"}_@nest 예시 코드_
+![Desktop View](/assets/images/what-is-junit/nest.png){: width="972" height="589"}_@nest 예시 코드_
 
 중첩클래스도 결국 내부에서 동일한 라이프사이클을 갖기 때문에, 중첩클래스 내부에서도 동일하게 동작한다.
 다음 실행 결과는 레벨 별로 묶어 실행 결과를 표시한것이다.
 
-![Desktop View](/assets/posts/test/junit/what-is-junit5/nest-result.png){: width="972" height="589"}_실행결과_
+![Desktop View](/assets/images/what-is-junit/nest-result.png){: width="972" height="589"}_실행결과_
 
 때문에 테스트 클래스 내부에서 별도의 묶음 처리가 필요한 경우 다음과 같이 @Nest 어노테이션을 활용하여 테스트 구조를 묶고 분리할 수 있다.

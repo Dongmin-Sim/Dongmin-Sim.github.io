@@ -34,7 +34,7 @@ tags:
 
 코드트리를 이용하기 전까지 내가 코딩테스트에 대해 느꼈던 감정은 "막막함", "지루함", "절망감", "막연함", "저항감"이었다. 이전에 코딩테스트를 준비하면서 억지로 힘을 짜내며 문제들을 찾았고, 너무 어려운 문제를 만났을때 느껴지는 좌절감과 막연함. 어디부터 시작해야할 지 모르겠는 답답함. 한마디로 _<u>"아..하기 싫다.. 그치만 해야하고.."</u>_ 이런 기분이었다.
 
-![Desktop View](/assets/meme/dontwantthis.png){: width="972" height="589" .w-50}_싫어도 해야만해_
+<!-- ![Desktop View](/assets/meme/dontwantthis.png){: width="972" height="589" .w-50}_싫어도 해야만해_ -->
 
 <u>코딩테스트 준비</u>라는 활동은 **즐거움과 몰입의 시간과는** **정반대의 활동**이었다. 위를 간단하게 정리해보면 다음과 같다.
 
@@ -55,17 +55,17 @@ tags:
 
 ### 1. 나의 현재 실력 파악
 
-![Desktop View](/assets/posts/codetree-diagnosis.png){: width="972" height="589" .w-75}_실력진단_
+![Desktop View](/assets/images/codetree-review-1/codetree-diagnosis.png){: width="972" height="589" .w-75}_실력진단_
 
 코드트리에서는 실력 진단이라는 기능을 통해 현재 실력 파악과 목표하는 바에 진입할 수 있도록 학습 플랜을 제시해준다. 현재 목표하고 있는 것이 무엇인지, 그리고 현재 진단자의 실력이 어느정도 인지를 파악해 취약 유형을 분석해준다.
 
 개인적으로 좋았던 점은 내가 취약한 유형이 무엇인지 파악해서 해당 파트의 문제를 추천해주는 점이 좋았다. 다음은 내가 취약한 유형의 파트를 세세하게 알려주는 점이다. 
 
-![Desktop View](/assets/posts/codetree-weak.png){: width="972" height="589" .w-75}_취약분석_
+![Desktop View](/assets/images/codetree-review-1/codetree-weak.png){: width="972" height="589" .w-75}_취약분석_
 
 실력 진단 기능은 별도의 비용이 들지 않고 꾸준히 계속 도전할 수 있다. 따라서 현재 나의 실력이 증가하고 있는지 아니면 머물러 있는지 객관적 판단 지표를 제공해준다. 
 
-![Desktop View](/assets/posts/codetree-diagnosis-history.png){: width="972" height="589" .w-50}_학습진단_
+![Desktop View](/assets/images/codetree-review-1/codetree-diagnosis-history.png){: width="972" height="589" .w-50}_학습진단_
 
 코드트리를 이용한지 한달 정도 지난 시점에서 총 3번의 실력진단을 실시했는데 꾸준히 우상향하는 그래프를 보여주고 있다. 개인적으로 나는 실력진단으로 부족한 유형을 파악하고 해당 유형 파트를 집중적으로 공부하는 방법으로 진행했다. 적절한 실력 지표가 없다면 우리의 감에 의지해 내 실력을 파악해야 한다. 
 
@@ -75,7 +75,7 @@ tags:
 
 내가 가장 만족했던 부분은 바로 이 점이다. 이것은 코드트리의 "**<u>몰입환경</u>**"과 같은 특정한 서비스가 있는 것은 아니지만, 코드트리에서 제공하는 기능들이 같이 상호작용하면서 자동적으로 사용자에게 몰입의 환경을 만들어주는 효과를 낸다.
 
-![Desktop View](/assets/posts/flowchart.png){: width="972" height="589"}_칙센트 미하이의 몰입 차트_
+![Desktop View](/assets/images/codetree-review-1/flowchart.png){: width="972" height="589"}_칙센트 미하이의 몰입 차트_
 
 
 
@@ -91,19 +91,19 @@ tags:
 
 코드트리의 학습 구성은 이러한 <u>몰입 상태에 놓일 수 있도록 실력과 난이도를 점진적으로 조절</u>하도록 크게 3가지 파트로 구성되어있다. 
 
-![Desktop View](/assets/posts/codetree-curriculum.png){: width="972" height="589" .w-75}_커리큘럼 구성_
+![Desktop View](/assets/images/codetree-review-1/codetree-curriculum.png){: width="972" height="589" .w-75}_커리큘럼 구성_
 
 #### 기본개념
 
 기본 개념에서는 해당 유형의 개념, 풀이 방법, 관점을 주로 두어야하는 포인트를 찝어 설명해준다. 조금 복잡한 개념의 경우 많은 이미지 자료와 동영상 자료가 포함되어 있어 개인적으로 단계별로 진행되는 알고리즘을 이해하기 편했다. 기본 개념에서 나오는 유형으로 간단하게 풀이해볼 수 있는 문제가 준비되어 있으면서 앞의 설명을 충분히 숙지했다면 어렵지 않게 통과할 문제가 준비되어있다. 
 
-![Desktop View](/assets/posts/codetree-basic.png){: width="972" height="589" .w-75}_기본개념_
+![Desktop View](/assets/images/codetree-review-1/codetree-basic.png){: width="972" height="589" .w-75}_기본개념_
 
 #### 연습문제
 
 연습 문제부터는 문제를 풀이할 수록 서서히 난이도가 올라가도록 체감되었다. 앞선 기본개념에서 살짝 변형되었거나, 이전에 배웠던 개념을 추가하여 복합적으로 풀이해야한다거나, 조금씩 올려가며 나의 실력과 난이도를 맞춰볼 수 있다. 
 
-![Desktop View](/assets/posts/codetree-time.png){: width="972" height="589" .w-75}_소요시간_
+![Desktop View](/assets/images/codetree-review-1/codetree-time.png){: width="972" height="589" .w-75}_소요시간_
 
 개인적으로 내 실력보다 높은 난이도를 만나 풀 수 없는 경우 문제에 기재된 예상시간 보다 풀이시간이 2배로 넘어갈 경우 문제 해답을 보곤한다. 
 
@@ -119,13 +119,13 @@ tags:
 
 하지만 코드트리에서는 난이도 별로, 그리고 유형별로 별도의 코스가 나뉘어져 있어, 이러한 시간을 줄일 수 있다. 실력진단을 보고 해당하는 코스를 선택하면 된다.
 
-![Desktop View](/assets/posts/codetree-curriculum-book.png){: width="972" height="589" .w-75}_커리큘럼 모음_
+![Desktop View](/assets/images/codetree-review-1/codetree-curriculum-book.png){: width="972" height="589" .w-75}_커리큘럼 모음_
 
 
 
 그리고 해당 문제에 대해 모르는 내용이나 개념을 물어봐야할 경우 토론 창을 이용해서 질문을 주고 받을 수 있다. 거진 하루 안에는 답변을 해주시는 편이며, 문제의 정답을 바로 알려주는 것이 아닌 정답에 이르도록 반례를 제시해주거나, 힌트를 제공해주는 점에서 문제 풀이에 큰 도움이 된다. 
 
-![Desktop View](/assets/posts/codetree-qna.png){: width="972" height="589" .w-75}_토론_
+![Desktop View](/assets/images/codetree-review-1/codetree-qna.png){: width="972" height="589" .w-75}_토론_
 
 이런 점은 혼자 진행할 때보다 훨씬 시간적으로 절약이 많이 된다. 시간적인 측면에서 효율성을 가져갈 수 있다는 의미이다.
 
@@ -135,7 +135,7 @@ tags:
 
 코드트리는 개인적인 목표를 설정할 수 있다. 문제마다 풀이시 얻을 수 있는 경험치 시스템이 존재하는데 이를 통해 하루 목표를 설정하고 달성하는 시스템이 있다. 목표는 크게 5가지로 나뉘어져 있으며, 내가 투자할 수 있는 시간을 예시로 선택을 도와준다. 
 
-![Desktop View](/assets/posts/codetree-study-plan.png){: width="972" height="589" .w-50}_목표_
+![Desktop View](/assets/images/codetree-review-1/codetree-study-plan.png){: width="972" height="589" .w-50}_목표_
 
 나는 이 기능을 코딩테스트 문제에 대한 **<u>저항감을 낮추는데 사용</u>**했다. 처음에 시작할때는 "가볍게"로 시작하여 조그만 성취감을 늘려갔다. 문제를 풀이하면 목표치 그래프 바가 갱신되는데, 이게 생각보다 성취감이 들고 재미로 다가온다. 마치 게임의 던전을 클리하는 기분이다. (개인적으로는 성취시 나오는 이펙트가 더 화려했으면 더 성취감이 부각되지 않을까 싶다!)
 
@@ -143,7 +143,7 @@ tags:
 
 또 코드트리내에서는 업적이라는 시스템이 있는데, 특정 활동 조건을 만족하면 열리는 뱃지 같은 개념이다. 개인적으로는 잘 들여다보지 않는데 생각보다 나에게는 큰 감정이 들지 않는 기능이었다. 이유는 뒤에서 부가적으로 설명하려고 한다.
 
-![Desktop View](/assets/posts/codetree-achievement.png){: width="972" height="589" .w-75}_업적_
+![Desktop View](/assets/images/codetree-review-1/codetree-achievement.png){: width="972" height="589" .w-75}_업적_
 
 
 
@@ -163,7 +163,7 @@ tags:
 
 그리고 내가 취약했던 유형을 조금 더 극복할 수 있도록 학습하기에서 나온 문제들 뿐 아니라 기타 다른 문제들도 추천해주어 취약 유형에 대한 자신감을 더 키울 수 있도록 보충해주는 시스템이 있다면 더할 나위 없을 것 같다. 
 
-![Desktop View](/assets/posts/codetree-log.png){: width="972" height="589" .w-75}_개인페이지_
+![Desktop View](/assets/images/codetree-review-1/codetree-log.png){: width="972" height="589" .w-75}_개인페이지_
 
 현재 개인 페이지는 다음과 같은데 주로 활동 일지, 로그에 관한 내용이 많다. 실력진단의 점수도 있지만, 조금 더 내가 어떤 유형에서 잘하고 못하는지를 알려주는, <u>'내'가 '코딩테스트'에서 어떤 역량들</u>을 가지고 있는지. '나' 파악할 수 있는 피처들이 들어갔으면 어땠을까 했다. 코드트리에 익숙해진 유저들이 자신만의 코딩 역량 메타인지를 기를 수 있도록 도와주는 기능 추가되고 이와 관련된 서비스도 함께 연계되면 좋을 것 같다. 
 
@@ -183,7 +183,7 @@ tags:
 
 업적을 달성한 페이지가 떠도 해제조건에 비해 별다른 감흥이 나진 않았다. 
 
-![Desktop View](/assets/posts/codetree-achievement.png){: width="972" height="589" .w-75}_업적_
+![Desktop View](/assets/images/codetree-review-1/codetree-achievement.png){: width="972" height="589" .w-75}_업적_
 
 차라리 해제한 업적만큼 적절한 멤버십 이용기간을 늘려준다거나, 업적으로 이용한 무료 기간을 유저들한테 보여주는 것이 더 효과적으로 동기부여되지 않을까싶다. 
 

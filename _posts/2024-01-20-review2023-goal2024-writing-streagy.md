@@ -306,7 +306,7 @@ tags:
 
 글쓰기 파이프라인을 다음 그림으로 도식화 해보았다. 크게 준비 단계와 글쓰기 단계로 나누었다.
 
-![Desktop View](/assets/posts/writePiplineV01.png){: width="972" height="589" }
+![Desktop View](/assets/images/review2023-goal2024-writing-streagy/writePiplineV01.png){: width="972" height="589" }
 _나의 글쓰기 파이프라인 v0.1_
 
 

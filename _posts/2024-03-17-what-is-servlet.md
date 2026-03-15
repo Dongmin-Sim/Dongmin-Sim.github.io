@@ -63,7 +63,7 @@ tags:
 - 그 중에서도 HTTP 프로토콜에서 사용하기 위한 서블릿을 구현한 것을 일반적으로 HTTP 프로토콜과 많이 사용되어 "서블릿"은 "HTTP 서블릿"을 의미하는 경우가 많습니다. 
 
 
-![Desktop View](/assets/posts/spring/terminology/what-is-servlet/DefaultServlet.png){: width="972" height="589" .w-50}_이미지 설명_
+![Desktop View](/assets/images/what-is-servlet/DefaultServlet.png){: width="972" height="589" .w-50}_이미지 설명_
 
 
 
@@ -137,7 +137,7 @@ https://live-everyday.tistory.com/197
 
 - 웹 프로그래밍에서 서블릿은 HTTP 요청을 받아들이고, 해당 요청을 처리하여 HTTP 응답을 생성하는 데 사용됩니다. 
 - 위와 역할을 수행하기 위해 javax.servlet.Servlet 인터페이스를 구현한 클래스들을 서블릿이라 일컫습니다.
-![Desktop View](/assets/posts/spring/terminology/what-is-servlet/servlet-interface.png){: width="972" height="589"}_servlet interface_
+![Desktop View](/assets/images/what-is-servlet/servlet-interface.png){: width="972" height="589"}_servlet interface_
 
 
 주요 메서드로는 다음이 있습니다

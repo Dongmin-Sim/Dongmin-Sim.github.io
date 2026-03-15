@@ -20,7 +20,7 @@ tags:
 
 2월부터 4월까지 약 8주간 코드트리의 서비스를 이용하면서 코딩테스트를 준비했다. 시작할 때의 시점에서 나의 상태는 **프로그래밍 언어의 확장**을 결심했을 시점이었다. Python에서 Java로 언어를 확장하면서 **새로 접하는 언어의 기본기**를 다지는 것이 필요했다.
 
-![Desktop View](/assets/posts/review/codetree/codetree-basic.png){: width="972" height="589" .w-50}_[프로그래밍 기초 코스](https://www.codetree.ai/curriculums/4)_
+![Desktop View](/assets/images/codetree-review-2/codetree-basic.png){: width="972" height="589" .w-50}_[프로그래밍 기초 코스](https://www.codetree.ai/curriculums/4)_
 
 마침 코드트리의 ["프로그래밍 기초"](https://www.codetree.ai/curriculums/4) 파트가 큰 도움이 되었다. 빠르게 기초 문제를 풀어나가면서 언어의 기본적인 문법과 구조를 파악하는데 큰 도움이 되었다.
 
@@ -36,7 +36,7 @@ tags:
 
 되도록이면 하루에 1시간을 목표로 삼고 학습을 진행했었다. 챌린지 초반에는 1시간 이상씩 학습도 했으나, 챌린지 기간이 뒤로 갈수록 조금씩 학습률이 낮아진것이 아쉬웠다.
 
-![Desktop View](/assets/posts/review/codetree/codetree-grass.png){: width="972" height="589" .w-50}_코드트리 잔디_
+![Desktop View](/assets/images/codetree-review-2/codetree-grass.png){: width="972" height="589" .w-50}_코드트리 잔디_
 
 챌린지 초반에는 시작시의 열정 + 습관화가 큰 도움을 주었던 것 같다. 습관화는 하루에 30분씩 코드 문제를 풀기로 일정관리 프로그램에 등록을 해두어 꽤 도움을 많이 보았던것 같다.
 
@@ -46,11 +46,11 @@ tags:
 
 코드트리의 학습진단을 통해 파악한 현재 상태이다. 역시.. 어려웠다고 느낀대로, backtracking 문제에서 막혀버렸다.
 
-![Desktop View](/assets/posts/review/codetree/codetree-current-2.png){: width="972" height="589"}_현재 학습 수준_
+![Desktop View](/assets/images/codetree-review-2/codetree-current-2.png){: width="972" height="589"}_현재 학습 수준_
 
 학습진단도 될 수 있으면 회고 느낌으로 자주 봐야겠다는 생각이 들었다.
 
-![Desktop View](/assets/posts/review/codetree/codetree-current-1.png){: width="972" height="589"}_현재 학습 수준_
+![Desktop View](/assets/images/codetree-review-2/codetree-current-1.png){: width="972" height="589"}_현재 학습 수준_
 
 평균적으로 풀이 시간과 제출 횟수가 평균보다 적은 편이다. 통과한 문제에 대해서는 개념을 이해하고 있고, 그에 대한 구현이 비교적 수월하고 정확하다는 것을 나타내는 것 같다.
 
@@ -58,7 +58,7 @@ tags:
 
 ## 보완해야할 점
 
-![Desktop View](/assets/posts/review/codetree/codetree-after.png){: width="972" height="589"}_이미지 설명_
+![Desktop View](/assets/images/codetree-review-2/codetree-after.png){: width="972" height="589"}_이미지 설명_
 
 실제로 Backtracking 문제는 자주 출제되는 유형이기도 하니 이 유형은 꼭 습득하고 넘어가야겠다. 오래걸리더라도 반복 숙달이 꼭 필요한 부분이다.
 

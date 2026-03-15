@@ -118,7 +118,7 @@ Source 를 선택해야함.
 	- SHORT(default) : "repetition" + 현재 횟수 + "of" + value
 	- LONG : @DisplayName + SHORT_DISPLAY_NAME
 
-![Pasted image 20240426161251](/assets/posts/Pasted image 20240426161251.png)
+<!-- ![Pasted image 20240426161251](/assets/posts/Pasted image 20240426161251.png) -->
 
 ### 예시 
 
@@ -180,7 +180,7 @@ Stream<DynamicTest> isUnderTenTest() {
 }
 ```
 
-![Pasted image 20240426163219](/assets/posts/Pasted image 20240426163219.png)
+<!-- ![Pasted image 20240426163219](/assets/posts/Pasted image 20240426163219.png) -->
 
 displayname으로 인해 실패한 테스트에 대한 디버깅이 for 문 보다는 용이 
 
