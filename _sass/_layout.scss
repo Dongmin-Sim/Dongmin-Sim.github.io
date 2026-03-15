@@ -113,6 +113,15 @@
   > *:last-child {
     margin-bottom: 0;
   }
+
+  > p > img + em {
+    display: block;
+    text-align: center;
+    font-size: 0.85em;
+    color: $color-muted;
+    font-style: normal;
+    margin-top: 0.4em;
+  }
 }
 
 // TOC
