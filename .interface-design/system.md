@@ -1,125 +1,143 @@
-# Design System: Blog
-
-## Direction
+# Design System — Blog
 
 Typography-first, book-like reading experience.
-Text earns its place. No decoration without purpose.
-Light mode, warm neutral palette, borders-only depth.
-
-## Foundation
-
-Warm neutral — paper-like warmth, not clinical white.
+Warm neutral palette, borders-only depth, no decoration without purpose.
 
 ## Colors
 
-| Token              | Value     | Role                    |
-|--------------------|-----------|-------------------------|
-| `color-bg`         | `#faf9f7` | Page background         |
-| `color-surface`    | `#f5f4f0` | Header, footer, code bg |
-| `color-border`     | `#e0dfd8` | All borders             |
-| `color-heading`    | `#1a1916` | Headings, hover text    |
-| `color-body`       | `#3d3c38` | Body text, link text    |
-| `color-muted`      | `#9a9890` | Meta, nav, captions     |
-| `color-link-under` | `#c8c6be` | Link underline default  |
+| Token | Value | Usage |
+|-------|-------|-------|
+| `$color-bg` | `#faf9f7` | Page background |
+| `$color-surface` | `#f5f4f0` | Table headers, code block bg |
+| `$color-border` | `#e0dfd8` | All borders, dividers |
+| `$color-heading` | `#1a1916` | Headings, titles, link text |
+| `$color-body` | `#3d3c38` | Body text, hover states |
+| `$color-muted` | `#9a9890` | Meta text, captions, nav, dates |
+| `$color-link-underline` | `#c8c6be` | Default link underline |
+| `$color-link-underline-hover` | `#9a9890` | Hover link underline |
+| `$color-code-inline-bg` | `#efede8` | Inline code background |
+| `$color-code-inline` | `#4a4845` | Inline code text |
+
+All colors must be tokens in `_variables.scss`. No hardcoded hex in component files (except `_syntax.scss`).
 
 ## Typography
 
-| Role       | Family                          | Weight  |
-|------------|---------------------------------|---------|
-| Body       | Noto Serif, Noto Serif KR       | 400     |
-| Headings   | Noto Serif, Noto Serif KR       | 700     |
-| Code       | JetBrains Mono                  | 400     |
+### Fonts
+- Body: `Noto Serif`, `Noto Serif KR`, Georgia, serif
+- Code: `JetBrains Mono`, Menlo, monospace
 
-### Scale
+### Font Size Scale
+| Size | Usage | Frequency |
+|------|-------|-----------|
+| `0.82rem` | Meta, dates, counts, labels | 10x |
+| `0.85rem` | Descriptions, captions | 2x |
+| `0.88rem` | Nav links, secondary text | 6x |
+| `1rem` | Body titles, site title | 4x |
+| `1.06rem` | H3 | 2x |
+| `1.25rem` / `1.3rem` | H2 (mobile / desktop) | — |
+| `1.5rem` / `1.65rem` | H1 (mobile / desktop) | — |
+| `3rem` | 404 page number | 1x |
+| `0.78rem` | TOC links (intentional exception) | 1x |
 
-| Element    | Mobile    | Desktop   |
-|------------|-----------|-----------|
-| Body       | 16px      | 17px      |
-| H1         | 1.5rem    | 1.65rem   |
-| H2         | 1.25rem   | 1.3rem    |
-| H3         | 1.06rem   | 1.06rem   |
-| Meta/nav   | 0.82rem   | 0.82rem   |
-| Nav links  | 0.88rem   | 0.88rem   |
-| Code inline| 0.875em   | 0.875em   |
-| Code block | 0.84em    | 0.84em    |
+### Font Weights
+- `400` — body text, titles
+- `700` — headings, strong emphasis
 
 ### Line Heights
-
-- Body: 1.75 (generous for Korean mixed text)
-- Headings: 1.3
-- Post list titles: 1.4
-- Code blocks: 1.6
+- `1.75` — body text
+- `1.5` — lists, descriptions
+- `1.4` — post list titles
+- `1.3` — headings
+- `1.6` — code blocks
 
 ## Spacing
 
-Unit: `em` (scales with font size).
+Base unit: `0.25em`, scaled by multiplier.
 
-| Use case           | Value    |
-|--------------------|----------|
-| Paragraph gap      | 1.5em    |
-| Section gap (h2)   | 2em top  |
-| Content padding    | 24px (mobile), auto margins (desktop) |
-| Post list item gap | 1.75em   |
-| Header padding     | 2em top, 1.5em bottom |
-| Footer margin-top  | 4em      |
+| Value | Frequency | Usage |
+|-------|-----------|-------|
+| `0.25em` | 4x | Small inner gaps |
+| `0.5em` | 7x | Tight spacing |
+| `0.75em` | 3x | Medium inner gaps |
+| `1em` | 4x | Standard gap |
+| `1.25em` | 3x | Component padding |
+| `1.5em` | 14x | Section padding, paragraph margin |
+| `2em` | 4x | Section heading margin-top |
+| `2.5em` | 5x | Section gaps |
+| `3em` | 3x | Large section breaks |
+| `4em` | 2x | Footer/page level spacing |
 
-## Layout
-
-- Content max-width: 640px, centered
-- Breakpoint: 720px
-- Mobile padding: 24px sides
-- Single column, no sidebar
+Mobile padding: `24px` (`$padding-mobile`).
 
 ## Depth
 
-Borders only. Zero box-shadows.
+**Borders only.** Zero box-shadows.
 
-| Pattern          | Style                    |
-|------------------|--------------------------|
-| Horizontal rule  | 1px solid `color-border` |
-| Header/footer    | 1px solid `color-border` |
-| Code inline      | 1px solid `color-border` |
-| Blockquote       | 2px solid `color-border` |
+- Dividers: `1px solid $color-border`
+- Component borders: `1px solid $color-border`
+- Blockquote: `2px solid $color-border` (left border)
 
 ## Radius
 
-- Inline code: 3px
-- Code blocks: 4px
-- Nothing else uses radius
+`4px` — the only value. Thumbnails, series-nav, code blocks, inline code.
+
+## Breakpoints
+
+| Token | Value | Usage |
+|-------|-------|-------|
+| `$bp-desktop` | `720px` | Font size bump, typography |
+| `$bp-toc` | `1100px` | TOC visibility |
+
+## Layout
+
+- Content width: `640px` (`$content-width`)
+- TOC width: `200px`, gap `48px` from content
+- Container: centered with `$padding-mobile` horizontal padding
 
 ## Patterns
 
-### Header
-- Flex row, space-between, baseline aligned
-- Site title: 1rem, weight 700, no underline
-- Nav links: 0.88rem, muted color, no underline
+### Link Hover (6 components)
+```scss
+text-decoration: underline;
+text-decoration-color: $color-link-underline-hover;
+text-underline-offset: 3px;
+text-decoration-thickness: 1px;
+```
 
-### Post List (Home)
-- No borders, no cards
-- Title: 1rem, weight 400, heading color
-- Date below title: 0.82rem, muted, Korean format (YYYY년 MM월 DD일)
-- Items separated by 1.75em whitespace
+### Nav Link (muted → body on hover)
+```scss
+color: $color-muted;
+text-decoration: none;
+&:hover { color: $color-body; }
+```
 
-### Post Page
-- Date above title: 0.82rem, muted
-- Title: h1
-- Content follows with 2.5em gap from header
-- Tags at bottom: separated by top border, 0.82rem, muted
+### Caption (images and tables)
+```scss
+display: block;
+text-align: center;
+font-size: 0.85em;
+color: $color-muted;
+font-style: italic;
+margin-top: 0.4em;
+```
 
-### Code Block
-- Background: `color-surface`
-- Border: 1px solid `color-border`
-- Padding: 1em
-- Radius: 4px
-- Horizontal scroll on overflow
+### Section Divider
+```scss
+margin-top: 3em;
+padding-top: 1.5em;
+border-top: 1px solid $color-border;
+```
 
-### Blockquote
-- Left border: 2px solid `color-border`
-- Italic, muted color
-- Left padding: 1.25em
+## Syntax Highlighting
 
-### Links
-- Same color as body text
-- Underline color: `color-link-under`
-- Hover: heading color, darker underline
-- Understated — no bright blue
+Warm neutral theme in `_syntax.scss`. Standalone — does not use design tokens.
+
+| Role | Color |
+|------|-------|
+| Base text | `#4a4845` |
+| Comments | `#9a9890` (italic) |
+| Keywords | `#7a6858` |
+| Strings | `#5a7a38` |
+| Numbers | `#7a6040` |
+| Types/Classes | `#8a7028` |
+| Errors | `#a0522d` |
