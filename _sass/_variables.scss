@@ -7,8 +7,8 @@ $color-body: #3d3c38;
 $color-muted: #9a9890;
 $color-link-underline: #c8c6be;
 $color-link-underline-hover: #9a9890;
-$color-code-bg: #f5f4f0;
-$color-code-border: #e0dfd8;
+$color-code-inline-bg: #efede8;
+$color-code-inline: #4a4845;
 
 // Typography
 $font-body: "Noto Serif", "Noto Serif KR", Georgia, serif;
@@ -20,3 +20,4 @@ $padding-mobile: 24px;
 
 // Breakpoint
 $bp-desktop: 720px;
+$bp-toc: 1100px;

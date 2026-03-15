@@ -3,9 +3,9 @@
 code {
   font-family: $font-code;
   font-size: 0.875em;
-  background-color: #efede8;
-  color: #4a4845;
-  border: 1px solid $color-code-border;
+  background-color: $color-code-inline-bg;
+  color: $color-code-inline;
+  border: 1px solid $color-border;
   border-radius: 4px;
   padding: 2px 6px;
 }
@@ -18,7 +18,7 @@ pre {
   code {
     display: block;
     padding: 1em;
-    background-color: $color-code-bg;
+    background-color: $color-surface;
     color: inherit;
     border: none;
     border-radius: 4px;
