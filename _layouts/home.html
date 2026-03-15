@@ -13,6 +13,9 @@ layout: default
     <div class="post-list__title">
       <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
     </div>
+    {% if post.description %}
+    <div class="post-list__desc">{{ post.description }}</div>
+    {% endif %}
     <div class="post-list__date">
       <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y년 %m월 %d일" }}</time>
     </div>
