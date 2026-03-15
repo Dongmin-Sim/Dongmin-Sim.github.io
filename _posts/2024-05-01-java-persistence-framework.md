@@ -4,6 +4,9 @@ title: Java 진영의 영속성 프레임워크(Persistence Framework)
 date: 2024-05-01
 tags:
   - iBATIS
+image:
+  path: /assets/thumbnails/spring-data.png
+  alt: 스프링 데이터
 ---
 ## 들어가며
 

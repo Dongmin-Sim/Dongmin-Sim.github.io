@@ -5,6 +5,9 @@ date: 2024-03-17
 tags:
   - build
   - ci/cd
+image:
+  path: /assets/thumbnails/java.png
+  alt: Gradle이란?
 ---
 ## 들어가며
 

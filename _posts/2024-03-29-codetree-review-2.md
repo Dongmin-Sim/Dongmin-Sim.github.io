@@ -5,6 +5,9 @@ date: 2024-03-29
 tags:
   - 회고
   - 코드트리
+image:
+  path: /assets/thumbnails/codetree.png
+  alt: 글또 X 코드트리
 ---
 ## 들어가며
 

@@ -3,6 +3,10 @@ layout: post
 title: 하루하루 써내려가는 일기 (백엔드-인프라 반상회 with 글또 10기)
 date: 2024-12-10
 tags: []
+description: 글또 커뮤니티의 백엔드-인프라 반상회를 다녀오며 느낀점을 작성한 회고입니다.
+image:
+  path: /assets/thumbnails/geultto-backend-infra-seminar-24.jpg
+  alt: 글또 마지막 백엔드 인프라 반상회
 ---
 ## 들어가며
 

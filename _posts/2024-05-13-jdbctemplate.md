@@ -4,6 +4,9 @@ title: jdbcTemplate 이란?
 date: 2024-05-13
 tags:
   - iBATIS
+image:
+  path: /assets/thumbnails/spring-data.png
+  alt: 스프링 데이터
 ---
 ## 들어가며
 

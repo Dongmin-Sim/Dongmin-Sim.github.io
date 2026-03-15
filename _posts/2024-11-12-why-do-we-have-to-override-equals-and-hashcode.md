@@ -7,6 +7,10 @@ tags:
   - Object
   - Equals
   - HashCode
+description: equals 와 hashcode 메서드에 대해 알아보고 이 두 메서드의 관계와 두 메서드를 일관성있게 재정의해야하는 이유에 대해 설명합니다.
+image:
+  path: /assets/thumbnails/why-do-we-have-to-override-equals-and-hashcode-thumbnail.png
+  alt: equals, hashcode를 왜 재정의해야 하나요?
 ---
 ## **들어가며**
 

@@ -3,6 +3,7 @@ layout: post
 title: Spring Security란, 인증과 인가
 date: 2025-01-29
 tags: []
+description: Spring Security가 무엇인지, 인증과 인가에 대한 이해를 목적으로 합니다.
 ---
 주제: 
 - 인증과 인가의 이해 

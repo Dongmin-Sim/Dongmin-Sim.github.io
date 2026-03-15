@@ -7,6 +7,8 @@ tags:
   - exception
   - checked-exception
   - unchecked-exception
+image:
+  path: /assets/thumbnails/exception.png
 ---
 ## 들어가며
 

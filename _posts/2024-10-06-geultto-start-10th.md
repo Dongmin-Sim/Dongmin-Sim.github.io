@@ -5,6 +5,10 @@ date: 2024-10-06
 tags:
   - 글또
   - 회고
+description: 마지막 글또 10기에 참여하면서 활동 목표와 생각을 정리한 다짐글입니다.
+image:
+  path: /assets/thumbnails/geultto-social-card.png
+  alt: 글또 9기 회고
 ---
 ## 10기를 시작하면서
 

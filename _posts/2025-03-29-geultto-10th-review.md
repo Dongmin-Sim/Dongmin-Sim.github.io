@@ -3,6 +3,10 @@ layout: post
 title: 나의 전환점 글또
 date: 2025-03-29
 tags: []
+description: 나의 첫 커뮤니티 글또를 돌아보며 회고한 글입니다.
+image:
+  path: /assets/thumbnails/geultto-social-card.png
+  alt: 글또를 마무리하며
 ---
 ## 들어가며
 
