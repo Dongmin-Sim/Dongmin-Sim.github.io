@@ -1,0 +1,23 @@
+---
+layout: default
+title: 시리즈
+permalink: /series/
+---
+
+<h1 class="page-title">시리즈</h1>
+
+<ul class="series-list">
+  {% for s in site.data.series %}
+    {% assign post_count = 0 %}
+    {% for post in site.posts %}
+      {% if post.series == s.id %}
+        {% assign post_count = post_count | plus: 1 %}
+      {% endif %}
+    {% endfor %}
+    <li class="series-list__item">
+      <a href="{{ '/series/' | append: s.id | append: '/' | relative_url }}" class="series-list__title">{{ s.title }}</a>
+      <p class="series-list__desc">{{ s.description }}</p>
+      <span class="series-list__count">{{ post_count }}개의 글</span>
+    </li>
+  {% endfor %}
+</ul>

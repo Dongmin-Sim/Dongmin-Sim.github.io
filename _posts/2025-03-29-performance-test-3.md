@@ -2,6 +2,8 @@
 layout: post
 title: 성능 테스트 초기 단계
 date: 2025-03-29
+series: performance-test
+series_order: 2
 tags: []
 ---
 ## 들어가며

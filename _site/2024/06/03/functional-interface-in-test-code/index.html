@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>함수형 인터페이스로 테스트 코드 리팩토링하기 — Blog</title>
+  <meta name="description" content="테스트 코드를 리팩토링하는 방법 중 함수형 인터페이스를 이용해보는 케이스를 다룹니다.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400&family=Noto+Serif+KR:wght@400;700&family=Noto+Serif:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/main.css">
+</head>
+<body>
+  <div class="container">
+    <header class="site-header">
+      <div class="site-header__inner">
+        <a href="/" class="site-title">Blog</a>
+        <nav class="site-nav">
+          <a href="/">글</a>
+          <a href="/series/">시리즈</a>
+          <a href="/about">소개</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <div class="post-wrapper">
+  <article>
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime="2024-06-03T00:00:00+09:00">2024년 06월 03일</time>
+      </div>
+      <h1 class="post-title">함수형 인터페이스로 테스트 코드 리팩토링하기</h1>
+    </header>
+
+    
+
+    <div class="post-content">
+      <h2 id="들어가며">들어가며</h2>
+
+<p>테스트 코드도 프로덕션 코드만큼이나 관리가 필요하다. 프로덕션 코드가 리팩토링되는 만큼 그에 맞춰 테스트 코드도 같이 관리되어야 유지보수에 도움이 되기 때문이다.</p>
+
+<p>그 중 테스트 코드중에서도 비슷한 Assertions 로직이 반복되는 경우가 있는데 이런 상황을 리팩토링하는 방법 중 하나를 소개해보려고 한다.</p>
+
+<p>여기서 소개하고자하는 내용은 함수형 인터페이스를 사용하는 방식이며, 함수형 인터페이스의 간단한 개념만 알고 있다면 이해하는데 그리 어렵지 않다.</p>
+
+<p>만일 함수형 인터페이스에 대해서 낯설다면 다음 글을 참고해 볼 수 있다. 👉<a href="">람다와 함수형 인터페이스</a></p>
+
+<h2 id="반복되는-assertions">반복되는 Assertions</h2>
+
+<p>여기 제품 ID 매개변수로 해당하는 제품의 정보를 요청하는 간단한 API Spec 이 있다.</p>
+
+<p><strong>제품 정보 요청</strong></p>
+
+<div class="language-http highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">GET 
+/api/v1/product/{productId}
+</span></code></pre></div></div>
+
+<p><strong>정상 응답</strong>
+정상 응답의 경우 data라는 필드로 해당 정보를 감싸서 공통응답을 내려주는 spec이 있다고 가정한다.</p>
+<div class="language-http highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="p">:</span> <span class="s">application/json;charset=UTF-8</span>
+<span class="s">{</span>
+<span class="s">	"data": {</span>
+<span class="s">		"id": {id},</span>
+<span class="s">		"price": {price}</span>
+<span class="s">	}</span>
+<span class="s">}</span>
+</code></pre></div></div>
+
+<p>그리고 다음 예시는 WebMvcTest를 이용한 ProductController 테스트 코드이다. 
+이 테스트 코드는 특정 API에 대한 요청과 그에 대응하는 응답에 대한 검증을 목표로 하고 있으며, 정상적인 흐름일 경우 그에 적절한 HttpStatus code와 response body의 정보가 예상한 대로 흘러가는지 검증한다.</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">final</span> <span class="nc">String</span> <span class="n">productId</span> <span class="o">=</span> <span class="s">"1"</span><span class="o">;</span>
+<span class="kd">final</span> <span class="nc">Long</span> <span class="n">price</span> <span class="o">=</span> <span class="mi">100L</span><span class="o">;</span>
+
+<span class="nd">@Test</span>  
+<span class="nd">@DisplayName</span><span class="o">(</span><span class="s">"재고조회 - 정상 요청일 경우, 200 status 와 재고 리턴"</span><span class="o">)</span>  
+<span class="kt">void</span> <span class="nf">test1000</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+    <span class="c1">// given  </span>
+    <span class="kd">final</span> <span class="nc">Product</span> <span class="n">product</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Product</span><span class="o">(</span><span class="n">productId</span><span class="o">,</span> <span class="n">price</span><span class="o">);</span>
+    <span class="nc">BDDMockito</span><span class="o">.</span><span class="na">given</span><span class="o">(</span><span class="n">productService</span><span class="o">.</span><span class="na">findByItemId</span><span class="o">(</span><span class="n">productId</span><span class="o">))</span>  
+	            <span class="o">.</span><span class="na">willReturn</span><span class="o">(</span><span class="n">product</span><span class="o">);</span>  
+  
+    <span class="c1">// when  </span>
+    <span class="kd">final</span> <span class="nc">MvcResult</span> <span class="n">result</span> <span class="o">=</span> <span class="n">mockMvc</span><span class="o">.</span><span class="na">perform</span><span class="o">(</span>
+			    <span class="n">get</span><span class="o">(</span><span class="s">"/api/v1/product/{productId}"</span><span class="o">,</span> <span class="n">productId</span><span class="o">)</span>
+			<span class="o">)</span>  
+            <span class="o">.</span><span class="na">andExpect</span><span class="o">(</span><span class="n">status</span><span class="o">().</span><span class="na">isOk</span><span class="o">())</span>  
+            <span class="o">.</span><span class="na">andReturn</span><span class="o">();</span>
+    <span class="c1">// then</span>
+    <span class="kd">final</span> <span class="nc">String</span> <span class="n">response</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="na">getResponse</span><span class="o">().</span><span class="na">getContentAsString</span><span class="o">();</span>
+    <span class="kd">final</span> <span class="nc">JsonNode</span> <span class="n">responseBody</span> <span class="o">=</span> <span class="n">objectMapper</span><span class="o">.</span><span class="na">readTree</span><span class="o">(</span><span class="n">response</span><span class="o">);</span>
+    <span class="kd">final</span> <span class="nc">JsonNode</span> <span class="n">dataField</span> <span class="o">=</span> <span class="n">responseBody</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">"data"</span><span class="o">);</span>
+    
+    <span class="n">assertEquals</span><span class="o">(</span><span class="n">product</span><span class="o">.</span><span class="na">getId</span><span class="o">(),</span> <span class="n">dataField</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">"id"</span><span class="o">).</span><span class="na">asText</span><span class="o">());</span>
+    <span class="n">assertEquals</span><span class="o">(</span><span class="n">product</span><span class="o">.</span><span class="na">getPrice</span><span class="o">(),</span> <span class="n">dataField</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">"price"</span><span class="o">).</span><span class="na">asLong</span><span class="o">());</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>해당 코드를 간단하게 설명해보자면</p>
+<ul>
+  <li>BDD style로 <code class="language-plaintext highlighter-rouge">given-when-then</code> 구조를 따르도록 작성된 테스트 코드이다.</li>
+  <li><code class="language-plaintext highlighter-rouge">given</code> 절에서는 ProductController 에서 참조하고 있는 productService의 findByProductId 메서드를 미리 지정해둔 Product를 리턴하도록 stubbing하고</li>
+  <li><code class="language-plaintext highlighter-rouge">when</code> 절에서 <code class="language-plaintext highlighter-rouge">"/api/v1/product/{productId}"</code> 로 productId를 담은 get 요청을 보낼때,
+    <ul>
+      <li>httpstatus 는 200(ok) 를 기대한다.</li>
+    </ul>
+  </li>
+  <li>그리고 <code class="language-plaintext highlighter-rouge">then</code> 절에서 응답값으로 내려온 json reponseBody가 “data” 를 가지고 있는 구조인지 검증하고
+    <ul>
+      <li>해당 값들도 미리 스터빙해둔 Product의 값으로 정상적으로 내려오는지를 검증한다.</li>
+    </ul>
+  </li>
+</ul>
+
+<p>그런데 위와 같은 <code class="language-plaintext highlighter-rouge">"정상 요청일 경우, 200 status 와 재고 리턴"</code>  테스트의 구조상, 정상흐름과 그에 대한 응답값을 확인하는 검증로직은 비단 조회뿐 아니라 다른 API에서도 사용될 것으로 예상해볼 수 있는데, 다음 예시도 한번 살펴보자.</p>
+
+<p><strong>제품 가격 수정 요청</strong></p>
+<pre><code class="language-http-request">PATCH /api/v1/product/{productId}/price
+Content-Type: application/json;charset=UTF-8
+
+{
+  "newPrice": {newPrice}
+}
+</code></pre>
+<p><strong>정상 응답</strong></p>
+<div class="language-http highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="p">:</span> <span class="s">application/json;charset=UTF-8</span>
+<span class="s">{</span>
+<span class="s">	"data": {</span>
+<span class="s">		"id": {id},</span>
+<span class="s">		"name": {name},</span>
+<span class="s">		"price": {price}</span>
+<span class="s">	}</span>
+<span class="s">}</span>
+</code></pre></div></div>
+<p><strong>테스트 코드</strong></p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">final</span> <span class="nc">String</span> <span class="n">productId</span> <span class="o">=</span> <span class="s">"1"</span><span class="o">;</span>
+<span class="kd">final</span> <span class="nc">Long</span> <span class="n">newPrice</span> <span class="o">=</span> <span class="mi">200L</span><span class="o">;</span>
+
+<span class="nd">@Test</span>  
+<span class="nd">@DisplayName</span><span class="o">(</span><span class="s">"재고수정 - 정상 요청일 경우, 200 status 와 수정된 재고 리턴"</span><span class="o">)</span>  
+<span class="kt">void</span> <span class="nf">test1000</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+    <span class="c1">// given  </span>
+    <span class="kd">final</span> <span class="nc">Product</span> <span class="n">updatedProduct</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Product</span><span class="o">(</span><span class="n">productId</span><span class="o">,</span> <span class="n">newPrice</span><span class="o">);</span>
+    <span class="nc">BDDMockito</span><span class="o">.</span><span class="na">given</span><span class="o">(</span><span class="n">productService</span><span class="o">.</span><span class="na">updateProduct</span><span class="o">(</span><span class="n">productId</span><span class="o">,</span> <span class="n">newPrice</span><span class="o">))</span>  
+	            <span class="o">.</span><span class="na">willReturn</span><span class="o">(</span><span class="n">updatedProduct</span><span class="o">);</span>  
+  
+    <span class="c1">// when  </span>
+	<span class="nc">String</span> <span class="n">content</span> <span class="o">=</span> <span class="s">"{\"newPrice\":"</span> <span class="o">+</span> <span class="n">newPrice</span> <span class="o">+</span> <span class="s">"}"</span><span class="o">;</span>
+    <span class="kd">final</span> <span class="nc">MvcResult</span> <span class="n">result</span> <span class="o">=</span> <span class="n">mockMvc</span><span class="o">.</span><span class="na">perform</span><span class="o">(</span>
+			<span class="n">patch</span><span class="o">(</span><span class="s">"/api/v1/product/{productId}/price"</span><span class="o">,</span> <span class="n">productId</span><span class="o">)</span>
+				<span class="o">.</span><span class="na">contentType</span><span class="o">(</span><span class="nc">MediaType</span><span class="o">.</span><span class="na">APPLICATION_JSON</span><span class="o">)</span>  
+				<span class="o">.</span><span class="na">content</span><span class="o">(</span><span class="n">content</span><span class="o">)</span>
+		<span class="o">)</span>
+        <span class="o">.</span><span class="na">andExpect</span><span class="o">(</span><span class="n">status</span><span class="o">().</span><span class="na">isOk</span><span class="o">())</span>  
+        <span class="o">.</span><span class="na">andReturn</span><span class="o">();</span>
+
+	<span class="c1">// then</span>
+	<span class="kd">final</span> <span class="nc">String</span> <span class="n">response</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="na">getResponse</span><span class="o">().</span><span class="na">getContentAsString</span><span class="o">();</span>  
+	<span class="kd">final</span> <span class="nc">JsonNode</span> <span class="n">responseBody</span> <span class="o">=</span> <span class="n">objectMapper</span><span class="o">.</span><span class="na">readTree</span><span class="o">(</span><span class="n">response</span><span class="o">);</span>  
+	<span class="kd">final</span> <span class="nc">JsonNode</span> <span class="n">dataField</span> <span class="o">=</span> <span class="n">responseBody</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">"data"</span><span class="o">);</span>  
+	<span class="n">assertEquals</span><span class="o">(</span><span class="n">updatedProduct</span><span class="o">.</span><span class="na">getId</span><span class="o">(),</span> <span class="n">dataField</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">"id"</span><span class="o">).</span><span class="na">asText</span><span class="o">());</span>  
+	<span class="n">assertEquals</span><span class="o">(</span><span class="n">updatedProduct</span><span class="o">.</span><span class="na">getName</span><span class="o">(),</span> <span class="n">dataField</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">"name"</span><span class="o">).</span><span class="na">asText</span><span class="o">());</span>  
+	<span class="n">assertEquals</span><span class="o">(</span><span class="n">updatedProduct</span><span class="o">.</span><span class="na">getPrice</span><span class="o">(),</span> <span class="n">dataField</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">"price"</span><span class="o">).</span><span class="na">asLong</span><span class="o">());</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>위와 같은 경우도, 정상흐름일 경우에 대한 응답 검증으로 <code class="language-plaintext highlighter-rouge">given</code>, <code class="language-plaintext highlighter-rouge">when</code> 절을 제외한 <code class="language-plaintext highlighter-rouge">then</code>절만 살짝씩 달라진다.</p>
+
+<p>이에 대해서 리팩토링을 수행해볼 수 있을 것 같다.</p>
+
+<h2 id="consumer">Consumer&lt;&gt;</h2>
+
+<h2 id="마무리">마무리</h2>
+
+    </div>
+
+    
+
+
+    
+  </article>
+
+  <aside class="toc">
+    <nav>
+      <ul></ul>
+    </nav>
+  </aside>
+</div>
+
+<script>
+(function () {
+  var headings = document.querySelectorAll('.post-content h2, .post-content h3');
+  if (headings.length < 2) return;
+
+  var ul = document.querySelector('.toc ul');
+  var links = [];
+
+  headings.forEach(function (h) {
+    if (!h.id) {
+      h.id = h.textContent
+        .trim()
+        .toLowerCase()
+        .replace(/[^\w\s가-힣-]/g, '')
+        .replace(/\s+/g, '-');
+    }
+
+    var li = document.createElement('li');
+    var a = document.createElement('a');
+    a.href = '#' + h.id;
+    a.textContent = h.textContent;
+    a.className = 'toc__link';
+    if (h.tagName === 'H3') li.className = 'toc__item--sub';
+
+    li.appendChild(a);
+    ul.appendChild(li);
+    links.push({ el: a, target: h });
+  });
+
+  var current = null;
+
+  function activate(link) {
+    if (current) current.classList.remove('toc__link--active');
+    link.classList.add('toc__link--active');
+    current = link;
+  }
+
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        var link = links.find(function (l) { return l.target === entry.target; });
+        if (link) activate(link.el);
+      }
+    });
+  }, { rootMargin: '0px 0px -70% 0px' });
+
+  headings.forEach(function (h) { observer.observe(h); });
+
+  var lastLink = links[links.length - 1].el;
+  window.addEventListener('scroll', function () {
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 50) {
+      activate(lastLink);
+    }
+  }, { passive: true });
+})();
+</script>
+
+    </main>
+
+    <footer class="site-footer">
+      <p>&copy; 2026 Blog</p>
+    </footer>
+  </div>
+</body>
+</html>

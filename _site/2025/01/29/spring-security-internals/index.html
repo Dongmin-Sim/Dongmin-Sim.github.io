@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Spring Security Internals — Blog</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400&family=Noto+Serif+KR:wght@400;700&family=Noto+Serif:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/main.css">
+</head>
+<body>
+  <div class="container">
+    <header class="site-header">
+      <div class="site-header__inner">
+        <a href="/" class="site-title">Blog</a>
+        <nav class="site-nav">
+          <a href="/">글</a>
+          <a href="/series/">시리즈</a>
+          <a href="/about">소개</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <div class="post-wrapper">
+  <article>
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime="2025-01-29T00:00:00+09:00">2025년 01월 29일</time>
+      </div>
+      <h1 class="post-title">Spring Security Internals</h1>
+    </header>
+
+    
+
+    <div class="post-content">
+      <!--  ![Pasted image 20240806142255](/assets/posts/Pasted image 20240806142255.png) -->
+
+<ul>
+  <li>SecurityContextHolder
+    <ul>
+      <li>SecurityContext를 제공하는 static 메소드(getContext)를 지원합니다.
+        <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">SecurityContext</span> <span class="n">securityContext</span> <span class="o">=</span> <span class="nc">SecurityContextHolder</span><span class="o">.</span><span class="na">getContext</span><span class="o">();</span>
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li>SecurityContext
+    <ul>
+      <li>SecurityContext는 접근 주체와 인증에 대한 정보를 담고 있는 Context입니다.</li>
+      <li>즉, Authentication을 담고 있습니다.</li>
+    </ul>
+  </li>
+  <li>Authentication
+    <ul>
+      <li>Principal과 GrantAuthority를 제공합니다.</li>
+      <li>인증이 이루어지면 해당 Authentication 이 저장됩니다.</li>
+    </ul>
+  </li>
+  <li>Principal
+    <ul>
+      <li>유저에 해당하는 정보입니다.</li>
+      <li>대부분의 경우 Principal로 UserDetail을 반환합니다.</li>
+    </ul>
+  </li>
+  <li>GrantAuthority
+    <ul>
+      <li>ROLE_ADMIN, ROLE_USER등 Principal이 가지고 있는 권한을 나타냅니다.</li>
+      <li>prefix로 ‘ROLE_‘이 붙습니다.</li>
+      <li>인증 이후에 인가를 할 때 사용합니다.</li>
+      <li>권한은 여러개 일 수 있기 때문에 <code class="language-plaintext highlighter-rouge">Collection&lt;GrantedAuthority&gt;</code> 형태로 제공합니다.</li>
+      <li>ex) ROLE_DEVELOPER, ROLE_ADMIN</li>
+    </ul>
+  </li>
+</ul>
+
+<p>ThreadLocal</p>
+
+<ul>
+  <li>WebMVC 기반으로 프로젝트를 만든다는 가정하에 대부분의 경우에는 요청 1개당 Thread 1개가 생성된다.</li>
+  <li>이때 ThreadLocal을 사용하면 Thread마다 고유한 공간을 만들수가 있고, 그곳에 SecurityContext를 저장할 수 있다.
+    <ul>
+      <li>요청 1개 - Thread 1개 - Security Context 1개</li>
+    </ul>
+  </li>
+  <li>그러나 ThreadLocal만 강제로 사용해야하는 것은 아니고, 원하면 SecurityContext 공유 전략을 바꿀 수 있다.
+    <ul>
+      <li>Mode_threadlocal
+        <ul>
+          <li>ThreadLocalSecurityContextHolderStrategy를 사용함.</li>
+          <li>ThreadLocal을 사용하여 같은 Thread 안에서 SecurityContext를 공유한다.</li>
+          <li>기본 설정 모드</li>
+        </ul>
+      </li>
+      <li>MODE_INHERITABLETHREADLOCAL
+        <ul>
+          <li>inheritableThreadLocalSecurtiryContextHolderStrategy를 사용합니다.</li>
+          <li>inheritableThreadLocal을 사용하여 자식 Thread까지도 SecurityContext를 공유합니다.</li>
+        </ul>
+      </li>
+      <li>MODE_GLOBAL
+        <ul>
+          <li>GlobalSecurityContextHolderStrategy를 사용합니다.</li>
+          <li>Global로 설정되어 애플리케이션 전체에서 SecurtiryContext를 공유합니다.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p>Spring Security의 기본적인 Security Context 관리 전략은 ThreadLocal을 사용하는 ThreadLocalSecurityContextHolderStrategy입니다. 
+변수는 전역변수, 지역변수와 같은 유효한 Scope를 가집니다. 마찬가지로 ThreadLocal은 Thread마다 고유한 영역을 가지고 있는 곳에 저장된 변수로 각각의 Thread안에서 유효한 변수입니다. 일반적인 서버의 경우에는 외부로부터 요청이 오면 그 요청 마다 Thread 1개가 할당됨. 따라서 ThreadLocal로 SecurityContext를 관리하게 되면, SecurityContext는 요청마다 독립적으로 관리될 수 있음.</p>
+
+<h2 id="passwordencoder">PasswordEncoder</h2>
+
+<p>Spring Security를 사용하면서 유저의 Password를 관리해야할 필요가 있다. 
+Password를 관리할 때는 일단 2가지가 만족되어야한다.</p>
+<ol>
+  <li>회원가입할 때 Passwod를 입력받으면 그 값을 암호화해서 저장해야한다.</li>
+  <li>로그인할 때 입력받은 Password와 회원가입할때의 Password를 비교할 수 있어야 한다.</li>
+</ol>
+
+<p>이 두 가지를 만족하기 위해서는 보통 해시 함수라는 알고리즘 방식을 이용한다. 
+해시 함수는 암호화는 비교적 쉽지만 복호화가 거의 불가능한 방식의 알고리즘. 
+이것을 사용하면 아래와 같은 방식으로 Password를 관리할 수 있음.</p>
+<ol>
+  <li>회원가입할 때 Password를 해시함수로 암호화해서 저장한다.</li>
+  <li>로그인할 때 password가 들어오면 같은 해시함수로 암호화한다.</li>
+  <li>저장된 값을 불러와서 2번의 암호화된 값과 비교한다.</li>
+  <li>동일하면 같은 암호로 인지한다.</li>
+</ol>
+
+<p>DelegatingPasswordEncoder
+스프링 시큐리티는 여러 PasswordEncoder를 선택할 수 있는 대표 PasswordEncoder를 따로 만들어서 사용하고 있음.</p>
+
+<ul>
+  <li>DelegatingPasswordEncoder 는 어떤 PasswordEncoder를 선택했는지 알려주기 위해서 앞의 암호화 방식을 표현하고 있음. 그렇기 때문에 어떤 암호는 bcrypt로 암호화 되고, 다른 암호는 sha256 되었다고 하더라고 DelegatingPasswordEncoder는 둘다 지원할 수 있음.</li>
+  <li>DelegatingPasswordEncoder는 인코딩 전략으로 Bcrypt를 기본 Encoder로 사용하고 있음.</li>
+</ul>
+
+<h3 id="passwordencoder-종류">PasswordEncoder 종류</h3>
+<ul>
+  <li>NoOpPasswordEncoder
+    <ul>
+      <li>암호화하지 않고 평문 그대로 사용함</li>
+      <li>password가 그대로 노출되기 때문에 현재는 deprecated되었고, 사용하지 않기 권장</li>
+    </ul>
+  </li>
+  <li>BcryptPasswordEncoder
+    <ul>
+      <li>Bcrypt 해시 함수를 사용한 PasswordEncoder.</li>
+      <li>Bctypt는 애초부터 패스워드 저장을 목적으로 설계되었음.</li>
+      <li>Password는 무작위로 여러번 시도하여 맞추는 해킹을 방지하기 위해 암호를 확인할 때 의도적으로 느리게 설정되어 있음.</li>
+      <li>BcryptPasswordEncoder는 강도를 설정할 수 있는데 강도가 높을 수록 오랜 시간이 걸린다.</li>
+    </ul>
+  </li>
+  <li>Pbkdf2PasswordEncoder
+    <ul>
+      <li>pbkdf2는 NIST(미국 표준 기술 연구소)에 의해서 승인된 알고리즘이고, 미국 정부 시스템에서도 사용</li>
+    </ul>
+  </li>
+  <li>ScryptPasswordEncoder
+    <ul>
+      <li>Scrypt는 Pbkdf2와 유사</li>
+      <li>해커가 무작위로 password를 맞추려고 시도할 때 메모리 사용량을 늘리거나 반대로 메모리 사용량을 줄여서 느린 공격을 실행할 수 밖에 없도록 의도적인 방식을 사용함.</li>
+      <li>따라서 공격이 매우 어렵고, Pbkdf2 보다 안전하다고 평가 받음.</li>
+      <li>보안에 아주 민감한 경우에 사용할 수 있음.</li>
+    </ul>
+  </li>
+</ul>
+
+    </div>
+
+    
+
+
+    
+  </article>
+
+  <aside class="toc">
+    <nav>
+      <ul></ul>
+    </nav>
+  </aside>
+</div>
+
+<script>
+(function () {
+  var headings = document.querySelectorAll('.post-content h2, .post-content h3');
+  if (headings.length < 2) return;
+
+  var ul = document.querySelector('.toc ul');
+  var links = [];
+
+  headings.forEach(function (h) {
+    if (!h.id) {
+      h.id = h.textContent
+        .trim()
+        .toLowerCase()
+        .replace(/[^\w\s가-힣-]/g, '')
+        .replace(/\s+/g, '-');
+    }
+
+    var li = document.createElement('li');
+    var a = document.createElement('a');
+    a.href = '#' + h.id;
+    a.textContent = h.textContent;
+    a.className = 'toc__link';
+    if (h.tagName === 'H3') li.className = 'toc__item--sub';
+
+    li.appendChild(a);
+    ul.appendChild(li);
+    links.push({ el: a, target: h });
+  });
+
+  var current = null;
+
+  function activate(link) {
+    if (current) current.classList.remove('toc__link--active');
+    link.classList.add('toc__link--active');
+    current = link;
+  }
+
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        var link = links.find(function (l) { return l.target === entry.target; });
+        if (link) activate(link.el);
+      }
+    });
+  }, { rootMargin: '0px 0px -70% 0px' });
+
+  headings.forEach(function (h) { observer.observe(h); });
+
+  var lastLink = links[links.length - 1].el;
+  window.addEventListener('scroll', function () {
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 50) {
+      activate(lastLink);
+    }
+  }, { passive: true });
+})();
+</script>
+
+    </main>
+
+    <footer class="site-footer">
+      <p>&copy; 2026 Blog</p>
+    </footer>
+  </div>
+</body>
+</html>

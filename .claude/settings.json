@@ -1,5 +1,19 @@
 {
   "enabledPlugins": {
     "interface-design@interface-design": true
+  },
+  "permissions": {
+    "allow": [
+      "Read(*)",
+      "Write(*)",
+      "Bash(git *)",
+      "Bash(bundle *)",
+      "Bash(jekyll *)",
+      "Bash(mkdir *)",
+      "Bash(cp *)",
+      "Bash(mv *)",
+      "Bash(chmod *)",
+      "Bash(ls *)"
+    ]
   }
 }

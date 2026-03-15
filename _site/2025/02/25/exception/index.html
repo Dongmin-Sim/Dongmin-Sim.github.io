@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>예상하지 못한 이벤트를 다루는 방법, 자바의 Exception — Blog</title>
+  <meta name="description" content="자바의 예외와 예외처리, 좋지 못한 예외처리 패턴에 대해 정리한 글입니다.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400&family=Noto+Serif+KR:wght@400;700&family=Noto+Serif:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/main.css">
+</head>
+<body>
+  <div class="container">
+    <header class="site-header">
+      <div class="site-header__inner">
+        <a href="/" class="site-title">Blog</a>
+        <nav class="site-nav">
+          <a href="/">글</a>
+          <a href="/series/">시리즈</a>
+          <a href="/about">소개</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <div class="post-wrapper">
+  <article>
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime="2025-02-25T00:00:00+09:00">2025년 02월 25일</time>
+      </div>
+      <h1 class="post-title">예상하지 못한 이벤트를 다루는 방법, 자바의 Exception</h1>
+    </header>
+
+    
+    <div class="post-thumbnail">
+      <img src="/assets/images/thumbnails/exception.png" alt="예상하지 못한 이벤트를 다루는 방법, 자바의 Exception">
+    </div>
+    
+
+    <div class="post-content">
+      <h2 id="들어가며">들어가며</h2>
+
+<p>프로그램을 개발하고, 실행하는 과정 속에서는 여러가지 이벤트들이 벌어지곤 한다. 그 중에서도 사용자의 잘못된 입력이라던가, 네트워크의 연결이 원활하지 않거나, 예상하지 못했던 수 많은 예외적인 이벤트들이 발생해 프로그램을 동작을 방해한다.</p>
+
+<p>예외적인 이벤트들은 비단 자바 뿐만 아니라 어떤 프로그래밍 언어를 사용하더라도 발생하게 된다. 이런 이벤트들을 적절히 처리하지 않으면 시스템의 안정성과 신뢰성을 보장할 수 없다. 따라서 개발자들은 견고한 프로그램을 위해 이러한 이벤트들을 잘 핸들링할 수 있어야한다.</p>
+
+<p>본 글에서는 예외란 무엇인지, 자바에서는 어떻게 예외 처리를 지원하는지에 대해 알아본다. 이어서 자바의 예외 종류, 좋지 못한 예외 처리 패턴들을 살펴본다. 예외에 대해서 생소하거나, 자바에서 예외를 어떻게 다루는지 궁금한 경우 이 글의 대상 독자이다.</p>
+
+<h2 id="예외란">예외란?</h2>
+
+<p>예외란 프로그램의 <strong>정상적 흐름을 벗어난 예외적</strong>인 사건, 상황을 의미한다.</p>
+
+<p>정상적 흐름에서 발생할 수 있는 예외적인 사건은 매우 여러가지가 존재한다. 프로그램 상의 오류일 수도 있고, 외부 시스템에 의한 것일 수도 있고 개발자가 의도한 것일수도 있다.</p>
+
+<p>예외들의 종류는 다양하다.</p>
+
+<ul>
+  <li>파일이 존재하지 않거나 읽을 수 없을 때</li>
+  <li>네트워크 연결이 끊어졌을 때</li>
+  <li>SQL 구문 오류가 있을 때</li>
+  <li>데이터베이스 연결 실패 시</li>
+  <li>수학적 연산 중에 0으로 나누려고 할 때</li>
+  <li>재귀 호출이 너무 깊어져서 스택 메모리가 초과되는 경우</li>
+  <li>메모리 할당이 부족할 때</li>
+</ul>
+
+<h2 id="예외를-마주하게-된다면">예외를 마주하게 된다면</h2>
+
+<p>예외가 발생하면 프로그램 코드 내에서 취할 수 있는 일은 다음과 같다.</p>
+
+<h3 id="1-예외-상황이-현재-위치에서-복구가-가능한-상황이라면">1. 예외 상황이 현재 위치에서 복구가 가능한 상황이라면</h3>
+
+<p>예외란 정상적인 흐름에서 발생된 예외 이벤트라 했다. 때문에 다시 <strong>정상흐름으로 복구</strong>할 수 있다면 그렇게 해야한다.</p>
+
+<p>예를 들어:</p>
+
+<ul>
+  <li><strong>재시도</strong>: 외부 시스템과의 연결이 일시적으로 끊어진 경우, 몇 초 후 다시 시도하는 방식으로 복구할 수 있다.</li>
+  <li><strong>대안 방법을 찾기</strong>: 네트워크 요청이 실패했을 때, 데이터베이스에서 해당 데이터를 찾아오는 방법으로 대체할 수 있다. 이를 통해 예외 상황을 처리하고 정상 흐름으로 복구할 수 있다.</li>
+</ul>
+
+<p>이처럼 복구가 가능한 예외는 최소한의 비용으로 빠르게 해결하는 것이 적절하다.</p>
+
+<h3 id="2-현재-위치에서-복구가-불가능하다면">2. 현재 위치에서 복구가 불가능하다면</h3>
+
+<p>현재 위치에서 이 예외를 복구하는 것이 가능하지 않거나 적절하지 않다면 이 예외에 대해서 최소한의 처리를 진행해주고 다시 <strong>예외를 외부로 넘김으로써 예외 처리가 필요함</strong>을 알려야한다.</p>
+
+<p>최소한의 처리는 현재 예외에 대한 정보를 남기기 위해 <strong>로깅</strong>을 하거나, 별도의 다른 예외로 변환하는 작업들을 생각해볼 수 있다. 다른 예외로 변환하는 이유는 예외 발생 원인과 관련된 상세 정보를 제공하여 문제 해결에 도움을 주기 위해서다.</p>
+
+<p>예외를 다른 예외로 변환할 때는 <strong>더 높은 레벨의 예외</strong>나 <strong>의미 있는 예외</strong>를 사용하는 것이 중요하다. 예외가 너무 일반적이거나, 정보가 부족하면 문제 해결이 어려울 수 있기 때문이다. 예를 들어, <code class="language-plaintext highlighter-rouge">IOException</code>을 <code class="language-plaintext highlighter-rouge">RuntimeException</code>으로 바꿀 때, <strong>더 구체적인 메시지</strong>와 <strong>원본 예외</strong>를 전달하는 것이 중요하다. 이를 통해 예외를 발생시킨 원인을 명확하게 파악하고, 예외 처리가 필요한 곳에서 적절한 대응을 할 수 있도록 돕는다.</p>
+
+<p>또한, 예외를 변환하는 과정에서 예외 체인을 유지하는 것이 좋다. 즉, 원본 예외를 <strong><code class="language-plaintext highlighter-rouge">cause</code></strong> 로 포함시켜서, 나중에 예외를 추적할 때 원인 파악이 용이하도록 한다.</p>
+
+<p>예를 들어:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">try</span> <span class="o">{</span>
+    <span class="c1">// 예외가 발생할 수 있는 코드</span>
+    <span class="nc">FileReader</span> <span class="n">file</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">FileReader</span><span class="o">(</span><span class="s">"data.txt"</span><span class="o">);</span>
+<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+	<span class="c1">// 다시 예외를 발생시킨다.</span>
+    <span class="k">throw</span> <span class="k">new</span> <span class="nf">FileReadException</span><span class="o">(</span><span class="s">"파일을 읽는 중 오류 발생"</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>위와 같이 <code class="language-plaintext highlighter-rouge">IOException</code>을 <code class="language-plaintext highlighter-rouge">FileReadException</code>으로 변환할 때, <code class="language-plaintext highlighter-rouge">IOException</code>을 <code class="language-plaintext highlighter-rouge">FileReadException</code>의 <code class="language-plaintext highlighter-rouge">cause</code>로 전달함으로써 예외를 추적할 수 있다.</p>
+
+<p>이러한 방식으로 예외 처리를 하면, 시스템이 예상치 못한 문제를 만났을 때 보다 나은 대처가 가능하고, 나중에 문제를 해결할 때 유용한 정보를 제공할 수 있다.</p>
+
+<h2 id="예외-처리-매커니즘">예외 처리 매커니즘</h2>
+
+<p>자바에서는 이러한 비정상적인 예외 이벤트를 다룰 수 있는 예외 처리 매커니즘들을 제공한다.</p>
+
+<h3 id="try-catch-finally">try-catch-finally</h3>
+
+<p>첫번째는 try-catch-finally 구문이다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">try</span> <span class="o">{</span>
+    <span class="c1">// 예외가 발생할 수 있는 코드</span>
+<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">SpecificException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+    <span class="c1">// 예외 처리 코드</span>
+<span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+    <span class="c1">// 예외 발생 여부와 관계없이 실행되는 코드</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<ul>
+  <li><strong>try</strong>: 예외가 발생할 수 있는 코드를 작성하는 블록.</li>
+  <li><strong>catch</strong>: 발생한 예외를 처리하는 블록.</li>
+  <li><strong>finally</strong>: 예외가 발생하든 발생하지 않든 반드시 실행되는 블록. 자원 해제 등을 처리할 때 유용.</li>
+</ul>
+
+<p><code class="language-plaintext highlighter-rouge">try</code> 블록은 우리가 기대하는 정상 흐름이 담긴 코드이자 예외가 발생할 가능성이 존재하는 코드가 위치하는 블록이다. 이때 <code class="language-plaintext highlighter-rouge">try</code> 블록에서 예외가 발생하면 해당 예외를 처리할 수 있는 <code class="language-plaintext highlighter-rouge">catch</code> 블록으로 넘어오게 된다. <code class="language-plaintext highlighter-rouge">catch</code> 블록에서는 인자로 넘어온 예외를 가지고 로깅을 하거나, 재시도를 시도하거나 예외를 복구할 수 있는 코드를 작성할 수 있다. 이 공간은 예외 처리를 수행하기 위한 목적의 공간이다.</p>
+
+<p><code class="language-plaintext highlighter-rouge">catch</code> 문은 여러 블록으로 작성이 가능하다. 위에서 아래로 내려오면서 필터처럼 <code class="language-plaintext highlighter-rouge">try</code>문 안에서 발생하는 예외와 일치하는 <code class="language-plaintext highlighter-rouge">catch</code> 블록이 실행된다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">try</span> <span class="o">{</span>
+	<span class="c1">// 코드 실행</span>
+<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">FileNotFoundException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+	<span class="c1">// FileNotFoundException일 경우 처리</span>
+<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+    <span class="c1">// IOException일 경우 처리</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>위에서 아래로 내려오면서</p>
+
+<p><code class="language-plaintext highlighter-rouge">finally</code>는 예외가 발생하든 발생하지 않든 <strong>무조건 실행</strong>되는 블록이기 때문에, 예외 처리의 유무와 관계없이 리소스를 정리하고 닫는 작업, <strong>리소스를 반드시 해제해야 하는 경우</strong>에 사용된다. 예를 들어, 데이터베이스 연결, 파일 I/O 작업, 네트워크 연결 등에서 리소스를 열고 닫는 작업을 수행하는 도중 예외가 발생하게 된다면 자원이 해제되지 않아 예상치 못한 문제가 발생할 수 있기 때문이다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">Connection</span> <span class="n">conn</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="k">try</span> <span class="o">{</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="nc">DriverManager</span><span class="o">.</span><span class="na">getConnection</span><span class="o">(</span><span class="s">"//"</span><span class="o">);</span>
+    <span class="c1">// DB 작업</span>
+<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">SQLException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+<span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+    <span class="c1">// 예외가 발생하든 발생하지 않든 연결을 닫는 작업 수행</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">conn</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="n">conn</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">SQLException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+</code></pre></div></div>
+
+<p>예를 들어 자바의 가비지 컬렉터(GC)는 객체를 자동으로 관리하지만, 파일 핸들, 데이터베이스 커넥션 같은 리소스는 GC의 관리 대상이 아니다. 즉, GC가 객체를 수거하더라도 내부적으로 사용하던 리소스는 여전히 점유될 수 있다. 따라서 명시적으로 닫아주지 않으면 프로그램이 종료될 때까지 해당 리소스가 해제되지 않으며, 점점 더 많은 메모리와 CPU 리소스를 소비하게 될 수도 있다.</p>
+
+<p>만일 아래와 같이 <code class="language-plaintext highlighter-rouge">try</code>문에서 예외가 발생하지 않고 정상 흐름으로 진행되다가 <code class="language-plaintext highlighter-rouge">return</code> 을 만나게 된다면 바로 메서드가 종료될까? <code class="language-plaintext highlighter-rouge">finally</code> 구문이 실행이 될까?</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">static</span> <span class="nc">String</span> <span class="nf">readFile</span><span class="o">(</span><span class="nc">String</span> <span class="n">filePath</span><span class="o">)</span> <span class="o">{</span>
+	<span class="nc">FileReader</span> <span class="n">fileReader</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+	<span class="nc">BufferedReader</span> <span class="n">bufferedReader</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+
+	<span class="k">try</span> <span class="o">{</span>
+		<span class="n">fileReader</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">FileReader</span><span class="o">(</span><span class="n">filePath</span><span class="o">);</span>
+		<span class="n">bufferedReader</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">BufferedReader</span><span class="o">(</span><span class="n">fileReader</span><span class="o">);</span>
+
+		<span class="nc">String</span> <span class="n">content</span> <span class="o">=</span> <span class="n">bufferedReader</span><span class="o">.</span><span class="na">readLine</span><span class="o">();</span>
+		<span class="k">return</span> <span class="n">content</span><span class="o">;</span> <span class="c1">// 메서드 종료</span>
+	<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+		<span class="c1">// 예외처리</span>
+	<span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+		<span class="c1">// finally 블럭이 실행될까?</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">finally</code> 블럭은 실행이 실행된 후에야 비로소<code class="language-plaintext highlighter-rouge">return</code> 구문이 실행된다.</p>
+
+<h3 id="try-with-resources">try-with-resources</h3>
+
+<p>자바에서는 자원 해제 방식을 <code class="language-plaintext highlighter-rouge">try</code> 문의 괄호 안에서 선언한 리소스를 자동으로 정리해주는 문법도 지원한다.
+대신 괄호 안에 올 수 있는 리소스는 <code class="language-plaintext highlighter-rouge">AutoCloseable</code> 인터페이스를 구현한 리소스만 위치할 수 있다. 이 인터페이스에는 리소스를 정리하는 close 메서드를 구현해야하도록 정의하고 있다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">try</span> <span class="o">(</span><span class="nc">BufferedReader</span> <span class="n">br</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">BufferedReader</span><span class="o">(</span><span class="k">new</span> <span class="nc">FileReader</span><span class="o">(</span><span class="s">"example.txt"</span><span class="o">));)</span> <span class="o">{</span>
+    <span class="n">br</span><span class="o">.</span><span class="na">readLine</span><span class="o">();</span>
+<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">throw</span> <span class="k">new</span> <span class="nf">RuntimeException</span><span class="o">(</span><span class="n">e</span><span class="o">);</span>
+<span class="o">}</span>
+
+
+<span class="c1">// AutoCloseable.java</span>
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">AutoCloseable</span> <span class="o">{</span>
+	<span class="kt">void</span> <span class="nf">close</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">Exception</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h3 id="throws">throws</h3>
+
+<p>throws 키워드는 예외를 위임하기 위한 키워드이다. 예외에 대한 처리를 현재 메서드를 호출한 곳으로 위임하는 것이다. 사실상 예외처리를 진행할 수 없으니 다른 곳에서 해결하라는 의미와 같다.</p>
+
+<p>이 throws 키워드는 다음과 같이 사용이 가능하다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kt">void</span> <span class="nf">readFile</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">IOException</span> <span class="o">{</span>
+	<span class="c1">// 파일 읽어오기</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>위의 예시코드와 같이 메서드 선언부에 사용하며, <code class="language-plaintext highlighter-rouge">throws</code> 다음에 오는 예외들이 발생할 수 있음을 알려주는 역할을 한다. 예외는 위의 예시인 <code class="language-plaintext highlighter-rouge">IOException</code> 뿐만 아니라 쉼표 구분을 통해 여러 예외의 다중 선언이 가능하다.</p>
+
+<p>바로 다음의 예외 종류에서도 설명하겠지만 <code class="language-plaintext highlighter-rouge">throws</code> 키워드는 <code class="language-plaintext highlighter-rouge">Checked Exception</code>를 주로 명시하는데 사용된다.</p>
+
+<h2 id="예외의-종류">예외의 종류</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Throwable
+ ├── Error (프로그램 복구 불가능)
+ ├── Exception (일반적인 예외)
+      ├── Checked Exception (컴파일 타임 예외)
+      ├── Unchecked Exception (런타임 예외)
+</code></pre></div></div>
+
+<p>자바의 모든 예외, 즉 Exception은 <code class="language-plaintext highlighter-rouge">Throwable</code>이라는 클래스를 구현하고 있다. 이 <code class="language-plaintext highlighter-rouge">Throwable</code> 클래스는 자바에서 모든 예외와 오류의 슈퍼 클래스가 된다. 하이어라키의 각 요소들과 예외 종류들을 알아본다.</p>
+
+<h3 id="error">Error</h3>
+
+<p>시스템 발생하는 치명적인 오류를 의미한다. 이 경우는 프로그램에서 <strong>복구할 수 없는 심각한 문제</strong>가 발생했음을 의미한다.</p>
+
+<p>개발 코드에서 Error를 잡아봤자 사실 할 수 있는 것이 없다. 굳이 예외로 잡지 않는 것이 좋다. 이런 Error의 경우에는 별도의 조치가 필요한 수준이기 때문에 로그를 남겨 문제의 원인을 파악하도록 해야한다. 알람이나 notification을 연동하는 방법 등을 고려해볼 수 있다.</p>
+
+<p>대표적인 Error의 예시로 아래 Error 들이 존재한다.</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">OutOfMemoryError</code> (메모리 부족)</li>
+  <li><code class="language-plaintext highlighter-rouge">StackOverflowError</code> (스택 오버플로우)</li>
+  <li><code class="language-plaintext highlighter-rouge">VirtualMachineError</code> (JVM 관련 오류)</li>
+</ul>
+
+<h3 id="exceptionchecked">Exception(Checked)</h3>
+
+<p>자바는 예외를 크게 2가지로 나누어서 표현한다. 예외를 나누는 큰 분류 기준은 컴파일러가 예외처리를 강제하는지 하지 않는지에 따라 나뉜다.</p>
+
+<p>두 예외 중 컴파일에 의해 검사되는 예외들을 Checked Exception이라 부른다. Checked Exception은 기본적으로 <strong>예외 발생이 예상</strong>되고 <strong>복구가 가능한 예외</strong>들을 표현하기 위한 목적으로 설계되었다. 때문에 Checked Exception는 컴파일러가 예외 발생 예상 지점을 확인하고 개발자에게 <strong>예외처리를 강제</strong>한다. 고로 예외를 처리할 수 있는 try-catch나, throws를 반드시 사용해야만 한다. 그렇지 않으면 컴파일이 불가능하다.</p>
+
+<p>에를 들어, 대표적인 Checked Exception들은 다음과 같다.</p>
+
+<p><code class="language-plaintext highlighter-rouge">IOException</code> : 파일이 존재하지 않을 가능성이 있기 때문에 <strong>컴파일 타임에 예외 처리를 강제</strong>해야 한다.
+<code class="language-plaintext highlighter-rouge">ClassNotFoundException</code> : 특정 클래스가 존재하지 않는 경우를 반드시 대비해야 하기 때문.</p>
+
+<h3 id="runtime-exceptionunchecked">Runtime-Exception(Unchecked)</h3>
+
+<p>Unchecked Exception은 복구가 어렵거나, 할 수 없는 프로그램사의 예외를 나타내기 위해 설계되었다. 컴파일러에 의해 검사되지 않기 때문에 Unchecked라고 불린다. 이 예외는 예외처리를 강요받지 않는다. Unchecked Exception에 해당되는 예외들은 <code class="language-plaintext highlighter-rouge">RuntimeException</code> 이라는 별도의 클래스 상속받는다.</p>
+
+<p>애플리케이션이 일반적으로 예상하거나 복구할 수 없는 예외들이 이에 해당된다. 일반적으로 논리 오류나 부적절한 API 사용과 같은 프로그래밍 버그를 나타낸다.</p>
+
+<p>대표적으로 부적절한 인자가 전달될때 발생하는 <code class="language-plaintext highlighter-rouge">IllegalArgumentException</code>이나 유효하지 않은 인덱스에 접근할 때 발생하는 <code class="language-plaintext highlighter-rouge">IndexOutOfBoundsException</code>가 존재한다.</p>
+
+<h2 id="checked-exception에-대한-고찰">Checked Exception에 대한 고찰</h2>
+
+<p>최근에는 Checked Exception을 사용하지 않는 방향으로 나아가고 있음. Java를 제외한 Kotlin에서도 기타 최신언어들에서 Checked Exception을 사용하지 않는 방향으로 변화하고 있다.</p>
+
+<p>이러한 방향성의 대표적인 이유들은 다음과 같다.</p>
+
+<p>Checked Exception의 경우 예외를 처리하도록 컴파일러에서 강제하기 때문에, try-catch 블록을 작성하거나, throws 키워드를 추가해야만 한다.</p>
+
+<p>Checked Exception는 개발자가 복구해야만 하는 예외를 표시한 것이지만, 만약 호출된 곳에서 예외를 처리할 수 없는 경우에 이 예외를 호출한 곳으로 위임을 해야하는데, 당장에 예외를 처리할 수 없는 상황이라면 적절한 예외처리를 할 수 있는 곳까지 호출 스택을 따라 exception이 전파되는 현상이 발생하게된다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ExceptionTestClass</span> <span class="o">{</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="n">methodA</span><span class="o">();</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="c1">// 예외처리</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">methodA</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">IOException</span> <span class="o">{</span>
+        <span class="n">methodB</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">methodB</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">IOException</span> <span class="o">{</span>
+        <span class="n">methodC</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">methodC</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">IOException</span> <span class="o">{</span>
+        <span class="nc">CustomReader</span> <span class="n">aa</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">CustomReader</span><span class="o">(</span><span class="s">"aa"</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>이런 형태가 되어버리면 <code class="language-plaintext highlighter-rouge">methodA</code>과 <code class="language-plaintext highlighter-rouge">methodB</code> 는 예외를 단순히 전달, 위임만 하지만, 특정 예외에 강하게 결합되는 결과가 되어버린다. 만약 <code class="language-plaintext highlighter-rouge">CustomException</code>이 다른 예외로 변경된다면 throws 로 전파된 코드들에도 변경이 불가피해진다. 뿐만 아니라 모든 Checked Exception에 대해서 <code class="language-plaintext highlighter-rouge">try-catch</code> 하는 코드의 가독성도 그리 좋지 못하다는 문제점이 있다.</p>
+
+<p>자바에서는 이런 경우 Unchecked Exception으로 예외를 변환하는 방식으로 이 문제를 해결할 수 있다. Unchecked Exception은 <code class="language-plaintext highlighter-rouge">RuntimeException</code>을 상속한 예외로, 컴파일 타임에 예외 처리를 강제하지 않기 때문에 코드의 결합도를 줄이고 더 유연하게 예외를 처리할 수 있다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ExceptionTestClass</span> <span class="o">{</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="n">methodA</span><span class="o">();</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">RuntimeException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="c1">// 예외처리</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">methodA</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">methodB</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">methodB</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">methodC</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">methodC</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="nc">CustomReader</span> <span class="n">aa</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">CustomReader</span><span class="o">(</span><span class="s">"aa"</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nf">RuntimeException</span><span class="o">(</span><span class="n">e</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>Unchecked Exception을 사용하면 <code class="language-plaintext highlighter-rouge">methodC</code>과 <code class="language-plaintext highlighter-rouge">method2</code>가 예외를 던지더라도, 이를 호출하는 곳에서 예외를 처리할지 여부를 선택할 수 있다. 이렇게 예외를 처리할 필요 없이 더 간결한 코드로 유지할 수 있게 되며, 예외 처리의 강제성을 줄여서 코드의 유연성을 높일 수 있다.</p>
+
+<p>아래 글은 Checked Exception에 대해 다소 비판적인 의견이 포함된 글들이다.</p>
+
+<ul>
+  <li><a href="https://literatejava.com/exceptions/checked-exceptions-javas-biggest-mistake/">checked excpetion은 자바의 가장 큰 실수다.</a></li>
+  <li><a href="https://phauer.com/2015/checked-exceptions-are-evil/">checked excpetion은 사악하다</a></li>
+</ul>
+
+<h2 id="좋지-않은-예외처리란">좋지 않은 예외처리란?</h2>
+
+<h3 id="예외를-흐름제어로-사용하는-경우">예외를 흐름제어로 사용하는 경우</h3>
+
+<p>예외는 프로그램 흐름의 제어를 위한 도구가 아니라, 프로그램의 비정상적인 상태나 오류를 다루기 위한 방법으로 사용되어야 한다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">FlowControlExample</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="c1">// 사용자가 입력한 값에 따라 분기</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">someCondition</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">throw</span> <span class="k">new</span> <span class="nf">RuntimeException</span><span class="o">(</span><span class="s">"정상적인 흐름에서 예외를 던짐"</span><span class="o">);</span>
+            <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"정상적인 처리"</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">RuntimeException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"예외로 흐름을 제어한 경우: "</span> <span class="o">+</span> <span class="n">e</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">try</code> 문에서 정상 흐름일 경우에도 조건에 맞지 않는다면 <code class="language-plaintext highlighter-rouge">catch</code>문으로 이어지기 때문에 실제로 이것이 예외 상황으로 발생한 것인지 하나의 분기 흐름인 것인지 코드를 읽고 이해하는 시간이 한번 더 필요하기 때문에 가독성이 좋지 않다.</p>
+
+<p>또한 예외가 발생할 때는 예외 객체가 생성되고, (객체 생성 비용) 이 예외를 처리하기 위한 스택 트레이스를 추적하는 과정이 발생을 하게 된다. 이 예외가 어디서, 왜 발생했는지 전체 추적 정보를 저장해야하는 스택 트레이스 정보 또한 처리를 해야하기 때문에 성능상에도 그리 좋지 않다. 즉, 처리 비용이 일반적인 분기문에 비해 크다. 때문에 굳이 예외를 이용해 흐름제어를 해야할 이유가 없다.</p>
+
+<h3 id="예외를-무시하는-코드">예외를 무시하는 코드</h3>
+
+<p>예외 발생을 무시하도록 작성해서는 안된다. 단순히 예외를 잡아서 로깅만 한다던가 이에 대한 처리를 묵인해버리는 경우는 바람직한 코드가 아니다. 아래 코드를 보자.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">try</span> <span class="o">{</span>
+	<span class="c1">// code</span>
+<span class="o">}</span> <span class="k">catch</span><span class="o">(</span><span class="nc">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+	<span class="n">logger</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="s">"파일을 읽는 중 오류 발생: "</span> <span class="o">+</span> <span class="n">e</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+	<span class="c1">// do nothing</span>
+<span class="o">}</span>
+
+</code></pre></div></div>
+
+<p>위 코드의 경우 예외를 로깅한다는 행위를 통해서 catch 문에서 ‘무언가’처리한 것 같은 느낌을 주지만, 사실 어떠한 처리도 진행하지 않았다. 이 catch 문이 지나가버린 이후에는 이 예외가 발생했다는 것을 어떠한 상위 메서드에서도 알 수 없다. 문제가 발생했지만, 나만 볼 수 있는 메모장에 적어두고 다른 할일을 하는 것과 동일하다.</p>
+
+<p>로깅을 남기는 행위는 예외를 해결하는 행위가 아니기 때문이다. 예외는 비정상적인 이벤트로 이는 복구되거나, 처리가 되어야 하는 대상이다. 예를 들어 예외가 발생할 경우 사용자에게 예외가 발생함을 알리고, 정책에 따라 기본 설정값으로 반환을 한다거나, 적절한 예외로 변환해서 다시 상위 메서드에게 전달하는 방법들이 이에 해당된다.</p>
+
+<h3 id="추상적인-예외-사용">추상적인 예외 사용</h3>
+
+<p>구체적이지 않는 예외를 사용을 지양해야한다. <code class="language-plaintext highlighter-rouge">Exception</code> 클래스는 자바의 예외 계층 구조에서 <strong>모든 예외의 최상위 클래스</strong>이다. 즉, <code class="language-plaintext highlighter-rouge">Exception</code>은 구체적인 예외 정보를 담기에는 무리가 존재한다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kt">void</span> <span class="nf">readFile</span><span class="o">(</span><span class="nc">String</span> <span class="n">fileName</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">fileName</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="nf">Exception</span><span class="o">(</span><span class="s">"파일 이름이 null일 수 없습니다."</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="nc">File</span> <span class="n">file</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">File</span><span class="o">(</span><span class="n">fileName</span><span class="o">);</span>
+    <span class="k">if</span> <span class="o">(!</span><span class="n">file</span><span class="o">.</span><span class="na">exists</span><span class="o">())</span> <span class="o">{</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="err"></span><span class="nc">Exception</span><span class="o">(</span><span class="s">"파일이 존재하지 않습니다: "</span> <span class="o">+</span> <span class="n">fileName</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="c1">// 파일 읽기 작업</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>위 코드에서는 입력 인자가 잘못되어도, 파일이 실제로 존재하지 않아도 모두 Exception이라는 추상적인 예외 타입으로 두 가지 다른 속성의 예외가 표현된다. 그러면 포함되는 메시지를 통해서 예외를 구분하면되지 않을까 하지만, 메시지를 통해서 예외를 구분하는 방식을 다음과 같은 이유로 그리 좋은 방식이 아니다.</p>
+
+<p>메시지의 형식이나, 내용이 일관적이지 않을 수 있다. 동일한 상황에 대해서 문자열을 동일하게 작성하는 것은 어렵고, 한글자만 달라져도 이를 쉽게 파악할 수 없다. 또 메시지 변경을 해야한다면, 해당 문자열을 사용하는 모든 코드를 수정해야만한다. 또한 문자열만으로는 예외의 원인이나 성격이 바로 파악하기가 어렵다. 한번 문자열을 읽고 이게 어떤 예외상황인지 이해하고 변환하는 과정이 일어나므로 가독성이 좋지 않다.</p>
+
+<p>아래와 같이 상황에 맞는 구체적인 예외 클래스를 사용해 예외 상황을 구분하는 것이 좋다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kt">void</span> <span class="nf">readFile</span><span class="o">(</span><span class="nc">String</span> <span class="n">fileName</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">FileNotFoundException</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">fileName</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="nf">IllegalArgumentException</span><span class="o">(</span><span class="s">"파일 이름이 null일 수 없습니다."</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="nc">File</span> <span class="n">file</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">File</span><span class="o">(</span><span class="n">fileName</span><span class="o">);</span>
+    <span class="k">if</span> <span class="o">(!</span><span class="n">file</span><span class="o">.</span><span class="na">exists</span><span class="o">())</span> <span class="o">{</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="err"></span><span class="nc">FileNotFoundException</span><span class="o">(</span><span class="s">"파일이 존재하지 않습니다: "</span> <span class="o">+</span> <span class="n">fileName</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="c1">// 파일 읽기 작업</span>
+<span class="o">}</span>
+
+</code></pre></div></div>
+
+<h2 id="마무리하며">마무리하며</h2>
+
+<p>예외란 무엇인지 알아보고 예외상황을 마주했을때 취할 수 있는 액션들에 대해서 알아보았다. 이어서 자바에서는 예외를 처리하기 위한 구체적인 매커니즘과 문법, <code class="language-plaintext highlighter-rouge">try-catch</code>, <code class="language-plaintext highlighter-rouge">throws</code>에 대해서 정리했다. 자바에서 지원하는 예외의 종류(Checked Exception, Unchecked Exception)에 차이점에 대해서 알아보고 Checked Exception에 대한 논쟁을 살펴보며 Checked Exception 가지는 한계점에 대해서도 간략하게 알아봤다. 예시를 통해서 각 상황별로 예외를 처리하는 안티패턴들에 대해서 이야기해보았다.</p>
+
+<p>적절한 복구와 위임을 통한 예외 처리는 예상하지 못한 예외들을 핸들링하여 소프트웨어의 안정성을 확보하는 가장 기본적인 방법이자 코드의 가독성과 유지보수성을 높이는 중요한 접근법이다. 그러나 예외를 무분별하게 사용하거나, 예외 메시지에 의존하는 등의 <strong>안티패턴</strong>을 피하고, <strong>구체적이고 명확한 예외 처리</strong>를 통해 예외 발생 원인에 대한 적절한 대응을 하는 것이 중요하다.</p>
+
+    </div>
+
+    
+
+
+    
+    <div class="post-tags">
+      
+        <a href="/tags/#exception">#exception</a>
+      
+        <a href="/tags/#checked-exception">#checked-exception</a>
+      
+        <a href="/tags/#unchecked-exception">#unchecked-exception</a>
+      
+    </div>
+    
+  </article>
+
+  <aside class="toc">
+    <nav>
+      <ul></ul>
+    </nav>
+  </aside>
+</div>
+
+<script>
+(function () {
+  var headings = document.querySelectorAll('.post-content h2, .post-content h3');
+  if (headings.length < 2) return;
+
+  var ul = document.querySelector('.toc ul');
+  var links = [];
+
+  headings.forEach(function (h) {
+    if (!h.id) {
+      h.id = h.textContent
+        .trim()
+        .toLowerCase()
+        .replace(/[^\w\s가-힣-]/g, '')
+        .replace(/\s+/g, '-');
+    }
+
+    var li = document.createElement('li');
+    var a = document.createElement('a');
+    a.href = '#' + h.id;
+    a.textContent = h.textContent;
+    a.className = 'toc__link';
+    if (h.tagName === 'H3') li.className = 'toc__item--sub';
+
+    li.appendChild(a);
+    ul.appendChild(li);
+    links.push({ el: a, target: h });
+  });
+
+  var current = null;
+
+  function activate(link) {
+    if (current) current.classList.remove('toc__link--active');
+    link.classList.add('toc__link--active');
+    current = link;
+  }
+
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        var link = links.find(function (l) { return l.target === entry.target; });
+        if (link) activate(link.el);
+      }
+    });
+  }, { rootMargin: '0px 0px -70% 0px' });
+
+  headings.forEach(function (h) { observer.observe(h); });
+
+  var lastLink = links[links.length - 1].el;
+  window.addEventListener('scroll', function () {
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 50) {
+      activate(lastLink);
+    }
+  }, { passive: true });
+})();
+</script>
+
+    </main>
+
+    <footer class="site-footer">
+      <p>&copy; 2026 Blog</p>
+    </footer>
+  </div>
+</body>
+</html>

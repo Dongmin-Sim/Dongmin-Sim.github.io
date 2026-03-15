@@ -2,6 +2,8 @@
 layout: post
 title: SQL의 조건 분기에 대해
 date: 2025-03-29
+series: sql-optimization
+series_order: 1
 tags: []
 ---
 ## 들어가며

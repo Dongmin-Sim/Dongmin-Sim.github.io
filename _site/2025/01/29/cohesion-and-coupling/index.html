@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>변경의 관점에서 보는 응집도와 결합도 — Blog</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400&family=Noto+Serif+KR:wght@400;700&family=Noto+Serif:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/main.css">
+</head>
+<body>
+  <div class="container">
+    <header class="site-header">
+      <div class="site-header__inner">
+        <a href="/" class="site-title">Blog</a>
+        <nav class="site-nav">
+          <a href="/">글</a>
+          <a href="/series/">시리즈</a>
+          <a href="/about">소개</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <div class="post-wrapper">
+  <article>
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime="2025-01-29T00:00:00+09:00">2025년 01월 29일</time>
+      </div>
+      <h1 class="post-title">변경의 관점에서 보는 응집도와 결합도</h1>
+    </header>
+
+    
+
+    <div class="post-content">
+      <h2 id="들어가며">들어가며</h2>
+
+<h2 id="응집도">응집도</h2>
+<p>모듈에 포함된 내부 요소들이 연관돼 있는 정도를 나타냄. 
+모듈 내의 요소들이 하나의 목적을 위해 긴밀하게 협력한다면 그 모듈은 높은 응집도를 가진다.</p>
+
+<p>객체 지향 관점에서 응집도는 객체 또는 클래스에 얼마나 관련 높은 책임들을 할당했는지를 나타낸다.</p>
+
+<h2 id="결합도">결합도</h2>
+<p>의존성 정도를 나타낸다. 다른 모듈에 대해 얼마나 많은 지식을 갖고 있는지를 나타내는 척도이다. 
+어떤 모듈이 다른 모듈에 대해 너무 자세한 부분까지 알고 있다면 두 모듈은 높은 결합도를 가진다.</p>
+
+<p>객체 지향의 관점에서 결합도는 객체 또는 클래스가 협력에 필요한 적절한 수준의 관계만을 유지하고 있는지를 나타낸다.</p>
+
+<h2 id="높은-응집도와-낮은-결합도란">높은 응집도와 낮은 결합도란</h2>
+
+<p>좋은 설계는 변경과 관련이 높다. 응집도와 결합도의 높고 낮음의 정도가 설계의 품질을 결정하는 기준이 된다면, 응집도와 결합도는 변경에 관련된 것이다.</p>
+
+<p>변경의 관점에서 <strong>응집도란 변경이 발생할 때 모듈 내부에서 발생하는 변경의 정도</strong></p>
+
+<p>변경의 관점에서 <strong>결합도는 한 모듈이 변경되기 위해서 다른 모듈의 변경을 요구하는 정도</strong>
+또한 변경의 원인을 이용해 결합도의 개념을 설명할 수도 있다. 
+내부 구현을 변경했을때, 이것이 다른 모듈에 영향을 미치는 경우에는 두 모듈 사이의 결합도가 높다고 표현한다.</p>
+
+<p>반면 퍼블릭 인터페이스를 수정했을 때만 다른 모듈에 영향을 미치는 경우에는 결합도가 낮다고 표현한다.</p>
+
+<h2 id="실험">실험</h2>
+
+<h2 id="마무리">마무리</h2>
+
+<p>응집도와 결합도는 변경에 관련이 깊다.</p>
+
+<p>어떤 설계를 쉽게 변경할 수 있다면 높은 응집도를 가진 요소들로 구성돼있고, 요소들 사이의 결합도가 낮을 확률이 높다.</p>
+
+<p>만일 코드가 변경에 강하게 저항하고 있다면 구성 요소들의 응집도가 낮고, 요소들이 서로 강하게 결합돼있을 확률이 높다.</p>
+
+<p>그리고 이 개념들은 캡슐화의 정도에 따라, 영향을 끼친다. 캡슐화를 지키면 모듈안의 응집도는 높아지고, 결합도는 낮아질 확률이 높다.</p>
+
+    </div>
+
+    
+
+
+    
+  </article>
+
+  <aside class="toc">
+    <nav>
+      <ul></ul>
+    </nav>
+  </aside>
+</div>
+
+<script>
+(function () {
+  var headings = document.querySelectorAll('.post-content h2, .post-content h3');
+  if (headings.length < 2) return;
+
+  var ul = document.querySelector('.toc ul');
+  var links = [];
+
+  headings.forEach(function (h) {
+    if (!h.id) {
+      h.id = h.textContent
+        .trim()
+        .toLowerCase()
+        .replace(/[^\w\s가-힣-]/g, '')
+        .replace(/\s+/g, '-');
+    }
+
+    var li = document.createElement('li');
+    var a = document.createElement('a');
+    a.href = '#' + h.id;
+    a.textContent = h.textContent;
+    a.className = 'toc__link';
+    if (h.tagName === 'H3') li.className = 'toc__item--sub';
+
+    li.appendChild(a);
+    ul.appendChild(li);
+    links.push({ el: a, target: h });
+  });
+
+  var current = null;
+
+  function activate(link) {
+    if (current) current.classList.remove('toc__link--active');
+    link.classList.add('toc__link--active');
+    current = link;
+  }
+
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        var link = links.find(function (l) { return l.target === entry.target; });
+        if (link) activate(link.el);
+      }
+    });
+  }, { rootMargin: '0px 0px -70% 0px' });
+
+  headings.forEach(function (h) { observer.observe(h); });
+
+  var lastLink = links[links.length - 1].el;
+  window.addEventListener('scroll', function () {
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 50) {
+      activate(lastLink);
+    }
+  }, { passive: true });
+})();
+</script>
+
+    </main>
+
+    <footer class="site-footer">
+      <p>&copy; 2026 Blog</p>
+    </footer>
+  </div>
+</body>
+</html>

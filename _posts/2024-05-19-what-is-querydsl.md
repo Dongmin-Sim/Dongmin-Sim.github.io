@@ -2,6 +2,8 @@
 layout: post
 title: Querydsl이란?
 date: 2024-05-19
+series: spring-data
+series_order: 5
 tags: []
 description: 본 글에서는 Querydsl 의 개요와 특징에 대해서 설명합니다.
 image:

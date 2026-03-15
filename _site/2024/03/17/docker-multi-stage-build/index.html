@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Docker 멀티 스테이지 빌드로 스프링 애플리케이션 빌드 — Blog</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400&family=Noto+Serif+KR:wght@400;700&family=Noto+Serif:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/main.css">
+</head>
+<body>
+  <div class="container">
+    <header class="site-header">
+      <div class="site-header__inner">
+        <a href="/" class="site-title">Blog</a>
+        <nav class="site-nav">
+          <a href="/">글</a>
+          <a href="/series/">시리즈</a>
+          <a href="/about">소개</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <div class="post-wrapper">
+  <article>
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime="2024-03-17T00:00:00+09:00">2024년 03월 17일</time>
+      </div>
+      <h1 class="post-title">Docker 멀티 스테이지 빌드로 스프링 애플리케이션 빌드</h1>
+    </header>
+
+    
+
+    <div class="post-content">
+      <h2 id="들어가며">들어가며</h2>
+
+<h2 id="도커-레이어-개념">도커 레이어 개념</h2>
+
+<h2 id="멀티-스테이지-빌드란-">멀티 스테이지 빌드란 ?</h2>
+
+<h2 id="실습">실습</h2>
+
+<h3 id="목표">목표</h3>
+<ul>
+  <li>일반 빌드와 멀티스테이지 빌드를 확인해보기
+    <ul>
+      <li>용량 차이: 레이어 확인해보기</li>
+      <li>속도 차이 :</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="환경">환경</h3>
+<p>타겟 배포 환경</p>
+
+<p>java : 17</p>
+
+<p>애플리케이션 : sprint boot 
+데이터베이스 : mysql</p>
+
+<p>애플리케이션 이미지 : openjdk
+데이터베이스 이미지 : mysql8</p>
+
+<h3 id="플로우">플로우</h3>
+<ol>
+  <li></li>
+</ol>
+
+<h4 id="일반빌드">일반빌드</h4>
+
+<h4 id="멀티스테이지-빌드">멀티스테이지 빌드</h4>
+
+<h3 id="목표-확인">목표 확인</h3>
+<h4 id="dive-로-확인">dive 로 확인</h4>
+
+<h2 id="마무리하며">마무리하며</h2>
+
+
+    </div>
+
+    
+
+
+    
+    <div class="post-tags">
+      
+        <a href="/tags/#build">#build</a>
+      
+        <a href="/tags/#spring">#spring</a>
+      
+        <a href="/tags/#docker">#docker</a>
+      
+    </div>
+    
+  </article>
+
+  <aside class="toc">
+    <nav>
+      <ul></ul>
+    </nav>
+  </aside>
+</div>
+
+<script>
+(function () {
+  var headings = document.querySelectorAll('.post-content h2, .post-content h3');
+  if (headings.length < 2) return;
+
+  var ul = document.querySelector('.toc ul');
+  var links = [];
+
+  headings.forEach(function (h) {
+    if (!h.id) {
+      h.id = h.textContent
+        .trim()
+        .toLowerCase()
+        .replace(/[^\w\s가-힣-]/g, '')
+        .replace(/\s+/g, '-');
+    }
+
+    var li = document.createElement('li');
+    var a = document.createElement('a');
+    a.href = '#' + h.id;
+    a.textContent = h.textContent;
+    a.className = 'toc__link';
+    if (h.tagName === 'H3') li.className = 'toc__item--sub';
+
+    li.appendChild(a);
+    ul.appendChild(li);
+    links.push({ el: a, target: h });
+  });
+
+  var current = null;
+
+  function activate(link) {
+    if (current) current.classList.remove('toc__link--active');
+    link.classList.add('toc__link--active');
+    current = link;
+  }
+
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        var link = links.find(function (l) { return l.target === entry.target; });
+        if (link) activate(link.el);
+      }
+    });
+  }, { rootMargin: '0px 0px -70% 0px' });
+
+  headings.forEach(function (h) { observer.observe(h); });
+
+  var lastLink = links[links.length - 1].el;
+  window.addEventListener('scroll', function () {
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 50) {
+      activate(lastLink);
+    }
+  }, { passive: true });
+})();
+</script>
+
+    </main>
+
+    <footer class="site-footer">
+      <p>&copy; 2026 Blog</p>
+    </footer>
+  </div>
+</body>
+</html>

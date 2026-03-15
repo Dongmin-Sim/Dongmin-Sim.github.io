@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Spring Data — Blog</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400&family=Noto+Serif+KR:wght@400;700&family=Noto+Serif:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/main.css">
+</head>
+<body>
+  <div class="container">
+    <header class="site-header">
+      <div class="site-header__inner">
+        <a href="/" class="site-title">Blog</a>
+        <nav class="site-nav">
+          <a href="/">글</a>
+          <a href="/series/">시리즈</a>
+          <a href="/about">소개</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <div class="post-wrapper">
+  <article>
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime="2025-01-29T00:00:00+09:00">2025년 01월 29일</time>
+      </div>
+      <h1 class="post-title">Spring Data</h1>
+    </header>
+
+    
+
+    <div class="post-content">
+      <h2 id="들어가며">들어가며</h2>
+
+<p>배경
+spring data</p>
+
+<p>Spring Data 프로젝트는 Spring 생태계에서 데이터 액세스 작업을 보다 간편하고 효율적으로 처리하기 위해 만들어졌습니다. 이 프로젝트의 탄생 배경은 다음과 같은 요인들에 기인합니다:</p>
+
+<ol>
+  <li><strong>복잡한 데이터 액세스 계층</strong>: 기존에는 데이터베이스나 다른 데이터 저장소와의 상호 작용을 위해 복잡한 JDBC 코드를 작성해야 했습니다. 이로 인해 애플리케이션의 유지 보수성과 확장성이 저하되었습니다.</li>
+  <li><strong>다양한 데이터 저장소 지원</strong>: 관계형 데이터베이스 뿐만 아니라 NoSQL 데이터베이스나 기타 데이터 저장소에 대한 지원이 필요했습니다. Spring Data는 다양한 종류의 데이터 저장소를 효과적으로 다룰 수 있는 추상화 계층을 제공합니다.</li>
+  <li><strong>반복적인 코드 작성</strong>: CRUD(Create, Read, Update, Delete) 기능을 구현하는 데 필요한 반복적인 코드 작성이 필요했습니다. Spring Data는 이러한 반복적인 작업을 최소화하고자 표준화된 리포지토리 인터페이스를 제공합니다.</li>
+  <li><strong>객체-관계 매핑(Object-Relational Mapping, ORM)의 필요성</strong>: 객체 지향 프로그래밍과 관계형 데이터베이스 간의 매핑 작업은 번거롭고 복잡합니다. Spring Data JPA는 JPA(Java Persistence API)를 기반으로 한 ORM 솔루션을 제공하여 객체-관계 매핑을 간소화합니다.</li>
+  <li><strong>데이터 액세스 작업의 추상화</strong>: 데이터 액세스 작업은 애플리케이션의 핵심 로직과 분리되어야 합니다. Spring Data는 이러한 데이터 액세스 계층을 추상화하여 비즈니스 로직과의 분리를 도와줍니다.</li>
+</ol>
+
+<p>이러한 배경 아래에서 Spring Data는 다양한 데이터 액세스 기술을 통합하고 표준화된 API를 제공하여 개발자가 데이터 액세스 작업을 더욱 쉽게 처리할 수 있도록 도와줍니다.</p>
+
+<h2 id="spring-data">Spring Data</h2>
+
+<p>관계형, 비관계형, 맵 리덕션 등 데이터 엑세스에 대해 일관된 접근 방식을 제공하는 것이 목표</p>
+
+<ul>
+  <li>CRUD + 쿼리</li>
+  <li>동일한 인터페이스
+    <ul>
+      <li>db에 따른 차이만 있을뿐. 그래서 기본적인 crud에 대한 더 높은 수준의 추상화를 하여 인터페이스 화한것</li>
+    </ul>
+  </li>
+  <li>페이징 처리
+    <ul>
+      <li>기본적인 페이징 처리 통합</li>
+    </ul>
+  </li>
+  <li>쿼리 메서드</li>
+  <li>id 값만 넘겨도 도메인클래스로 바인딩</li>
+</ul>
+
+<p><a href="https://github.com/spring-projects/spring-data-commons">Spring Data Commons</a> - Core Spring concepts underpinning every Spring Data module.</p>
+
+<p>기타 메인 모듈들</p>
+
+<p>-</p>
+<ul>
+  <li><a href="https://spring.io/projects/spring-data-jdbc">Spring Data JDBC</a> - Spring Data repository support for JDBC.</li>
+  <li><a href="https://spring.io/projects/spring-data-r2dbc">Spring Data R2DBC</a> - Spring Data repository support for R2DBC.</li>
+  <li><a href="https://spring.io/projects/spring-data-jpa">Spring Data JPA</a> - Spring Data repository support for JPA.</li>
+  <li><a href="https://github.com/spring-projects/spring-data-keyvalue">Spring Data KeyValue</a> - <code class="language-plaintext highlighter-rouge">Map</code> based repositories and SPIs to easily build a Spring Data module for key-value stores.</li>
+  <li><a href="https://spring.io/projects/spring-data-ldap">Spring Data LDAP</a> - Spring Data repository support for <a href="https://github.com/spring-projects/spring-ldap">Spring LDAP</a>.</li>
+  <li><a href="https://spring.io/projects/spring-data-mongodb">Spring Data MongoDB</a> - Spring based, object-document support and repositories for MongoDB.</li>
+  <li><a href="https://spring.io/projects/spring-data-redis">Spring Data Redis</a> - Easy configuration and access to Redis from Spring applications.</li>
+  <li><a href="https://spring.io/projects/spring-data-rest">Spring Data REST</a> - Exports Spring Data repositories as hypermedia-driven RESTful resources.</li>
+  <li><a href="https://spring.io/projects/spring-data-cassandra">Spring Data for Apache Cassandra</a> - Easy configuration and access to Apache Cassandra or large scale, highly available, data oriented Spring applications.</li>
+  <li><a href="https://spring.io/projects/spring-data-geode">Spring Data for Apache Geode</a> - Easy configuration and access to Apache Geode for highly consistent, low latency, data oriented Spring applications.</li>
+</ul>
+
+<h2 id="마무리">마무리</h2>
+
+    </div>
+
+    
+
+
+    
+    <div class="post-tags">
+      
+        <a href="/tags/#iBATIS">#iBATIS</a>
+      
+    </div>
+    
+  </article>
+
+  <aside class="toc">
+    <nav>
+      <ul></ul>
+    </nav>
+  </aside>
+</div>
+
+<script>
+(function () {
+  var headings = document.querySelectorAll('.post-content h2, .post-content h3');
+  if (headings.length < 2) return;
+
+  var ul = document.querySelector('.toc ul');
+  var links = [];
+
+  headings.forEach(function (h) {
+    if (!h.id) {
+      h.id = h.textContent
+        .trim()
+        .toLowerCase()
+        .replace(/[^\w\s가-힣-]/g, '')
+        .replace(/\s+/g, '-');
+    }
+
+    var li = document.createElement('li');
+    var a = document.createElement('a');
+    a.href = '#' + h.id;
+    a.textContent = h.textContent;
+    a.className = 'toc__link';
+    if (h.tagName === 'H3') li.className = 'toc__item--sub';
+
+    li.appendChild(a);
+    ul.appendChild(li);
+    links.push({ el: a, target: h });
+  });
+
+  var current = null;
+
+  function activate(link) {
+    if (current) current.classList.remove('toc__link--active');
+    link.classList.add('toc__link--active');
+    current = link;
+  }
+
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        var link = links.find(function (l) { return l.target === entry.target; });
+        if (link) activate(link.el);
+      }
+    });
+  }, { rootMargin: '0px 0px -70% 0px' });
+
+  headings.forEach(function (h) { observer.observe(h); });
+
+  var lastLink = links[links.length - 1].el;
+  window.addEventListener('scroll', function () {
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 50) {
+      activate(lastLink);
+    }
+  }, { passive: true });
+})();
+</script>
+
+    </main>
+
+    <footer class="site-footer">
+      <p>&copy; 2026 Blog</p>
+    </footer>
+  </div>
+</body>
+</html>

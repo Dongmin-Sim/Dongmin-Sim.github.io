@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SQL의 조건 분기에 대해 — Blog</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400&family=Noto+Serif+KR:wght@400;700&family=Noto+Serif:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/main.css">
+</head>
+<body>
+  <div class="container">
+    <header class="site-header">
+      <div class="site-header__inner">
+        <a href="/" class="site-title">Blog</a>
+        <nav class="site-nav">
+          <a href="/">글</a>
+          <a href="/series/">시리즈</a>
+          <a href="/about">소개</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <div class="post-wrapper">
+  <article>
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime="2025-03-29T00:00:00+09:00">2025년 03월 29일</time>
+      </div>
+      <h1 class="post-title">SQL의 조건 분기에 대해</h1>
+    </header>
+
+    
+
+    <div class="post-content">
+      <h2 id="들어가며">들어가며</h2>
+
+<p>SQL은 조건 분기를 할때 <code class="language-plaintext highlighter-rouge">CASE</code> 식을 주로 사용함. <code class="language-plaintext highlighter-rouge">CASE</code> 식은 프로그래밍 언어에서  <code class="language-plaintext highlighter-rouge">IF-THEN-ELSE</code> 구문 혹은 <code class="language-plaintext highlighter-rouge">SWITCH</code> 에 대응되는 SQL 조건 분기 식에 해당됨.</p>
+
+<p>SQL을 작성할때 효율적으로 조건분기할 수 있는 포인트들을 확인해본다.</p>
+
+<h2 id="union을-조건-분기에-사용하지-않기">UNION을 조건 분기에 사용하지 않기</h2>
+
+<p>보통 UNION을 사용하여 조건분기를 하는 경우가 있는데, 이는 그리 권장되는 방법이 아니다. 왜냐하면 성능적인 측면에서 단점이 존재하기 때문이다.  마치 하나의 SQL 구문을 실행하는 것처럼 보이지만, 내부적으로는 여러개의 SELECT 구문을 실행하도록 실행계획이 만들어지기 때문이다. 이는 테이블에 접근하는 횟수가 증가해 I/O 비용을 크게 늘릴 수 있기 때문이다.</p>
+
+<p>예를 들어 배타적인 조건의 결과가 필요한 경우 종종 UNION을 사용하여 쿼리를 작성할 수 있다. 만일 2024년 전의 데이터와 2024년 이후의 데이터가 각각 필요한 경우, 각각에 조건에 해당되는 쿼리를 실행 후 UNION으로 결과를 합치는 쿼리를 작성할 수 있다.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">select</span> <span class="n">Items</span><span class="p">.</span><span class="n">item_name</span><span class="p">,</span> <span class="n">Items</span><span class="p">.</span><span class="nb">year</span><span class="p">,</span> <span class="n">price_tax_ex</span> <span class="k">as</span> <span class="n">price</span>  
+<span class="k">from</span> <span class="n">Items</span>  
+<span class="k">where</span> <span class="nb">year</span> <span class="o">&lt;=</span> <span class="mi">2001</span>  
+<span class="k">union</span> <span class="k">all</span>  
+<span class="k">select</span> <span class="n">item_name</span><span class="p">,</span> <span class="nb">year</span><span class="p">,</span> <span class="n">price_tax_in</span> <span class="k">as</span> <span class="n">price</span>  
+<span class="k">from</span> <span class="n">Items</span>  
+<span class="k">where</span> <span class="nb">year</span> <span class="o">&gt;=</span> <span class="mi">2002</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>이 쿼리는 어떻게 동작할까?  예상대로 사실상 같은 테이블에 동일한 쿼리를 두 번 실행하는 것과 같다.</p>
+
+<p>다음은 해당 쿼리에 대한 실행 계획이다. <code class="language-plaintext highlighter-rouge">type</code> 은 쿼리 실행시 테이블에 접근하는 방식을 나타내는 지표이다. 이는 쿼리의 성능을 파악하는데 아주 중요한 지표다. 그 중에 <code class="language-plaintext highlighter-rouge">ALL</code>은 테이블을 풀 스캔한다는 의미이다. 조건을 비교하기 위해 레코드 하나하나를 모두 살피는 방식으로 가장 느린 접근 방법이다.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>id</th>
+      <th>select_type</th>
+      <th>table</th>
+      <th>partitions</th>
+      <th>type</th>
+      <th>possible_keys</th>
+      <th>key</th>
+      <th>key_len</th>
+      <th>ref</th>
+      <th>rows</th>
+      <th>filtered</th>
+      <th>extra</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>PRIMARY</td>
+      <td>Items</td>
+      <td> </td>
+      <td>ALL</td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td>12</td>
+      <td>33.33</td>
+      <td>Using where</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>UNION</td>
+      <td>Items</td>
+      <td> </td>
+      <td>ALL</td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td>12</td>
+      <td>33.33</td>
+      <td>Using where</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>그 외에도 다음과 같은 값들이 존재한다.</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">index</code>: 인덱스 전체 스캔 (전체 인덱스 검색)</li>
+  <li><code class="language-plaintext highlighter-rouge">range</code>: 인덱스 범위 스캔 (조건 범위에 맞는 인덱스 사용)</li>
+  <li><code class="language-plaintext highlighter-rouge">ref</code>: 인덱스 조회, 동등 비교 (비유니크 인덱스나 복합 인덱스 일부 사용)</li>
+  <li><code class="language-plaintext highlighter-rouge">eq_ref</code>: 유니크 인덱스 사용, 1:1 매칭 (조인 시 가장 효율적)</li>
+  <li><code class="language-plaintext highlighter-rouge">const</code> / <code class="language-plaintext highlighter-rouge">system</code>: 상수 테이블, 매우 빠름 (하나의 행만 참조)</li>
+  <li><code class="language-plaintext highlighter-rouge">NULL</code>: 테이블 접근하지 않음</li>
+</ul>
+
+<p>아래는 실행계획 분석. <code class="language-plaintext highlighter-rouge">Table scan on Items</code> 을 2번 실행해서 결과를 합치는 것을 볼 수 있다.</p>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-&gt; Append  <span class="o">(</span><span class="nv">cost</span><span class="o">=</span>2.9 <span class="nv">rows</span><span class="o">=</span>8<span class="o">)</span> <span class="o">(</span>actual <span class="nb">time</span><span class="o">=</span>0.0637..0.114 <span class="nv">rows</span><span class="o">=</span>12 <span class="nv">loops</span><span class="o">=</span>1<span class="o">)</span>  
+    -&gt; Stream results  <span class="o">(</span><span class="nv">cost</span><span class="o">=</span>1.45 <span class="nv">rows</span><span class="o">=</span>4<span class="o">)</span> <span class="o">(</span>actual <span class="nb">time</span><span class="o">=</span>0.0568..0.0676 <span class="nv">rows</span><span class="o">=</span>6 <span class="nv">loops</span><span class="o">=</span>1<span class="o">)</span>  
+        -&gt; Filter: <span class="o">(</span>Items.<span class="sb">`</span>year<span class="sb">`</span> &lt;<span class="o">=</span> 2001<span class="o">)</span>  <span class="o">(</span><span class="nv">cost</span><span class="o">=</span>1.45 <span class="nv">rows</span><span class="o">=</span>4<span class="o">)</span> <span class="o">(</span>actual <span class="nb">time</span><span class="o">=</span>0.0328..0.0416 <span class="nv">rows</span><span class="o">=</span>6 <span class="nv">loops</span><span class="o">=</span>1<span class="o">)</span>  
+            -&gt; Table scan on Items  <span class="o">(</span><span class="nv">cost</span><span class="o">=</span>1.45 <span class="nv">rows</span><span class="o">=</span>12<span class="o">)</span> <span class="o">(</span>actual <span class="nb">time</span><span class="o">=</span>0.0311..0.0381 <span class="nv">rows</span><span class="o">=</span>12 <span class="nv">loops</span><span class="o">=</span>1<span class="o">)</span>  
+    -&gt; Stream results  <span class="o">(</span><span class="nv">cost</span><span class="o">=</span>1.45 <span class="nv">rows</span><span class="o">=</span>4<span class="o">)</span> <span class="o">(</span>actual <span class="nb">time</span><span class="o">=</span>0.027..0.035 <span class="nv">rows</span><span class="o">=</span>6 <span class="nv">loops</span><span class="o">=</span>1<span class="o">)</span>  
+        -&gt; Filter: <span class="o">(</span>Items.<span class="sb">`</span>year<span class="sb">`</span> <span class="o">&gt;=</span> 2002<span class="o">)</span>  <span class="o">(</span><span class="nv">cost</span><span class="o">=</span>1.45 <span class="nv">rows</span><span class="o">=</span>4<span class="o">)</span> <span class="o">(</span>actual <span class="nb">time</span><span class="o">=</span>0.0226..0.0284 <span class="nv">rows</span><span class="o">=</span>6 <span class="nv">loops</span><span class="o">=</span>1<span class="o">)</span>  
+            -&gt; Table scan on Items  <span class="o">(</span><span class="nv">cost</span><span class="o">=</span>1.45 <span class="nv">rows</span><span class="o">=</span>12<span class="o">)</span> <span class="o">(</span>actual <span class="nb">time</span><span class="o">=</span>0.0206..0.0254 <span class="nv">rows</span><span class="o">=</span>12 <span class="nv">loops</span><span class="o">=</span>1<span class="o">)</span>
+</code></pre></div></div>
+
+<p>결국 테이블 풀 스캔을 유발하는 쿼리가 2번 나가게되는 것이다. 테이블의 레코드를 하나씩 비교하니 당연히 테이블의 레코드 수에 따라 쿼리를 실행하는 비용도 선형적으로 증가하게 될 것이다.</p>
+
+<p>따라서 SELECT 구문 전체를 여러번 사용하는 방식은 지양해야한다. UNION을 사용하게된다면 이런 구조의 쿼리를 작성할 확률이 높아진다.</p>
+
+<h2 id="select-절에서-조건-분기를-하자">SELECT 절에서 조건 분기를 하자.</h2>
+
+<p>위의 쿼리와 동일한 결과를 출력하지만 조건 분기를 where절에서 하지 않는 쿼리를 작성할 수 있다. 바로 <code class="language-plaintext highlighter-rouge">CASE</code> 식을 사용해서 가능하다.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">select</span> <span class="n">item_name</span><span class="p">,</span>  
+   <span class="nb">year</span><span class="p">,</span>  
+   <span class="k">case</span>  
+	   <span class="k">when</span> <span class="nb">year</span> <span class="o">&lt;=</span> <span class="mi">2001</span> <span class="k">then</span> <span class="n">price_tax_ex</span>  
+	   <span class="k">when</span> <span class="nb">year</span> <span class="o">&gt;=</span> <span class="mi">2002</span> <span class="k">then</span> <span class="n">price_tax_in</span>  
+	   <span class="k">end</span> <span class="k">as</span> <span class="n">price</span>  
+<span class="k">from</span> <span class="n">Items</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>위 쿼리의 실행계획도 다음과 같다.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>id</th>
+      <th>select_type</th>
+      <th>table</th>
+      <th>partitions</th>
+      <th>type</th>
+      <th>possible_keys</th>
+      <th>key</th>
+      <th>key_len</th>
+      <th>ref</th>
+      <th>rows</th>
+      <th>filtered</th>
+      <th>extra</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>SIMPLE</td>
+      <td>Items</td>
+      <td> </td>
+      <td>ALL</td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td>12</td>
+      <td>100</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-&gt; Table scan on Items  <span class="o">(</span><span class="nv">cost</span><span class="o">=</span>1.45 <span class="nv">rows</span><span class="o">=</span>12<span class="o">)</span> <span class="o">(</span>actual <span class="nb">time</span><span class="o">=</span>0.0213..0.0256 <span class="nv">rows</span><span class="o">=</span>12 <span class="nv">loops</span><span class="o">=</span>1<span class="o">)</span>
+</code></pre></div></div>
+
+<p>테이블의 접근 한번에 동일한 결과를 얻었으니, 앞선 두 번의 쿼리를 UNION 하는 방식보다는 2배 성능이 좋아졌다.</p>
+
+<p>SQL 구문의 성능이 좋은지, 나쁜지는 반드시 실행 계획을 통해서 판단을 해야만 한다. 안타깝게도 SQL은 실제 어떻게 실행되는지 사용자가 신경쓰지 않도록 선언적으로 설계되었지만, DBMS와 여러 설정 상황들로 인한 성능차이가 나는 한계점 때문에 이러한 실행계획을 확인해야만 한다.</p>
+
+<p>SQL을 작성하여 조건 분기를 할때 주의해야할 것은 ‘구문’이 아닌 ‘식’을 위주로 생각하면 성능 측면에서 이득을 볼 수 있는 부분들이 존재한다. SQL은 선언적으로 작성하도록 설계가 되었다. 따라서 각 구문의 절(WHERE, FROM, etc)에서는 식을 작성하는 것을 염두해두면 좋다.</p>
+
+<h2 id="집계에서도-union을-사용하지-말자">집계에서도 UNION을 사용하지 말자.</h2>
+
+<p>행/열을 변환해서 PIVOT하여 집계를 내야하는 경우에서도 UNION을 사용하면 쿼리도 복잡해지고 성능도 그리 좋지 않다. 예를 들면 다음과 같은 경우이다.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">select</span> <span class="n">tmp</span><span class="p">.</span><span class="n">prefecture</span><span class="p">,</span> <span class="k">sum</span><span class="p">(</span><span class="n">pop_men</span><span class="p">),</span> <span class="k">sum</span><span class="p">(</span><span class="n">pop_won</span><span class="p">)</span>  
+<span class="k">from</span> <span class="p">(</span><span class="k">select</span> <span class="n">prefecture</span><span class="p">,</span> <span class="n">pop</span> <span class="k">as</span> <span class="n">pop_men</span><span class="p">,</span> <span class="k">null</span> <span class="k">as</span> <span class="n">pop_won</span>  
+      <span class="k">from</span> <span class="n">Population</span>  
+      <span class="k">where</span> <span class="n">sex</span> <span class="o">=</span> <span class="mi">1</span>  
+      <span class="k">union</span>  
+      <span class="k">select</span> <span class="n">prefecture</span><span class="p">,</span> <span class="k">null</span><span class="p">,</span> <span class="n">pop</span> <span class="k">as</span> <span class="n">pop_won</span>  
+      <span class="k">from</span> <span class="n">Population</span>  
+      <span class="k">where</span> <span class="n">sex</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span> <span class="n">tmp</span>  
+<span class="k">group</span> <span class="k">by</span> <span class="n">prefecture</span>
+</code></pre></div></div>
+
+<p>이 역시 실행계획을 분석했을때, 마찬가지로 2번의 테이블 스캔이 일어나는 것을 확인할 수 있다.</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-&gt; Table scan on &lt;temporary&gt;  <span class="o">(</span>actual <span class="nb">time</span><span class="o">=</span>0.0827..0.0835 <span class="nv">rows</span><span class="o">=</span>5 <span class="nv">loops</span><span class="o">=</span>1<span class="o">)</span>  
+    -&gt; Aggregate using temporary table  <span class="o">(</span>actual <span class="nb">time</span><span class="o">=</span>0.082..0.082 <span class="nv">rows</span><span class="o">=</span>5 <span class="nv">loops</span><span class="o">=</span>1<span class="o">)</span>  
+        -&gt; Table scan on tmp  <span class="o">(</span><span class="nv">cost</span><span class="o">=</span>3.96..5.23 <span class="nv">rows</span><span class="o">=</span>2<span class="o">)</span> <span class="o">(</span>actual <span class="nb">time</span><span class="o">=</span>0.0636..0.0656 <span class="nv">rows</span><span class="o">=</span>10 <span class="nv">loops</span><span class="o">=</span>1<span class="o">)</span>  
+            -&gt; Union materialize with deduplication  <span class="o">(</span><span class="nv">cost</span><span class="o">=</span>2.7..2.7 <span class="nv">rows</span><span class="o">=</span>2<span class="o">)</span> <span class="o">(</span>actual <span class="nb">time</span><span class="o">=</span>0.0623..0.0623 <span class="nv">rows</span><span class="o">=</span>10 <span class="nv">loops</span><span class="o">=</span>1<span class="o">)</span>  
+                -&gt; Filter: <span class="o">(</span>Population.sex <span class="o">=</span> 1<span class="o">)</span>  <span class="o">(</span><span class="nv">cost</span><span class="o">=</span>1.25 <span class="nv">rows</span><span class="o">=</span>1<span class="o">)</span> <span class="o">(</span>actual <span class="nb">time</span><span class="o">=</span>0.0285..0.0342 <span class="nv">rows</span><span class="o">=</span>5 <span class="nv">loops</span><span class="o">=</span>1<span class="o">)</span>  
+                    -&gt; Table scan on Population  <span class="o">(</span><span class="nv">cost</span><span class="o">=</span>1.25 <span class="nv">rows</span><span class="o">=</span>10<span class="o">)</span> <span class="o">(</span>actual <span class="nb">time</span><span class="o">=</span>0.0268..0.0312 <span class="nv">rows</span><span class="o">=</span>10 <span class="nv">loops</span><span class="o">=</span>1<span class="o">)</span>  
+                -&gt; Filter: <span class="o">(</span>Population.sex <span class="o">=</span> 2<span class="o">)</span>  <span class="o">(</span><span class="nv">cost</span><span class="o">=</span>1.25 <span class="nv">rows</span><span class="o">=</span>1<span class="o">)</span> <span class="o">(</span>actual <span class="nb">time</span><span class="o">=</span>0.00507..0.00772 <span class="nv">rows</span><span class="o">=</span>5 <span class="nv">loops</span><span class="o">=</span>1<span class="o">)</span>  
+                    -&gt; Table scan on Population  <span class="o">(</span><span class="nv">cost</span><span class="o">=</span>1.25 <span class="nv">rows</span><span class="o">=</span>10<span class="o">)</span> <span class="o">(</span>actual <span class="nb">time</span><span class="o">=</span>0.00451..0.00656 <span class="nv">rows</span><span class="o">=</span>10 <span class="nv">loops</span><span class="o">=</span>1<span class="o">)</span>
+</code></pre></div></div>
+
+<p>이 역시도 CASE 식으로 변환이 가능하다. 집계함수 내부에서 <code class="language-plaintext highlighter-rouge">CASE</code> 식을 사용해서, 조건을 줄 수 있다.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">select</span> <span class="n">prefecture</span><span class="p">,</span>  
+       <span class="k">SUM</span><span class="p">(</span><span class="k">CASE</span> <span class="k">WHEN</span> <span class="n">sex</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">THEN</span> <span class="n">pop</span> <span class="k">ELSE</span> <span class="mi">0</span> <span class="k">END</span> <span class="p">)</span> <span class="k">as</span> <span class="n">pop_men</span><span class="p">,</span>  
+       <span class="k">SUM</span><span class="p">(</span><span class="k">CASE</span> <span class="k">WHEN</span> <span class="n">sex</span> <span class="o">=</span> <span class="mi">2</span> <span class="k">THEN</span> <span class="n">pop</span> <span class="k">ELSE</span> <span class="mi">0</span> <span class="k">END</span> <span class="p">)</span> <span class="k">as</span> <span class="n">pop_won</span>  
+<span class="k">from</span> <span class="n">Population</span>  
+<span class="k">group</span> <span class="k">by</span> <span class="n">prefecture</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h2 id="union을-사용해야하는-예시들">UNION을 사용해야하는 예시들</h2>
+
+<p>서로 다른 테이블에서 데이터가 필요한 경우에는 UNION의 설계의도와 부합한다.
+인덱스와 관련된 경우 UNION</p>
+
+
+    </div>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<nav class="series-nav">
+  <div class="series-nav__header">
+    <a href="/series/sql-optimization/" class="series-nav__title">SQL 최적화</a>
+    <span class="series-nav__count">1 / 5</span>
+  </div>
+  <div class="series-nav__links">
+    
+    
+    <a href="/2024/06/22/explain/" class="series-nav__next">실행계획이란? &rarr;</a>
+    
+  </div>
+</nav>
+
+
+
+
+    
+  </article>
+
+  <aside class="toc">
+    <nav>
+      <ul></ul>
+    </nav>
+  </aside>
+</div>
+
+<script>
+(function () {
+  var headings = document.querySelectorAll('.post-content h2, .post-content h3');
+  if (headings.length < 2) return;
+
+  var ul = document.querySelector('.toc ul');
+  var links = [];
+
+  headings.forEach(function (h) {
+    if (!h.id) {
+      h.id = h.textContent
+        .trim()
+        .toLowerCase()
+        .replace(/[^\w\s가-힣-]/g, '')
+        .replace(/\s+/g, '-');
+    }
+
+    var li = document.createElement('li');
+    var a = document.createElement('a');
+    a.href = '#' + h.id;
+    a.textContent = h.textContent;
+    a.className = 'toc__link';
+    if (h.tagName === 'H3') li.className = 'toc__item--sub';
+
+    li.appendChild(a);
+    ul.appendChild(li);
+    links.push({ el: a, target: h });
+  });
+
+  var current = null;
+
+  function activate(link) {
+    if (current) current.classList.remove('toc__link--active');
+    link.classList.add('toc__link--active');
+    current = link;
+  }
+
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        var link = links.find(function (l) { return l.target === entry.target; });
+        if (link) activate(link.el);
+      }
+    });
+  }, { rootMargin: '0px 0px -70% 0px' });
+
+  headings.forEach(function (h) { observer.observe(h); });
+
+  var lastLink = links[links.length - 1].el;
+  window.addEventListener('scroll', function () {
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 50) {
+      activate(lastLink);
+    }
+  }, { passive: true });
+})();
+</script>
+
+    </main>
+
+    <footer class="site-footer">
+      <p>&copy; 2026 Blog</p>
+    </footer>
+  </div>
+</body>
+</html>

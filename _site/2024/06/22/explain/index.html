@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>실행계획이란? — Blog</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400&family=Noto+Serif+KR:wght@400;700&family=Noto+Serif:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/main.css">
+</head>
+<body>
+  <div class="container">
+    <header class="site-header">
+      <div class="site-header__inner">
+        <a href="/" class="site-title">Blog</a>
+        <nav class="site-nav">
+          <a href="/">글</a>
+          <a href="/series/">시리즈</a>
+          <a href="/about">소개</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <div class="post-wrapper">
+  <article>
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime="2024-06-22T00:00:00+09:00">2024년 06월 22일</time>
+      </div>
+      <h1 class="post-title">실행계획이란?</h1>
+    </header>
+
+    
+
+    <div class="post-content">
+      <p>주제 :</p>
+<ul>
+  <li>실행 계획이 무엇인지 알아본다.</li>
+  <li>실행 계획을 고려해야하는 이유를 알아본다.</li>
+  <li>실행 계획 format을 읽는 법을 알아본다.</li>
+</ul>
+
+<h2 id="들어가며">들어가며</h2>
+
+<h2 id="실행-계획이란">실행 계획이란?</h2>
+
+<h2 id="실행-계획을-고려해야-하는-이유-">실행 계획을 고려해야 하는 이유 ?</h2>
+
+<h2 id="실행-계획의-구성-요소">실행 계획의 구성 요소</h2>
+
+<h3 id="header3">Header3</h3>
+
+<h2 id="마무리">마무리</h2>
+
+<ul>
+  <li><a href="https://dev.mysql.com/doc/refman/8.0/en/explain-output.html#explain-output-columns"></a></li>
+</ul>
+
+    </div>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<nav class="series-nav">
+  <div class="series-nav__header">
+    <a href="/series/sql-optimization/" class="series-nav__title">SQL 최적화</a>
+    <span class="series-nav__count">2 / 5</span>
+  </div>
+  <div class="series-nav__links">
+    
+    <a href="/2025/03/29/sql-branch/" class="series-nav__prev">&larr; SQL의 조건 분기에 대해</a>
+    
+    
+    <a href="/2025/01/24/cadinality-index/" class="series-nav__next">컬럼 카디널리티에 따른 인덱스 성능 비교 &rarr;</a>
+    
+  </div>
+</nav>
+
+
+
+
+    
+  </article>
+
+  <aside class="toc">
+    <nav>
+      <ul></ul>
+    </nav>
+  </aside>
+</div>
+
+<script>
+(function () {
+  var headings = document.querySelectorAll('.post-content h2, .post-content h3');
+  if (headings.length < 2) return;
+
+  var ul = document.querySelector('.toc ul');
+  var links = [];
+
+  headings.forEach(function (h) {
+    if (!h.id) {
+      h.id = h.textContent
+        .trim()
+        .toLowerCase()
+        .replace(/[^\w\s가-힣-]/g, '')
+        .replace(/\s+/g, '-');
+    }
+
+    var li = document.createElement('li');
+    var a = document.createElement('a');
+    a.href = '#' + h.id;
+    a.textContent = h.textContent;
+    a.className = 'toc__link';
+    if (h.tagName === 'H3') li.className = 'toc__item--sub';
+
+    li.appendChild(a);
+    ul.appendChild(li);
+    links.push({ el: a, target: h });
+  });
+
+  var current = null;
+
+  function activate(link) {
+    if (current) current.classList.remove('toc__link--active');
+    link.classList.add('toc__link--active');
+    current = link;
+  }
+
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        var link = links.find(function (l) { return l.target === entry.target; });
+        if (link) activate(link.el);
+      }
+    });
+  }, { rootMargin: '0px 0px -70% 0px' });
+
+  headings.forEach(function (h) { observer.observe(h); });
+
+  var lastLink = links[links.length - 1].el;
+  window.addEventListener('scroll', function () {
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 50) {
+      activate(lastLink);
+    }
+  }, { passive: true });
+})();
+</script>
+
+    </main>
+
+    <footer class="site-footer">
+      <p>&copy; 2026 Blog</p>
+    </footer>
+  </div>
+</body>
+</html>

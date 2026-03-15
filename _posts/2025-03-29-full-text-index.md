@@ -2,6 +2,8 @@
 layout: post
 title: MySQL 전문검색, FullText 인덱스.
 date: 2025-03-29
+series: sql-optimization
+series_order: 4
 tags: []
 ---
 ## 들어가며

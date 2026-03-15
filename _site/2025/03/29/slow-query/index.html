@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>성능테스트, 병목 발생. — Blog</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400&family=Noto+Serif+KR:wght@400;700&family=Noto+Serif:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/main.css">
+</head>
+<body>
+  <div class="container">
+    <header class="site-header">
+      <div class="site-header__inner">
+        <a href="/" class="site-title">Blog</a>
+        <nav class="site-nav">
+          <a href="/">글</a>
+          <a href="/series/">시리즈</a>
+          <a href="/about">소개</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <div class="post-wrapper">
+  <article>
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime="2025-03-29T00:00:00+09:00">2025년 03월 29일</time>
+      </div>
+      <h1 class="post-title">성능테스트, 병목 발생.</h1>
+    </header>
+
+    
+
+    <div class="post-content">
+      <h2 id="들어가며">들어가며</h2>
+
+<blockquote>
+  <p>초기 단계 성능테스트 수행. 
+결과 및 원인 분석.
+개선 사항.</p>
+</blockquote>
+
+<h2 id="슬로우-쿼리">슬로우 쿼리</h2>
+
+<h2 id="1-슬로우-쿼리-분석을-하는-이유">1. 슬로우 쿼리 분석을 하는 이유</h2>
+
+<ul>
+  <li><strong>병목 구간 발견</strong><br />
+  느린 쿼리가 전체 시스템 응답 지연, CPU 과부하, 트래픽 처리 한계의 주원인일 수 있음</li>
+  <li><strong>시스템 성능 저하 원인 규명</strong><br />
+  무분별한 풀 테이블 스캔, 인덱스 누락, 비효율적 조인 등 쿼리 문제를 찾아냄</li>
+  <li><strong>리소스 낭비 방지</strong> 
+  불필요하게 많은 CPU, I/O, 메모리 자원을 소모하는 쿼리를 찾아서 자원 효율 개선</li>
+  <li><strong>사용자 경험 개선</strong><br />
+  느린 쿼리를 개선해 API나 서비스 응답 시간을 줄임으로써 사용자 만족도 상승</li>
+</ul>
+
+<hr />
+
+<h2 id="2-슬로우-쿼리-분석-시-주로-보는-정보">2. 슬로우 쿼리 분석 시 주로 보는 정보</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>정보 종류</th>
+      <th>용도 및 병목 확인 포인트</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>실행 시간(Execution Time)</strong></td>
+      <td>쿼리가 얼마나 오래 걸리는지 → 성능 저하 직접 원인</td>
+    </tr>
+    <tr>
+      <td><strong>호출 빈도(Calls)</strong></td>
+      <td>자주 호출되는 느린 쿼리는 우선 튜닝 대상</td>
+    </tr>
+    <tr>
+      <td><strong>동시 실행 수 / 잠금 시간</strong></td>
+      <td>트랜잭션 잠금 병목이나 동시성 문제 감지</td>
+    </tr>
+    <tr>
+      <td><strong>스캔한 행 수(Rows Examined)</strong></td>
+      <td>인덱스 미사용, 풀 테이블 스캔 여부 판단</td>
+    </tr>
+    <tr>
+      <td><strong>반환된 행 수(Rows Sent)</strong></td>
+      <td>불필요하게 많은 데이터 반환 여부 확인</td>
+    </tr>
+    <tr>
+      <td><strong>쿼리 실행 계획(EXPLAIN)</strong></td>
+      <td>조인 방식, 인덱스 사용 여부, 쿼리 최적화 가능성 평가</td>
+    </tr>
+    <tr>
+      <td><strong>쿼리 텍스트</strong></td>
+      <td>비효율적 조건, 불필요한 함수 사용 등 코드 문제점 파악</td>
+    </tr>
+  </tbody>
+</table>
+
+<ul>
+  <li>
+    <p>슬로우 쿼리 분석은 DB 병목을 찾아내는 <strong>‘진단’ 단계</strong></p>
+  </li>
+  <li>
+    <p>주로 <strong>실행 시간, 호출 빈도, 행 스캔 수</strong>를 통해 쿼리의 ‘핫스팟’을 찾음</p>
+  </li>
+  <li>
+    <p>이후 튜닝, 인덱스 개선, 구조 변경 등의 <strong>‘개선’ 작업</strong>을 진행</p>
+  </li>
+  <li>
+    <p><strong>지속적인 모니터링과 반복 개선</strong>이 필수</p>
+  </li>
+</ul>
+
+<p>https://blog.techeer.net/%EC%BF%BC%EB%A6%AC-%ED%8A%9C%EB%8B%9D%EC%9D%84-%ED%86%B5%ED%95%B4-%EC%8A%AC%EB%A1%9C%EC%9A%B0-%EC%BF%BC%EB%A6%AC-%EA%B0%9C%EC%84%A0%ED%95%98%EA%B8%B0-52480d1cd602</p>
+
+    </div>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<nav class="series-nav">
+  <div class="series-nav__header">
+    <a href="/series/performance-test/" class="series-nav__title">성능 테스트</a>
+    <span class="series-nav__count">4 / 4</span>
+  </div>
+  <div class="series-nav__links">
+    
+    <a href="/2025/03/29/performance-test-2-1/" class="series-nav__prev">&larr; 성능 테스트 초기 단계</a>
+    
+    
+  </div>
+</nav>
+
+
+
+
+    
+  </article>
+
+  <aside class="toc">
+    <nav>
+      <ul></ul>
+    </nav>
+  </aside>
+</div>
+
+<script>
+(function () {
+  var headings = document.querySelectorAll('.post-content h2, .post-content h3');
+  if (headings.length < 2) return;
+
+  var ul = document.querySelector('.toc ul');
+  var links = [];
+
+  headings.forEach(function (h) {
+    if (!h.id) {
+      h.id = h.textContent
+        .trim()
+        .toLowerCase()
+        .replace(/[^\w\s가-힣-]/g, '')
+        .replace(/\s+/g, '-');
+    }
+
+    var li = document.createElement('li');
+    var a = document.createElement('a');
+    a.href = '#' + h.id;
+    a.textContent = h.textContent;
+    a.className = 'toc__link';
+    if (h.tagName === 'H3') li.className = 'toc__item--sub';
+
+    li.appendChild(a);
+    ul.appendChild(li);
+    links.push({ el: a, target: h });
+  });
+
+  var current = null;
+
+  function activate(link) {
+    if (current) current.classList.remove('toc__link--active');
+    link.classList.add('toc__link--active');
+    current = link;
+  }
+
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        var link = links.find(function (l) { return l.target === entry.target; });
+        if (link) activate(link.el);
+      }
+    });
+  }, { rootMargin: '0px 0px -70% 0px' });
+
+  headings.forEach(function (h) { observer.observe(h); });
+
+  var lastLink = links[links.length - 1].el;
+  window.addEventListener('scroll', function () {
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 50) {
+      activate(lastLink);
+    }
+  }, { passive: true });
+})();
+</script>
+
+    </main>
+
+    <footer class="site-footer">
+      <p>&copy; 2026 Blog</p>
+    </footer>
+  </div>
+</body>
+</html>

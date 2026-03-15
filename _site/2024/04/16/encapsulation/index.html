@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>캡슐화 — Blog</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400&family=Noto+Serif+KR:wght@400;700&family=Noto+Serif:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/main.css">
+</head>
+<body>
+  <div class="container">
+    <header class="site-header">
+      <div class="site-header__inner">
+        <a href="/" class="site-title">Blog</a>
+        <nav class="site-nav">
+          <a href="/">글</a>
+          <a href="/series/">시리즈</a>
+          <a href="/about">소개</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <div class="post-wrapper">
+  <article>
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime="2024-04-16T00:00:00+09:00">2024년 04월 16일</time>
+      </div>
+      <h1 class="post-title">캡슐화</h1>
+    </header>
+
+    
+
+    <div class="post-content">
+      <h2 id="캡슐화-encapsulation">캡슐화 (encapsulation)</h2>
+
+<p>객체의 <strong>상태</strong>와 <strong>행동</strong>을 하나로 묶고 내부의 <strong>구현내용</strong>은 일부 숨기는 것을 의미한다. 
+캡슐화의 목적은 변경에 영향을 통제하기 함에 있다.</p>
+
+<p>상대적으로 변경 가능성이 높은 부분은 내부로 숨기고, 변경 가능성이 적은 부분은 외부로 드러냄으로써 <strong>변경의 영향을 최소화</strong>할 수 있다.</p>
+
+<p>외부로 드러난 부분을 <strong>인터페이스</strong>, 내부로 숨겨진 부분을 상세 <strong>구현</strong>이라고 부른다.</p>
+
+<p>캡슐화가 중요한 이유는 <strong>불안정한</strong> 부분과 <strong>안정적인</strong> 부분을 <strong>분리</strong>해내어 <strong>변경의 여파를 통제</strong>할 수 있음에 있다.
+변경의 여파를 통제할 수 있다는 것은 요구사항의 변경에 <strong>유연한 대처</strong>를 예상할 수 있다는 뜻과도 일치한다.</p>
+
+<p>객체의 캡슐화는 언어적인 측면에서 지원하는 접근제어자나 데이터 수정자를 통해 가능하다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">private</span> 
+
+
+<span class="nf">setType</span><span class="o">()</span>
+
+</code></pre></div></div>
+
+    </div>
+
+    
+
+
+    
+  </article>
+
+  <aside class="toc">
+    <nav>
+      <ul></ul>
+    </nav>
+  </aside>
+</div>
+
+<script>
+(function () {
+  var headings = document.querySelectorAll('.post-content h2, .post-content h3');
+  if (headings.length < 2) return;
+
+  var ul = document.querySelector('.toc ul');
+  var links = [];
+
+  headings.forEach(function (h) {
+    if (!h.id) {
+      h.id = h.textContent
+        .trim()
+        .toLowerCase()
+        .replace(/[^\w\s가-힣-]/g, '')
+        .replace(/\s+/g, '-');
+    }
+
+    var li = document.createElement('li');
+    var a = document.createElement('a');
+    a.href = '#' + h.id;
+    a.textContent = h.textContent;
+    a.className = 'toc__link';
+    if (h.tagName === 'H3') li.className = 'toc__item--sub';
+
+    li.appendChild(a);
+    ul.appendChild(li);
+    links.push({ el: a, target: h });
+  });
+
+  var current = null;
+
+  function activate(link) {
+    if (current) current.classList.remove('toc__link--active');
+    link.classList.add('toc__link--active');
+    current = link;
+  }
+
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        var link = links.find(function (l) { return l.target === entry.target; });
+        if (link) activate(link.el);
+      }
+    });
+  }, { rootMargin: '0px 0px -70% 0px' });
+
+  headings.forEach(function (h) { observer.observe(h); });
+
+  var lastLink = links[links.length - 1].el;
+  window.addEventListener('scroll', function () {
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 50) {
+      activate(lastLink);
+    }
+  }, { passive: true });
+})();
+</script>
+
+    </main>
+
+    <footer class="site-footer">
+      <p>&copy; 2026 Blog</p>
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>jdbcTemplate 이란? — Blog</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400&family=Noto+Serif+KR:wght@400;700&family=Noto+Serif:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/main.css">
+</head>
+<body>
+  <div class="container">
+    <header class="site-header">
+      <div class="site-header__inner">
+        <a href="/" class="site-title">Blog</a>
+        <nav class="site-nav">
+          <a href="/">글</a>
+          <a href="/series/">시리즈</a>
+          <a href="/about">소개</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <div class="post-wrapper">
+  <article>
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime="2025-03-29T00:00:00+09:00">2025년 03월 29일</time>
+      </div>
+      <h1 class="post-title">jdbcTemplate 이란?</h1>
+    </header>
+
+    
+    <div class="post-thumbnail">
+      <img src="/assets/images/thumbnails/spring-data.png" alt="스프링 데이터">
+    </div>
+    
+
+    <div class="post-content">
+      <h2 id="들어가며">들어가며</h2>
+
+<p>데이터를 저장하려면 어떻게 해야할까?</p>
+
+<p>자바 환경에서 데이터베이스 연결을 위한 표준 API</p>
+
+<p>자바와 데이터베이스를 연결하기 위한 표준 인터페이스를 제공한다. 그리고 각 dB 벤더들이 이 jdbc를 구현한 드라이버를 구현체로 사용한다.</p>
+
+<p><strong>JDBC(Java Database Connectivity)</strong>는 자바 애플리케이션과 데이터베이스 간 연결 및 SQL 실행을 위한 <strong>표준 API</strong>입니다.<br />
+이를 통해 자바에서 데이터베이스 접속, 쿼리 실행, 결과 처리 등을 일관되게 할 수 있습니다.</p>
+
+<p>정리하면:</p>
+<ul>
+  <li>자바와 DB 사이의 표준 인터페이스</li>
+  <li>다양한 RDBMS를 동일한 API로 다룸</li>
+  <li>DB 벤더별 드라이버로 구체 구현 제공</li>
+</ul>
+
+<p>전체적인 흐름은? 
+애플리케이션 -&gt; JDBC API -&gt; 드라이버 -&gt; DB</p>
+
+<!-- ![Pasted image 20250710165408](/assets/posts/Pasted image 20250710165408.png) -->
+
+<p>드라이버 매니저가 라이브러리에 저장되어있는 db 드라이버를 검색함. 그리고 해당 드라이버를 통해 커넥션을 가져오도록 구현이 된다.</p>
+
+    </div>
+
+    
+
+
+    
+  </article>
+
+  <aside class="toc">
+    <nav>
+      <ul></ul>
+    </nav>
+  </aside>
+</div>
+
+<script>
+(function () {
+  var headings = document.querySelectorAll('.post-content h2, .post-content h3');
+  if (headings.length < 2) return;
+
+  var ul = document.querySelector('.toc ul');
+  var links = [];
+
+  headings.forEach(function (h) {
+    if (!h.id) {
+      h.id = h.textContent
+        .trim()
+        .toLowerCase()
+        .replace(/[^\w\s가-힣-]/g, '')
+        .replace(/\s+/g, '-');
+    }
+
+    var li = document.createElement('li');
+    var a = document.createElement('a');
+    a.href = '#' + h.id;
+    a.textContent = h.textContent;
+    a.className = 'toc__link';
+    if (h.tagName === 'H3') li.className = 'toc__item--sub';
+
+    li.appendChild(a);
+    ul.appendChild(li);
+    links.push({ el: a, target: h });
+  });
+
+  var current = null;
+
+  function activate(link) {
+    if (current) current.classList.remove('toc__link--active');
+    link.classList.add('toc__link--active');
+    current = link;
+  }
+
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        var link = links.find(function (l) { return l.target === entry.target; });
+        if (link) activate(link.el);
+      }
+    });
+  }, { rootMargin: '0px 0px -70% 0px' });
+
+  headings.forEach(function (h) { observer.observe(h); });
+
+  var lastLink = links[links.length - 1].el;
+  window.addEventListener('scroll', function () {
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 50) {
+      activate(lastLink);
+    }
+  }, { passive: true });
+})();
+</script>
+
+    </main>
+
+    <footer class="site-footer">
+      <p>&copy; 2026 Blog</p>
+    </footer>
+  </div>
+</body>
+</html>

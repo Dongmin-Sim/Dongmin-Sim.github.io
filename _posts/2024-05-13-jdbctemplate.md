@@ -2,6 +2,8 @@
 layout: post
 title: jdbcTemplate 이란?
 date: 2024-05-13
+series: spring-data
+series_order: 2
 tags:
   - iBATIS
 image:

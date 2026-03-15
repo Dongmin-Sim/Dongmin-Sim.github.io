@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Thymeleaf — Blog</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400&family=Noto+Serif+KR:wght@400;700&family=Noto+Serif:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/main.css">
+</head>
+<body>
+  <div class="container">
+    <header class="site-header">
+      <div class="site-header__inner">
+        <a href="/" class="site-title">Blog</a>
+        <nav class="site-nav">
+          <a href="/">글</a>
+          <a href="/series/">시리즈</a>
+          <a href="/about">소개</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <div class="post-wrapper">
+  <article>
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime="2024-03-17T00:00:00+09:00">2024년 03월 17일</time>
+      </div>
+      <h1 class="post-title">Thymeleaf</h1>
+    </header>
+
+    
+
+    <div class="post-content">
+      <h2 id="들어가며">들어가며</h2>
+
+<h2 id="타임리프란">타임리프란</h2>
+
+<p>모던 서버 사이드 자바 템플릿 엔진이다.</p>
+
+<h2 id="thymeleaf-만의-특징-강점">Thymeleaf 만의 특징, 강점</h2>
+
+<ul>
+  <li>HTML5 웹 표준을 준수하는 템플릿,</li>
+  <li>전체적인 문법인 HTML5 마크업 표준을 최대한 해치지 않게끔 설계</li>
+  <li>Decoupled logic : 템플릿 문법을 아예 템플릿에서 분리 가능  (thymeleaf 3 에서 도입되는 피처)
+    <ul>
+      <li>순수한 마크업만 남음 -&gt; 템플릿 엔진이 작동하지 않아도 렌더링 되는 정적 목업 페이지</li>
+      <li>템플릿 코드와 템플릿 문법이 별개의 파일에 존재하게 됨.</li>
+      <li>디자이너가 이해하기 쉬운 코드이다.</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="템플릿-문법-적용-방법">템플릿 문법 적용 방법</h2>
+
+<p>3가지</p>
+<ul>
+  <li>“th:” tag</li>
+  <li>“data-th” attribute</li>
+  <li>decoupled logic</li>
+</ul>
+
+<h2 id="expressions">Expressions</h2>
+<ul>
+  <li>Variable Expressions : <code class="language-plaintext highlighter-rouge">${...}</code>
+    <ul>
+      <li>주로 많이 사용</li>
+    </ul>
+  </li>
+  <li>Selection Variable Expressions : <code class="language-plaintext highlighter-rouge">*{...}</code></li>
+  <li>Message Expression : <code class="language-plaintext highlighter-rouge">#{...}</code>
+    <ul>
+      <li>외부 환경 변수,</li>
+    </ul>
+  </li>
+  <li>Link URL Expressions : <code class="language-plaintext highlighter-rouge">@{...}</code>
+    <ul>
+      <li>url 연결시</li>
+    </ul>
+  </li>
+  <li>Fragment Expressions : <code class="language-plaintext highlighter-rouge">~{...}</code></li>
+</ul>
+
+<h3 id="text-operations">Text operations</h3>
+<ul>
+  <li>String concatenation : <code class="language-plaintext highlighter-rouge">+</code></li>
+  <li>Literal substitutions : <code class="language-plaintext highlighter-rouge">|the name is ${name}|</code></li>
+</ul>
+
+<h3 id="arithmetic-operations">Arithmetic operations</h3>
+<ul>
+  <li>Binary operators : <code class="language-plaintext highlighter-rouge">+, -, *, /, %</code></li>
+  <li>Minus sign (unary operator) : <code class="language-plaintext highlighter-rouge">-</code></li>
+</ul>
+
+<h3 id="boolean-operations">Boolean operations</h3>
+<ul>
+  <li>Binary operators : <code class="language-plaintext highlighter-rouge">and</code>, <code class="language-plaintext highlighter-rouge">or</code></li>
+  <li>Boolean negation (unary operator) : <code class="language-plaintext highlighter-rouge">!</code>, <code class="language-plaintext highlighter-rouge">not</code></li>
+</ul>
+
+<h3 id="comparisons-and-equality">Comparisons and equality</h3>
+<ul>
+  <li>Comparators:  &gt;, &lt;, &gt;=, &lt;=, (gt, lt, ge, le)</li>
+  <li>Equality operators : == != (eq, ne)</li>
+</ul>
+
+<h3 id="conditional-operators">Conditional operators</h3>
+<ul>
+  <li>if-then : <code class="language-plaintext highlighter-rouge">(if) ? (then)</code></li>
+  <li>if-then-else : <code class="language-plaintext highlighter-rouge">(if) ? (then) : (else)</code></li>
+  <li>default : <code class="language-plaintext highlighter-rouge">(value) ?: (default value)</code></li>
+</ul>
+
+<h3 id="special-tokens">Special tokens</h3>
+<ul>
+  <li>
+    <p>No-operations : <code class="language-plaintext highlighter-rouge">_</code></p>
+  </li>
+  <li><strong>서버 사이드HTML 렌더링(SSR)</strong>
+    <ul>
+      <li>백엔드 서버에서 HTML을 동적으로 렌더링하는 용도로 사용됨</li>
+    </ul>
+  </li>
+  <li><strong>네츄럴 템플릿</strong>
+    <ul>
+      <li>타임리프틑 순수 HTML을 최대한 유지하는 특징이 있음.</li>
+      <li>타임리프로 작성한 파일은 HTML을 유지하기 때문에 웹 브라우저에서 파일을 직접 열어 내용으 ㄹ확인할 수 있음 .</li>
+      <li>서버를 통해 뷰 템플릿을 거치면 동적으로 변경된 결과를 확인할 수 있음.</li>
+      <li>JSP를 포함한 다른 뷰 템플릿들은 해당 파일을 열면, 예를 들어서 JSP 파일 자체를 그대로 웹 브라우저에서 열어보면 JSP 소스코드와 HTML이 뒤죽박죽 섞여서 웹 브라우저에서 정상적인 HTML 결과를 확인할 수 없다. 오직 서버를 통 해서 JSP가 렌더링 되고 HTML 응답 결과를 받아야 화면을 확인할 수 있다.</li>
+      <li>반면에 타임리프로 작성된 파일은 해당 파일을 그대로 웹 브라우저에서 열어도 정상적인 HTML 결과를 확인할 수 있다.</li>
+      <li>물론 이 경우 동적으로 결과가 렌더링 되지는 않는다. 하지만 HTML 마크업 결과가 어떻게 되는지 파일만 열어도 바 로 확인할 수 있다.</li>
+      <li>이렇게 <strong>순수 HTML을 그대로 유지하면서 뷰 템플릿도 사용할 수 있는 타임리프의 특징을 네츄럴 템플릿</strong>(natural templates)이라 한다.</li>
+    </ul>
+  </li>
+  <li><strong>스프링 통합 지원</strong>
+    <ul>
+      <li>타임리프는 스프링과 자연스럽게 통합되고, 스프링의 다양한 기능을 편리하게 사용할 수 있게 지원</li>
+    </ul>
+  </li>
+</ul>
+
+<p>선언 
+<code class="language-plaintext highlighter-rouge">&lt;html xmlns:th="http://www.thymeleaf.org"&gt;</code></p>
+
+    </div>
+
+    
+
+
+    
+    <div class="post-tags">
+      
+        <a href="/tags/#build">#build</a>
+      
+        <a href="/tags/#ci/cd">#ci/cd</a>
+      
+    </div>
+    
+  </article>
+
+  <aside class="toc">
+    <nav>
+      <ul></ul>
+    </nav>
+  </aside>
+</div>
+
+<script>
+(function () {
+  var headings = document.querySelectorAll('.post-content h2, .post-content h3');
+  if (headings.length < 2) return;
+
+  var ul = document.querySelector('.toc ul');
+  var links = [];
+
+  headings.forEach(function (h) {
+    if (!h.id) {
+      h.id = h.textContent
+        .trim()
+        .toLowerCase()
+        .replace(/[^\w\s가-힣-]/g, '')
+        .replace(/\s+/g, '-');
+    }
+
+    var li = document.createElement('li');
+    var a = document.createElement('a');
+    a.href = '#' + h.id;
+    a.textContent = h.textContent;
+    a.className = 'toc__link';
+    if (h.tagName === 'H3') li.className = 'toc__item--sub';
+
+    li.appendChild(a);
+    ul.appendChild(li);
+    links.push({ el: a, target: h });
+  });
+
+  var current = null;
+
+  function activate(link) {
+    if (current) current.classList.remove('toc__link--active');
+    link.classList.add('toc__link--active');
+    current = link;
+  }
+
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        var link = links.find(function (l) { return l.target === entry.target; });
+        if (link) activate(link.el);
+      }
+    });
+  }, { rootMargin: '0px 0px -70% 0px' });
+
+  headings.forEach(function (h) { observer.observe(h); });
+
+  var lastLink = links[links.length - 1].el;
+  window.addEventListener('scroll', function () {
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 50) {
+      activate(lastLink);
+    }
+  }, { passive: true });
+})();
+</script>
+
+    </main>
+
+    <footer class="site-footer">
+      <p>&copy; 2026 Blog</p>
+    </footer>
+  </div>
+</body>
+</html>

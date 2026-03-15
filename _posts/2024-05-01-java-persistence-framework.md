@@ -2,6 +2,8 @@
 layout: post
 title: Java 진영의 영속성 프레임워크(Persistence Framework)
 date: 2024-05-01
+series: spring-data
+series_order: 1
 tags:
   - iBATIS
 image:

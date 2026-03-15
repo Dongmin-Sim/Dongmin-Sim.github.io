@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>What Is Gc — Blog</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400&family=Noto+Serif+KR:wght@400;700&family=Noto+Serif:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/main.css">
+</head>
+<body>
+  <div class="container">
+    <header class="site-header">
+      <div class="site-header__inner">
+        <a href="/" class="site-title">Blog</a>
+        <nav class="site-nav">
+          <a href="/">글</a>
+          <a href="/series/">시리즈</a>
+          <a href="/about">소개</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <div class="post-wrapper">
+  <article>
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime="2025-01-29T00:00:00+09:00">2025년 01월 29일</time>
+      </div>
+      <h1 class="post-title">What Is Gc</h1>
+    </header>
+
+    
+
+    <div class="post-content">
+      <h2 id="들어가며">들어가며</h2>
+
+<p>gc란 무엇인지?</p>
+
+<p>대상 독자 설정</p>
+
+<h2 id="배경-설명---오징어-게임에-비유">배경 설명 - 오징어 게임에 비유</h2>
+
+<h2 id="gc란">GC란?</h2>
+
+<h3 id="개념과-역할">개념과 역할</h3>
+<p>gc의 개념, 역할,</p>
+
+<h3 id="메모리-관리---기본-개념">메모리 관리 - 기본 개념</h3>
+<ul>
+  <li>메모리 관리의 개념
+    <ul>
+      <li>힙 메모리와 스택 메모리</li>
+      <li>객체의 생명주기와 메모리 할당</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="gc-등장-배경">GC 등장 배경</h3>
+
+<p>메모리 관리의 자동화 기존에는 하나씩 설정해주어야 했음.</p>
+
+<p>핵심 가설 
+. Generational GC는 객체의 생존 기간에 따라 힙 메모리를 <strong>Young Generation</strong>과 <strong>Old Generation</strong>으로 나누고, 각각의 특성에 맞는 방식으로 가비지를 수집합니다. Serial GC도 이러한 세대 개념을 따르며, Young Generation과 Old Generation을 별도로 관리합니다.</p>
+
+<h2 id="gc-기본-원리">GC 기본 원리</h2>
+
+<h3 id="gc의-종류">GC의 종류</h3>
+<p><strong>1. Minor GC (Young Generation에서 발생)</strong></p>
+<ul>
+  <li>Minor GC는 <strong>Young Generation</strong>에서 발생하며, 짧은 생명주기를 가진 객체를 정리하는 데 초점을 둡니다.</li>
+  <li>Young Generation은 <strong>Eden 영역</strong>과 두 개의 <strong>Survivor 영역(S0, S1)</strong>으로 구성됩니다.</li>
+  <li>대부분의 객체는 Young Generation에서 생성되며, 금방 소멸합니다(Weak Generational Hypothesis).</li>
+</ul>
+
+<ol>
+  <li><strong>객체 생성</strong>:
+    <ul>
+      <li>새롭게 생성된 객체는 Eden 영역에 저장됩니다.</li>
+    </ul>
+  </li>
+  <li><strong>Eden 영역 가득 참</strong>:
+    <ul>
+      <li>Eden 영역이 가득 차면 Minor GC가 발생합니다.</li>
+    </ul>
+  </li>
+  <li><strong>Mark 단계</strong>:
+    <ul>
+      <li>Eden 영역의 객체 중 참조 가능한 객체를 식별(Mark)합니다.</li>
+    </ul>
+  </li>
+  <li><strong>Sweep 단계</strong>:
+    <ul>
+      <li>참조되지 않는(Unreachable) 객체를 제거(Sweep)하여 메모리를 회수합니다.</li>
+    </ul>
+  </li>
+  <li><strong>Survivor 영역으로 이동</strong>:
+    <ul>
+      <li>살아남은 객체는 Survivor 영역(S0 또는 S1)으로 이동합니다.</li>
+    </ul>
+  </li>
+  <li><strong>Survivor 영역 간 이동</strong>:
+    <ul>
+      <li>여러 번의 Minor GC를 거쳐 Survivor 영역에 남아있는 객체는 Old Generation으로 승격(Promotion)됩니다.</li>
+      <li>승격 기준은 객체의 생존 횟수(Age)가 특정 임계값(Tenuring Threshold)에 도달했을 때입니다.</li>
+    </ul>
+  </li>
+</ol>
+
+<p><strong>Major GC (Old Generation에서 발생)</strong></p>
+<ul>
+  <li>Major GC는 Old Generation에서 발생하며, 장기적으로 살아남은 객체를 정리합니다.</li>
+  <li>Old Generation은 Young Generation보다 크고, 긴 생명주기를 가진 객체가 저장됩니다.</li>
+</ul>
+
+<ol>
+  <li><strong>Old Generation 가득 참</strong>:
+    <ul>
+      <li>Old Generation이 가득 차면 Major GC가 발생합니다.</li>
+    </ul>
+  </li>
+  <li><strong>Mark 단계</strong>:
+    <ul>
+      <li>Old Generation 전체를 검사하여 참조 가능한 객체를 식별(Mark)합니다.</li>
+    </ul>
+  </li>
+  <li><strong>Sweep 단계</strong>:
+    <ul>
+      <li>참조되지 않는(Unreachable) 객체를 제거(Sweep)하여 메모리를 회수합니다.</li>
+    </ul>
+  </li>
+  <li><strong>Compact 단계 (선택적)</strong>:
+    <ul>
+      <li>메모리 단편화를 방지하기 위해 살아남은 객체를 한쪽으로 이동시켜 연속된 공간을 확보합니다.</li>
+    </ul>
+  </li>
+</ol>
+
+<h3 id="gc-핵심-단계">GC 핵심 단계</h3>
+
+<p>Mark 
+회수 대상 판단 -&gt; 표시</p>
+<ul>
+  <li>모든 GC는 “객체가 참조 가능한지 여부”를 기준으로 가비지를 판단.</li>
+  <li>참조 카운팅</li>
+  <li>그래프 탐색방식으로 도달 가능성 평가</li>
+</ul>
+
+<p>Sweep</p>
+
+<p>Compact</p>
+
+<h2 id="gc-알고리즘">GC 알고리즘.</h2>
+
+<p>주요 알고리즘</p>
+
+<table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Serial GC</strong></td>
+      <td>Mark-Sweep-Compact</td>
+      <td>단일 스레드 기반, 간단한 구조로 소규모 애플리케이션에 적합<a href="https://sihyung92.oopy.io/java/garbage-collect/1"><br /><br />1<br /><br /></a>.</td>
+    </tr>
+    <tr>
+      <td><strong>Parallel GC</strong></td>
+      <td>Mark-Sweep-Compact</td>
+      <td>멀티스레드를 활용하여 처리량(Throughput)을 높임<a href="https://sihyung92.oopy.io/java/garbage-collect/1"><br /><br />1<br /><br /></a>.</td>
+    </tr>
+    <tr>
+      <td><strong>CMS (Concurrent Mark-Sweep)</strong></td>
+      <td>Mark-Sweep</td>
+      <td>STW 시간을 줄이기 위해 일부 작업을 병행 수행, 단편화 문제 발생 가능<a href="https://sihyung92.oopy.io/java/garbage-collect/1"><br /><br />1<br /><br /></a><a href="https://f-lab.kr/insight/understanding-java-gc-and-optimization-strategies"><br /><br />4<br /><br /></a>.</td>
+    </tr>
+    <tr>
+      <td><strong>G1 GC</strong></td>
+      <td>Region 기반 Mark-Sweep-Compact</td>
+      <td>Region 단위로 힙을 관리하며, 짧은 STW 시간과 예측 가능한 지연 시간 제공<a href="https://blog.metafor.kr/163"><br /><br />2<br /><br /></a><a href="https://f-lab.kr/insight/understanding-java-gc-and-optimization-strategies"><br /><br />4<br /><br /></a>.</td>
+    </tr>
+    <tr>
+      <td><strong>ZGC</strong></td>
+      <td>Concurrent Mark-Sweep</td>
+      <td>대부분의 작업을 병행 수행하며 STW 시간을 10ms 이하로 유지, 대규모 힙에 적합<a href="https://f-lab.kr/insight/understanding-java-gc-and-optimization-strategies"><br /><br />4<br /><br /></a>.</td>
+    </tr>
+    <tr>
+      <td><strong>Shenandoah GC</strong></td>
+      <td>Concurrent Compact</td>
+      <td>G1과 유사하지만 더 짧은 지연 시간 제공, Compact 단계도 병행 수행<a href="https://f-lab.kr/insight/understanding-java-gc-and-optimization-strategies"><br /><br />4<br /><br /></a>.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="마무리">마무리</h2>
+
+    </div>
+
+    
+
+
+    
+  </article>
+
+  <aside class="toc">
+    <nav>
+      <ul></ul>
+    </nav>
+  </aside>
+</div>
+
+<script>
+(function () {
+  var headings = document.querySelectorAll('.post-content h2, .post-content h3');
+  if (headings.length < 2) return;
+
+  var ul = document.querySelector('.toc ul');
+  var links = [];
+
+  headings.forEach(function (h) {
+    if (!h.id) {
+      h.id = h.textContent
+        .trim()
+        .toLowerCase()
+        .replace(/[^\w\s가-힣-]/g, '')
+        .replace(/\s+/g, '-');
+    }
+
+    var li = document.createElement('li');
+    var a = document.createElement('a');
+    a.href = '#' + h.id;
+    a.textContent = h.textContent;
+    a.className = 'toc__link';
+    if (h.tagName === 'H3') li.className = 'toc__item--sub';
+
+    li.appendChild(a);
+    ul.appendChild(li);
+    links.push({ el: a, target: h });
+  });
+
+  var current = null;
+
+  function activate(link) {
+    if (current) current.classList.remove('toc__link--active');
+    link.classList.add('toc__link--active');
+    current = link;
+  }
+
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        var link = links.find(function (l) { return l.target === entry.target; });
+        if (link) activate(link.el);
+      }
+    });
+  }, { rootMargin: '0px 0px -70% 0px' });
+
+  headings.forEach(function (h) { observer.observe(h); });
+
+  var lastLink = links[links.length - 1].el;
+  window.addEventListener('scroll', function () {
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 50) {
+      activate(lastLink);
+    }
+  }, { passive: true });
+})();
+</script>
+
+    </main>
+
+    <footer class="site-footer">
+      <p>&copy; 2026 Blog</p>
+    </footer>
+  </div>
+</body>
+</html>

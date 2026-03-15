@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>람다 표현식에 대해 — Blog</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400&family=Noto+Serif+KR:wght@400;700&family=Noto+Serif:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/main.css">
+</head>
+<body>
+  <div class="container">
+    <header class="site-header">
+      <div class="site-header__inner">
+        <a href="/" class="site-title">Blog</a>
+        <nav class="site-nav">
+          <a href="/">글</a>
+          <a href="/series/">시리즈</a>
+          <a href="/about">소개</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <div class="post-wrapper">
+  <article>
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime="2025-01-24T00:00:00+09:00">2025년 01월 24일</time>
+      </div>
+      <h1 class="post-title">람다 표현식에 대해</h1>
+    </header>
+
+    
+
+    <div class="post-content">
+      <h2 id="들어가며">들어가며</h2>
+
+<p>람다에 대해 간략하게 살펴보기 
+람다와 연관된 개념</p>
+
+<p>람다의목표는정해진동작을다른메서드에서사용할 수있도록하나의조각으로캡슐화하는
+것이다. 그러려면세부구현을포함하는람다표현식을공개하지말아야한다.</p>
+
+<h2 id="람다-">람다 ?</h2>
+
+<h3 id="람다-표현식이란-">람다 표현식이란 ?</h3>
+
+<p>익명 함수(Anonymous Function)를 정의하는 간결한 방법</p>
+
+<h3 id="람다-표현식의-필요성">람다 표현식의 필요성</h3>
+
+<ol>
+  <li><strong>간결함과 가독성:</strong></li>
+</ol>
+
+<p>람다 함수는 익명 함수로, 작은 코드 블록을 간결하게 표현할 수 있습니다. 함수의 이름을 정의할 필요 없이, 즉석에서 간단한 기능을 구현할 수 있습니다. 이는 특히 일회성으로 사용될 함수를 정의할 때 유용합니다.</p>
+
+<ol>
+  <li><strong>함수형 프로그래밍:</strong></li>
+</ol>
+
+<p>람다 함수는 함수형 프로그래밍 패러다임을 지원합니다. 함수형 프로그래밍에서는 함수를 일급 시민(First-Class Citizen)으로 취급하여, 함수를 다른 함수의 인자로 전달하거나 함수에서 반환할 수 있습니다. 람다 함수는 이러한 기능을 간편하게 구현하는 수단입니다.</p>
+
+<ol>
+  <li><strong>콜백 함수의 간편한 정의:</strong></li>
+</ol>
+
+<p>콜백 함수는 비동기 작업이나 이벤트 처리에서 자주 사용되며, 람다 함수를 사용하면 이러한 콜백을 간단하게 정의할 수 있습니다.</p>
+
+<h2 id="함수형-프로그래밍">함수형 프로그래밍</h2>
+
+<p>혹시 함수형 프로그래밍이 뭔지 궁금해서 검색해봤다가 다음과 같은 글을 보고 창을 닫은 적이 있는가?</p>
+
+<h3 id="함수형-인터페이스란">함수형 인터페이스란?</h3>
+
+<ul>
+  <li><strong>서론</strong>
+    <ul>
+      <li>람다 표현식 소개</li>
+      <li>람다 표현식의 필요성</li>
+    </ul>
+  </li>
+  <li><strong>람다 표현식의 기본 개념</strong>
+    <ul>
+      <li>함수형 프로그래밍이란?</li>
+      <li>함수형 인터페이스와 람다 표현식</li>
+      <li>람다 표현식의 문법</li>
+    </ul>
+  </li>
+  <li><strong>람다 표현식의 문법과 구조</strong>
+    <ul>
+      <li>기본 문법</li>
+      <li>매개변수와 반환값</li>
+      <li>람다 표현식의 타입 추론</li>
+    </ul>
+  </li>
+  <li><strong>자바에서의 함수형 인터페이스</strong>
+    <ul>
+      <li>자바에서 제공하는 주요 함수형 인터페이스
+        <ul>
+          <li><code class="language-plaintext highlighter-rouge">Predicate&lt;T&gt;</code></li>
+          <li><code class="language-plaintext highlighter-rouge">Function&lt;T, R&gt;</code></li>
+          <li><code class="language-plaintext highlighter-rouge">Consumer&lt;T&gt;</code></li>
+          <li><code class="language-plaintext highlighter-rouge">Supplier&lt;T&gt;</code></li>
+          <li><code class="language-plaintext highlighter-rouge">BinaryOperator&lt;T&gt;</code></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+<ul>
+  <li><strong>람다 표현식의 활용</strong>
+    <ul>
+      <li>컬렉션과 스트림 API에서의 람다</li>
+      <li>이벤트 처리에서의 람다</li>
+      <li>쓰레드와 병렬 처리에서의 람다</li>
+    </ul>
+  </li>
+  <li><strong>람다 표현식의 고급 기능</strong>
+    <ul>
+      <li>메소드 참조와 생성자 참조</li>
+      <li>고차 함수</li>
+      <li>클로저와 람다 캡처링</li>
+    </ul>
+  </li>
+  <li><strong>람다 표현식과 익명 클래스 비교</strong>
+    <ul>
+      <li>람다 표현식과 익명 클래스의 차이점</li>
+      <li>람다 표현식의 장단점</li>
+      <li>익명 클래스의 장단점</li>
+    </ul>
+  </li>
+  <li><strong>람다 표현식의 실용적인 예제</strong>
+    <ul>
+      <li>데이터 필터링과 변환</li>
+      <li>콜백 메커니즘 구현</li>
+      <li>
+        <h2 id="사용자-정의-함수형-인터페이스">사용자 정의 함수형 인터페이스</h2>
+      </li>
+    </ul>
+  </li>
+  <li><strong>람다 표현식의 장점과 단점</strong>
+    <ul>
+      <li>람다 표현식의 장점
+        <ul>
+          <li>간결한 코드</li>
+          <li>향상된 가독성</li>
+          <li>병렬 처리의 용이성</li>
+        </ul>
+      </li>
+      <li>람다 표현식의 단점
+        <ul>
+          <li>디버깅의 어려움</li>
+          <li>과도한 사용 시 가독성 저하</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><strong>람다 표현식 사용 시 주의사항</strong>
+    <ul>
+      <li>상태를 가지는 람다의 사용 자제</li>
+      <li>람다 표현식의 성능 이슈</li>
+      <li>적절한 사용 시점</li>
+    </ul>
+  </li>
+  <li><strong>결론</strong>
+    <ul>
+      <li>람다 표현식의 요약</li>
+      <li>함수형 프로그래밍의 미래</li>
+      <li>람다 표현식의 적절한 활용 방안</li>
+    </ul>
+  </li>
+  <li><strong>참고 자료 및 추가 읽을거리</strong>
+    <ul>
+      <li>공식 문서와 튜토리얼</li>
+      <li>추천 도서</li>
+      <li>온라인 자료</li>
+    </ul>
+  </li>
+</ul>
+
+    </div>
+
+    
+
+
+    
+  </article>
+
+  <aside class="toc">
+    <nav>
+      <ul></ul>
+    </nav>
+  </aside>
+</div>
+
+<script>
+(function () {
+  var headings = document.querySelectorAll('.post-content h2, .post-content h3');
+  if (headings.length < 2) return;
+
+  var ul = document.querySelector('.toc ul');
+  var links = [];
+
+  headings.forEach(function (h) {
+    if (!h.id) {
+      h.id = h.textContent
+        .trim()
+        .toLowerCase()
+        .replace(/[^\w\s가-힣-]/g, '')
+        .replace(/\s+/g, '-');
+    }
+
+    var li = document.createElement('li');
+    var a = document.createElement('a');
+    a.href = '#' + h.id;
+    a.textContent = h.textContent;
+    a.className = 'toc__link';
+    if (h.tagName === 'H3') li.className = 'toc__item--sub';
+
+    li.appendChild(a);
+    ul.appendChild(li);
+    links.push({ el: a, target: h });
+  });
+
+  var current = null;
+
+  function activate(link) {
+    if (current) current.classList.remove('toc__link--active');
+    link.classList.add('toc__link--active');
+    current = link;
+  }
+
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        var link = links.find(function (l) { return l.target === entry.target; });
+        if (link) activate(link.el);
+      }
+    });
+  }, { rootMargin: '0px 0px -70% 0px' });
+
+  headings.forEach(function (h) { observer.observe(h); });
+
+  var lastLink = links[links.length - 1].el;
+  window.addEventListener('scroll', function () {
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 50) {
+      activate(lastLink);
+    }
+  }, { passive: true });
+})();
+</script>
+
+    </main>
+
+    <footer class="site-footer">
+      <p>&copy; 2026 Blog</p>
+    </footer>
+  </div>
+</body>
+</html>

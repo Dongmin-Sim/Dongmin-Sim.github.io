@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Handler method란? (feat. dispatch servlet) — Blog</title>
+  <meta name="description" content="핸들러 메소드란?">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400&family=Noto+Serif+KR:wght@400;700&family=Noto+Serif:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/main.css">
+</head>
+<body>
+  <div class="container">
+    <header class="site-header">
+      <div class="site-header__inner">
+        <a href="/" class="site-title">Blog</a>
+        <nav class="site-nav">
+          <a href="/">글</a>
+          <a href="/series/">시리즈</a>
+          <a href="/about">소개</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <div class="post-wrapper">
+  <article>
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime="2024-03-17T00:00:00+09:00">2024년 03월 17일</time>
+      </div>
+      <h1 class="post-title">Handler method란? (feat. dispatch servlet)</h1>
+    </header>
+
+    
+
+    <div class="post-content">
+      <p>핸들러 메소드란? 
+핸들러 메소드의 역할
+핸들러 메소드의 spec</p>
+<ul>
+  <li>input</li>
+  <li>output</li>
+</ul>
+
+<h2 id="들어가며">들어가며</h2>
+
+<p>Spring 에서 사용하는 HandlerMethod 에 대해서 알아보려고 한다.</p>
+
+<p>핸들러 메소드가 클라이언트의 요청과 처리 구조에서 어떤 위치에 있는지 전체적으로 조망한다음.<br />
+그에 맞추어 핸들러 메소드의 역할을 설명하려고 한다.</p>
+
+<p>이후에는 핸들러 메소드의 기본 구조에 대해서 알아보고,<br />
+핸들러 메소드의 작성 방법과 예시에 대해서 알아보려고 한다.</p>
+
+<h2 id="배경">배경</h2>
+
+<p>핸들러 메소드에 대해 이야기하기 전에 사용자의 특정 API 에 대한 요청이 어떻게 처리되는지, 전체 구조 속에서 핸들러 메소드의 위치를 살펴보고자 한다.</p>
+
+<p>예를 들어 제품의 정보를 알고 있는 서버가 있다고 가정해보자.</p>
+
+<p>만약 특정 제품의 정보를 알고 싶다면 사용자는 서버에게 특정 제품의 정보에 대한 요청을 할 수 있다. 
+그러면 서버에서는 해당 요청을 받아서, 요청에 맞는 정보를 다시 응답해준다.</p>
+
+<p>이것이 우리가 알고 있는 클라이언트-서버 구조이다.</p>
+
+<p>그러면 사용자는 그냥 전화기에 대고 정보를 요청하는 것처럼, 마구 요청을 하면 될까? 당연히 안된다. 요청-응답을 위해 특별히 약속한 규약을 API 라고하고, 우리는 이 API를 통해 정보를 요청하고 응답받는다.</p>
+
+<p>그러면 서버는 어떻게 요청들을 처리할까?</p>
+
+<ul>
+  <li>여러 API 들을 만들어놓고 한 곳에서 모두 처리할까?</li>
+  <li>아니면 API마다 이것을 담당하는 “<strong>무언가</strong>“을 <strong>매핑</strong>해서 처리할까?</li>
+</ul>
+
+<p>물론 첫번째 방법을 사용하는 것이 가장 직관적이고, 쉽다. 그렇지만 처리해야할 일은 많은데, 직원 한명이 모두 해당일을 담당하고 처리한다면 그 직원은 손발이 남아날까</p>
+
+<p>사실 정해진 답은 없지만, 보통은 후자의 방법을 많이 사용한다. 
+하지만 두번째 방법을 사용하게 되면 이 방법을 사용하기 위해 처리해야할 일이 하나 생긴다. 바로 API와 이를 처리하는 “<strong>무언가</strong>“를 서로 연결해줄 <strong>담당자</strong>가 필요해진다. 누가 이 API를 맡아 처리할지 결정해주어야 하는 결정자의 역할이 하나 더 생기는 것이다.</p>
+
+<p>이와 같은 흐름을 이해했다면, HandlerMethod에 대한 이해는 사실상 끝났다! 여기서 처리를 담당하는 무언가를 담당하는게 바로 HandlerMethod이기 때문이다.</p>
+
+<h2 id="dispatchservlet">DispatchServlet</h2>
+
+<p>앞에서 API 와 이를 처리하는 무언가를 서로 연결해줄 담당자가 필요하다고 언급했다.</p>
+
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Pont_transpondeur.jpg/640px-Pont_transpondeur.jpg" alt="Desktop View" width="972" height="589" class="w-50" /><em>기차 전차대</em></p>
+
+<!-- ![Pasted image 20240318170752](/assets/posts/Pasted image 20240318170752.png) -->
+
+<p>Servlet에 대한 더 자세한 내용은 다음 글에 정리해두었다. 👉<a href="">서블릿이란? (Servlet)</a></p>
+
+<h2 id="핸들러-메소드-역할">핸들러 메소드 역할</h2>
+
+<p>앞의 배경맥락을 이해했다면, 핸들러 메소드는 요청의 처리를 담당하는 개체로 자연스럽게 받아들여졌을 것이다. 간단하다 그리 어렵지 않다.</p>
+
+<p>정리하면 핸들러 메소드는 클라이언트의 요청을 실질적으로 처리하고 그에 맞는 응답을 반환하는 메소드이다. 
+핸들러 메소드에는 “이 메소드는 OO 요청을 처리하는 거야~” 라고 알려주는 일종의 <strong>태그</strong>가 붙는다</p>
+
+<p>그리고 <strong>비슷한 태그</strong>들이 붙은 핸들러 메소드들이 모여있는 클래스를 “컨트롤러”라고 부른다. 
+컨트롤러과 핸들러 메소드는 일종의 포함관계이며, 컨트롤러 내에 여러 핸들러 메소드가 존재할 수 있다.</p>
+
+<p>컨트롤러가 전체적인 요청-응답 흐름에 대한 묶음 처리를 담당한다면,
+각 핸들러 메서드는 개별 요청을 구체적으로 처리하는 세부 구현 단위가 된다.</p>
+
+<p>요청을 처리하는데 서로 이해관계가 높지만, 세부 처리가 필요한 경우 컨트롤러로 묶일 수 있다.</p>
+
+<h2 id="핸들러-메소드-구조">핸들러 메소드 구조</h2>
+
+<p>핸들러 메소드는 크게 3가지 구조로 이루어진다.</p>
+
+<p>앞서 핸들러 메소드에는 태그가 붙는다고 했던 것을 기억하는가?
+이놈이 어떤 일을 처리할 수 있는지</p>
+
+<ul>
+  <li>매핑정보, 요청, 응답으로 구성 </li>
+</ul>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@GetMapping</span><span class="o">(</span><span class="s">"/boards/{boardId}"</span><span class="o">)</span> <span class="c1">// 요청 매핑 정보</span>
+<span class="kd">public</span> <span class="nc">String</span> <span class="nf">getBoard</span><span class="o">(</span>
+		<span class="nd">@PathVariable</span> <span class="nc">Integer</span> <span class="n">boardId</span> <span class="c1">// 요청</span>
+<span class="o">)</span> <span class="o">{</span>
+	<span class="k">return</span> <span class="n">boardId</span><span class="o">;</span> <span class="c1">// 응답</span>
+<span class="o">}</span>
+  
+
+</code></pre></div></div>
+
+<h3 id="mapping-info">Mapping Info</h3>
+
+<p>“요청 매핑” 은 요청(Request)과 요청을 처리하는 핸들러(컨트롤러)를 매핑하는 역할을 해준다.</p>
+<ul>
+  <li>스프링에서는 @RequestMapping 애노테이션을 사용하여 요청 매핑을 정의할 수 있음</li>
+</ul>
+
+<p>요청 매핑은 클라이언트의 HTTP 요청이 어떤 핸들러 메서드로 매핑되는지를 결정합니다. 
+요청 매핑은 URL 경로, HTTP 메서드, 특정 요청 헤더 등과 관련하여 요청을 처리할 핸들러 메서드를 결정합니다</p>
+
+<p>spring 에서는 다음 어노테이션들로 핸들러 메서드와 매핑이 가능 + class(Controller)와 Method에 다 사용가능</p>
+
+<p>일종의 정보 + filter 역할을 겸함. 
+<!-- ![Pasted image 20240318172114](/assets/posts/Pasted image 20240318172114.png) --></p>
+<ul>
+  <li>정보
+    <ul>
+      <li>name : 뷰 템플릿에서 식별할 때 쓰는 이름, 템플릿 엔진을 사용하지 않고 뷰를 구현하면 그다지 사용할 일이 적음. 기본적으로 내부 생성해줌. (컨트롤러의 대분자 + # + 메서드 이름)</li>
+      <li>value, path : URI (기본 애트리뷰트, 바로 값을 입력해도됨. )</li>
+      <li>method : Http method (Ex, Get, post)
+        <ul>
+          <li>Http 메소드를 정해둔 일종의 shortcut 어노테이션을 제공</li>
+          <li>@GetMapping</li>
+          <li>@PutMapping</li>
+          <li>@PostMapping</li>
+          <li>@DeleteMapping</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>필터
+    <ul>
+      <li>params : 파라미터 검사 (필터 역할)</li>
+      <li>headers : 헤더 검사 (필터 역할)</li>
+      <li>consumes : 헤더의 Content-type 검사 (필터 역할)</li>
+      <li>produces : 헤더의 Accept 검사 (필터 역할)</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="request">Request</h3>
+<p>핸들러 메소드가 받을 수 있는 요청들</p>
+
+<p>메소드 파라미터로 적어 넣을 수 있는 타입들은 다음과 같음.</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">@RequestParam</code>, <code class="language-plaintext highlighter-rouge">@PathVariable</code>
+    <ul>
+      <li>주로 많이 사용</li>
+      <li><code class="language-plaintext highlighter-rouge">@RequestParam</code> 으로 지정하지 않아도, (컬렉션 타입이 아니면) <code class="language-plaintext highlighter-rouge">@RequestParam</code> 로 자동으로 인식됨, 하지만 지정할때와 안할때의 차이가 있음.
+        <ul>
+          <li>required 인자의 차이</li>
+          <li><code class="language-plaintext highlighter-rouge">@RequestParam Integer storeId</code>  이면 해당 값이 반드시 있어야 하지만 (true가 기본값)</li>
+          <li><code class="language-plaintext highlighter-rouge">@RequestParam</code> 을 지정하지 않고, ` Integer storeId` 일 경우 해당값은 기본이 false임</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">@RequestBody</code> , <code class="language-plaintext highlighter-rouge">HttpEntity&lt;B&gt;</code>
+    <ul>
+      <li>주로 많이 사용</li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">@ModelAttribute</code>, <code class="language-plaintext highlighter-rouge">@SessionAttribute</code>, <code class="language-plaintext highlighter-rouge">@Model</code>, <code class="language-plaintext highlighter-rouge">@ModelMap</code>
+    <ul>
+      <li>레거시에서 자주 쓰고자함.</li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">@RequestHeader</code>, <code class="language-plaintext highlighter-rouge">@CookieValue</code>
+    <ul>
+      <li>헤더정보를 주로 다룰때</li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">ServletRequest</code>, <code class="language-plaintext highlighter-rouge">ServletRespsone</code>, <code class="language-plaintext highlighter-rouge">HttpSession</code>
+    <ul>
+      <li>jsp 프로그래밍에서 주로 사용</li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">WebRequest</code>, <code class="language-plaintext highlighter-rouge">NativeWebRequest</code></li>
+  <li><code class="language-plaintext highlighter-rouge">Principal</code>, <code class="language-plaintext highlighter-rouge">Locale</code>, <code class="language-plaintext highlighter-rouge">TimeZone</code>, <code class="language-plaintext highlighter-rouge">InputStream</code>, <code class="language-plaintext highlighter-rouge">OutputStream</code>, <code class="language-plaintext highlighter-rouge">Reader</code>, <code class="language-plaintext highlighter-rouge">Writer</code> 등등
+👉 <a href="https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-controller/ann-methods/arguments.html">인자 타입 상세: 공식 문서 참고</a></li>
+</ul>
+
+<h3 id="response">Response</h3>
+
+<p>핸들러 메소드가 보낼 수 있는 응답들</p>
+
+<p>메소드가 리턴할 수 있는 타입들은 다음과 같음</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">ModelAndView</code>
+    <ul>
+      <li>데이터와 view를 동시에 내려줌</li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">String</code>, <code class="language-plaintext highlighter-rouge">View</code></li>
+  <li><code class="language-plaintext highlighter-rouge">@ModelAttribute</code>, <code class="language-plaintext highlighter-rouge">Map</code>, <code class="language-plaintext highlighter-rouge">Model</code></li>
+  <li><code class="language-plaintext highlighter-rouge">@RespsoneBody</code>
+    <ul>
+      <li>@RestController안에 @Controller같이 있는 어노테이션</li>
+      <li>Body에 평문으로 내보낼때, api로 데이터만 주고 받을때</li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">HttpEntity&lt;B&gt;</code>, <code class="language-plaintext highlighter-rouge">ResponseEntity&lt;B&gt;</code>
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">ResponseEntity&lt;B&gt;</code> 사용할때는 <code class="language-plaintext highlighter-rouge">@RespsoneBody</code> 를 지정안해도됨</li>
+      <li>동일한 동작을 하기 때문</li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">HttpHeaders</code></li>
+  <li><code class="language-plaintext highlighter-rouge">void</code> 등등</li>
+</ul>
+
+<p>👉 <a href="https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-controller/ann-methods/return-types.html">리턴 타입 상세: 공식 문서 참고</a></p>
+
+    </div>
+
+    
+
+
+    
+    <div class="post-tags">
+      
+        <a href="/tags/#spring">#spring</a>
+      
+        <a href="/tags/#webMVC">#webMVC</a>
+      
+        <a href="/tags/#handler">#handler</a>
+      
+    </div>
+    
+  </article>
+
+  <aside class="toc">
+    <nav>
+      <ul></ul>
+    </nav>
+  </aside>
+</div>
+
+<script>
+(function () {
+  var headings = document.querySelectorAll('.post-content h2, .post-content h3');
+  if (headings.length < 2) return;
+
+  var ul = document.querySelector('.toc ul');
+  var links = [];
+
+  headings.forEach(function (h) {
+    if (!h.id) {
+      h.id = h.textContent
+        .trim()
+        .toLowerCase()
+        .replace(/[^\w\s가-힣-]/g, '')
+        .replace(/\s+/g, '-');
+    }
+
+    var li = document.createElement('li');
+    var a = document.createElement('a');
+    a.href = '#' + h.id;
+    a.textContent = h.textContent;
+    a.className = 'toc__link';
+    if (h.tagName === 'H3') li.className = 'toc__item--sub';
+
+    li.appendChild(a);
+    ul.appendChild(li);
+    links.push({ el: a, target: h });
+  });
+
+  var current = null;
+
+  function activate(link) {
+    if (current) current.classList.remove('toc__link--active');
+    link.classList.add('toc__link--active');
+    current = link;
+  }
+
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        var link = links.find(function (l) { return l.target === entry.target; });
+        if (link) activate(link.el);
+      }
+    });
+  }, { rootMargin: '0px 0px -70% 0px' });
+
+  headings.forEach(function (h) { observer.observe(h); });
+
+  var lastLink = links[links.length - 1].el;
+  window.addEventListener('scroll', function () {
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 50) {
+      activate(lastLink);
+    }
+  }, { passive: true });
+})();
+</script>
+
+    </main>
+
+    <footer class="site-footer">
+      <p>&copy; 2026 Blog</p>
+    </footer>
+  </div>
+</body>
+</html>

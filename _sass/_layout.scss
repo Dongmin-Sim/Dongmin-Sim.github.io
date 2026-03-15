@@ -195,6 +195,60 @@
   }
 }
 
+// Series nav in post
+.series-nav {
+  margin-top: 3em;
+  padding: 1.25em 1.5em;
+  border: 1px solid $color-border;
+  border-radius: 4px;
+  font-size: 0.88rem;
+}
+
+.series-nav__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 0.75em;
+}
+
+.series-nav__title {
+  font-weight: 700;
+  color: $color-heading;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+  }
+}
+
+.series-nav__count {
+  font-size: 0.82rem;
+  color: $color-muted;
+}
+
+.series-nav__links {
+  display: flex;
+  justify-content: space-between;
+  gap: 1em;
+
+  a {
+    color: $color-muted;
+    text-decoration: none;
+    font-size: 0.82rem;
+
+    &:hover {
+      color: $color-body;
+    }
+  }
+}
+
+.series-nav__next {
+  margin-left: auto;
+  text-align: right;
+}
+
 .post-tags {
   margin-top: 3em;
   padding-top: 1.5em;
@@ -209,5 +263,91 @@
     &:hover {
       color: $color-body;
     }
+  }
+}
+
+// Series index page
+.page-title {
+  margin-bottom: 2em;
+}
+
+.series-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.series-list__item {
+  margin-bottom: 2em;
+}
+
+.series-list__title {
+  font-size: 1rem;
+  font-weight: 400;
+  color: $color-heading;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+    text-decoration-color: $color-link-underline-hover;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+  }
+}
+
+.series-list__desc {
+  font-size: 0.85rem;
+  color: $color-muted;
+  margin-top: 0.25em;
+}
+
+.series-list__count {
+  font-size: 0.82rem;
+  color: $color-muted;
+}
+
+// Individual series page
+.series-header {
+  margin-bottom: 2.5em;
+}
+
+.series-header__label {
+  font-size: 0.82rem;
+  color: $color-muted;
+  margin-bottom: 0.5em;
+}
+
+.series-header__title {
+  margin-bottom: 0.5em;
+}
+
+.series-header__desc {
+  font-size: 0.88rem;
+  color: $color-muted;
+}
+
+.series-posts {
+  padding-left: 1.5em;
+
+  li {
+    margin-bottom: 1em;
+  }
+
+  a {
+    color: $color-heading;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+      text-decoration-color: $color-link-underline-hover;
+      text-underline-offset: 3px;
+      text-decoration-thickness: 1px;
+    }
+  }
+
+  time {
+    display: block;
+    font-size: 0.82rem;
+    color: $color-muted;
+    margin-top: 0.15em;
   }
 }

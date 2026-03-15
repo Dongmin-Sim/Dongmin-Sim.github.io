@@ -1,0 +1,11 @@
+- id: sql-optimization
+  title: "SQL 최적화"
+  description: "SQL 쿼리 성능을 분석하고 개선하는 방법을 다루는 시리즈입니다."
+
+- id: spring-data
+  title: "Spring Data"
+  description: "Spring Data 생태계의 핵심 기술들을 단계별로 살펴봅니다."
+
+- id: performance-test
+  title: "성능 테스트"
+  description: "서비스 성능 테스트의 계획부터 실행, 병목 분석까지의 과정을 다룹니다."
