@@ -2,23 +2,79 @@
 layout: default
 ---
 
-<article>
-  <header class="post-header">
-    <div class="post-meta">
-      <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%Y년 %m월 %d일" }}</time>
+<div class="post-wrapper">
+  <article>
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%Y년 %m월 %d일" }}</time>
+      </div>
+      <h1 class="post-title">{{ page.title }}</h1>
+    </header>
+
+    <div class="post-content">
+      {{ content }}
     </div>
-    <h1 class="post-title">{{ page.title }}</h1>
-  </header>
 
-  <div class="post-content">
-    {{ content }}
-  </div>
+    {% if page.tags and page.tags.size > 0 %}
+    <div class="post-tags">
+      {% for tag in page.tags %}
+        <a href="{{ '/tags/' | relative_url }}#{{ tag }}">#{{ tag }}</a>{% unless forloop.last %} {% endunless %}
+      {% endfor %}
+    </div>
+    {% endif %}
+  </article>
 
-  {% if page.tags and page.tags.size > 0 %}
-  <div class="post-tags">
-    {% for tag in page.tags %}
-      <a href="{{ '/tags/' | relative_url }}#{{ tag }}">#{{ tag }}</a>{% unless forloop.last %} {% endunless %}
-    {% endfor %}
-  </div>
-  {% endif %}
-</article>
+  <aside class="toc">
+    <nav>
+      <ul></ul>
+    </nav>
+  </aside>
+</div>
+
+<script>
+(function () {
+  var headings = document.querySelectorAll('.post-content h2, .post-content h3');
+  if (headings.length < 2) return;
+
+  var ul = document.querySelector('.toc ul');
+  var links = [];
+
+  headings.forEach(function (h) {
+    if (!h.id) {
+      h.id = h.textContent
+        .trim()
+        .toLowerCase()
+        .replace(/[^\w\s가-힣-]/g, '')
+        .replace(/\s+/g, '-');
+    }
+
+    var li = document.createElement('li');
+    var a = document.createElement('a');
+    a.href = '#' + h.id;
+    a.textContent = h.textContent;
+    a.className = 'toc__link';
+    if (h.tagName === 'H3') li.className = 'toc__item--sub';
+
+    li.appendChild(a);
+    ul.appendChild(li);
+    links.push({ el: a, target: h });
+  });
+
+  var current = null;
+
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        if (current) current.classList.remove('toc__link--active');
+        var link = links.find(function (l) { return l.target === entry.target; });
+        if (link) {
+          link.el.classList.add('toc__link--active');
+          current = link.el;
+        }
+      }
+    });
+  }, { rootMargin: '0px 0px -70% 0px' });
+
+  headings.forEach(function (h) { observer.observe(h); });
+})();
+</script>
