@@ -1,0 +1,4 @@
+# preview.sh 의 ready 모드 전용 오버레이 설정.
+# 기본 _config.yml 위에 얹어서, 홈 목록을 stage: ready 인 글만 보이게 한다.
+# (home.html 의 가드 필터가 이 값을 읽음. 실제 배포 빌드엔 이 파일을 쓰지 않으므로 영향 없음.)
+preview_stage: ready

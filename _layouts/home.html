@@ -8,6 +8,8 @@ layout: default
 
 <ul class="post-list">
   {% assign sorted_posts = site.posts | sort: "date" | reverse %}
+  {% comment %} preview.sh ready 모드에서만 stage 로 거른다. 평소 빌드는 preview_stage 미설정이라 전체 노출. {% endcomment %}
+  {% if site.preview_stage %}{% assign sorted_posts = sorted_posts | where: "stage", site.preview_stage %}{% endif %}
   {% for post in sorted_posts %}
   <li class="post-list__item">
     <div class="post-list__title">
