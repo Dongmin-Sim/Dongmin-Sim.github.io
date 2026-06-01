@@ -13,6 +13,7 @@ description: equals 와 hashcode 메서드에 대해 알아보고 이 두 메서
 image:
   path: /assets/images/thumbnails/why-do-we-have-to-override-equals-and-hashcode-thumbnail.png
   alt: equals, hashcode를 왜 재정의해야 하나요?
+stage: ready
 ---
 ## **들어가며**
 

@@ -9,6 +9,7 @@ description: 나의 첫 커뮤니티 글또를 돌아보며 회고한 글입니�
 image:
   path: /assets/images/thumbnails/geultto-social-card.png
   alt: 글또를 마무리하며
+stage: ready
 ---
 ## 들어가며
 

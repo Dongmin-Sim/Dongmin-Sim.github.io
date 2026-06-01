@@ -9,6 +9,7 @@ tags:
   - MultiThreading
   - OS
   - thread
+stage: ready
 ---
 ## 들어가며
 

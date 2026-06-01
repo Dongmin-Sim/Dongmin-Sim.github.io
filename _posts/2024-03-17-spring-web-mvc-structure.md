@@ -7,6 +7,7 @@ date: 2024-03-17
 tags:
   - build
   - ci/cd
+stage: ready
 ---
 ## 들어가며
 

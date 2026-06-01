@@ -9,6 +9,7 @@ description: 글또 커뮤니티의 백엔드-인프라 반상회를 다녀오�
 image:
   path: /assets/images/thumbnails/geultto-backend-infra-seminar-24.jpg
   alt: 글또 마지막 백엔드 인프라 반상회
+stage: ready
 ---
 ## 들어가며
 

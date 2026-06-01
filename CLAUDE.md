@@ -2,13 +2,20 @@
 
 ## Run Locally
 
+Use `preview.sh` — picks a view in one word, live-reload always on:
+
 ```bash
-bundle install
-bundle exec jekyll serve          # published posts only
-bundle exec jekyll serve --drafts # include drafts
+./preview.sh          # all: drafts + unpublished posts (default, for writing)
+./preview.sh pub      # published only (matches the real site)
+./preview.sh ready    # only stage: ready posts (home list)
+./preview.sh all 4001 # change port (default 4000)
 ```
 
-Site at `http://localhost:4000`. Build output in `_site/` (gitignored).
+The script activates rbenv (ruby 3.2.6) itself, so it works from a non-interactive
+shell too. Stop with `Ctrl-C`. Site at `http://localhost:4000`.
+
+Raw jekyll still works (`bundle exec jekyll serve [--drafts] [--unpublished]`).
+Build output in `_site/` (gitignored).
 
 ## What Has Been Built
 
@@ -24,7 +31,8 @@ Site at `http://localhost:4000`. Build output in `_site/` (gitignored).
 - Post descriptions shown in home list
 - Series system (`_data/series.yml`) with navigation between posts
 - Tags page
-- Draft/published workflow (`published: true/false`)
+- Maturity workflow: `_drafts/` (in-progress) → `_posts/` (ready/published), with a
+  `stage:` front matter field (`seed` / `draft` / `ready`) — see "Post Maturity Model"
 
 ### Styling
 - Syntax highlighting (Rouge, warm neutral theme)
@@ -41,11 +49,40 @@ Site at `http://localhost:4000`. Build output in `_site/` (gitignored).
 
 - **Borders only** — no box-shadows anywhere
 - **All colors as tokens** in `_sass/_variables.scss`, no hardcoded hex in components
-- **`published: false`** on all migrated posts — flip to `true` individually when ready
-- **Flat `_posts/`** — no subdirectories, all files named `YYYY-MM-DD-slug.md`
+- **`published: false`** keeps a post out of the real site until flipped to `true`
+- **`_posts/` and `_drafts/` split by maturity** — `_drafts/` holds in-progress work
+  (not built unless `--drafts`), `_posts/` holds ready/published. No subdirectories in
+  either. `_posts/` files are `YYYY-MM-DD-slug.md`; `_drafts/` files may drop the date.
 - **Images organized by post slug** — `assets/images/{post-slug}/filename.png`
 - **Thumbnails** in `assets/images/thumbnails/`
 - **TOC font size 0.78rem** — intentional exception from the 0.82rem scale
+
+## Post Maturity Model
+
+Two orthogonal axes describe every post:
+
+- **`published: true/false`** — is it on the live site? (the deploy gate)
+- **`stage: seed | draft | ready`** — how finished is it? (the maturity)
+  - `seed` — title/outline/notes only, or near-empty. A topic placeholder.
+  - `draft` — has substance but unfinished or rough.
+  - `ready` — coherent enough to publish with light polish.
+
+Folder location follows maturity:
+
+- **`_drafts/`** holds `seed` + `draft` — never deployed, no date needed in filename.
+  New posts start here (e.g. seeded from a topic idea). Move to `_posts/` when `ready`.
+- **`_posts/`** holds `ready` + already-published. Files are `YYYY-MM-DD-slug.md`.
+
+So a typical life: `_drafts/topic.md` (seed) → fill in (draft) → polish (ready) →
+`git mv` to `_posts/YYYY-MM-DD-slug.md` → flip `published: true` to ship.
+
+Preview a single maturity with `./preview.sh ready` (home list filtered by stage; the
+filter in `_layouts/home.html` is guarded by `site.preview_stage`, set only by
+`_config_ready.yml`, so normal/deploy builds are unaffected).
+
+> The current `stage` values were seeded in bulk by a heuristic (count of completed
+> sentences), then refined by hand as posts get opened. Treat a single post's `stage`
+> as a hint until reviewed.
 
 ## Known Issues / TODO
 
@@ -61,7 +98,7 @@ Site at `http://localhost:4000`. Build output in `_site/` (gitignored).
 ```
 _config.yml              # Jekyll config, kramdown + Rouge
 _data/series.yml         # Series definitions
-_drafts/                 # Draft posts (not built by default)
+_drafts/                 # In-progress posts: stage seed+draft (not built unless --drafts)
 _includes/series-nav.html # Post series navigation
 _layouts/
   default.html           # Base layout with header/footer
@@ -69,7 +106,9 @@ _layouts/
   post.html              # Post with TOC, thumbnail, series nav
   series.html            # Individual series page
 _pages/series.html       # Series index
-_posts/                  # All posts (flat)
+_posts/                  # Ready/published posts (flat): stage ready
+preview.sh               # Local preview launcher (pub / all / ready modes)
+_config_ready.yml        # Overlay used by preview.sh ready mode
 _sass/
   _variables.scss        # Design tokens
   _base.scss             # Reset, body, links

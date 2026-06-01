@@ -10,6 +10,7 @@ tags:
 image:
   path: /assets/images/thumbnails/codetree.png
   alt: CODETREE
+stage: ready
 ---
 ## 들어가며
 

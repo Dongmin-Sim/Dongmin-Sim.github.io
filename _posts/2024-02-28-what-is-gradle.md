@@ -11,6 +11,7 @@ tags:
 image:
   path: /assets/images/thumbnails/gradle.png
   alt: Gradle이란?
+stage: ready
 ---
 ## 들어가며
 

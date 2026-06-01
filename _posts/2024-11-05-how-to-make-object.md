@@ -11,6 +11,7 @@ description: 객체와 클래스간의 관계, 클래스를 이루는 구성요�
 image:
   path: /assets/images/thumbnails/how-to-make-object-thumbnail.png
   alt: 객체와 클래스, 객체를 만드는 다양한 방법
+stage: ready
 ---
 # 0. 들어가며
 

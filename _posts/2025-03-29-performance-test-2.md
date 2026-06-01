@@ -7,6 +7,7 @@ date: 2025-03-29
 series: performance-test
 series_order: 1
 tags: []
+stage: ready
 ---
 ## 들어가며
 

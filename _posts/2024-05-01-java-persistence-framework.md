@@ -11,6 +11,7 @@ tags:
 image:
   path: /assets/images/thumbnails/spring-data.png
   alt: 스프링 데이터
+stage: ready
 ---
 ## 들어가며
 

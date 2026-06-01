@@ -11,6 +11,7 @@ description: 글또 9기에 참여하면서 활동 목표와 생각을 정리한
 image:
   path: /assets/images/thumbnails/geultto-social-card.png
   alt: 글또 9기 회고
+stage: ready
 ---
 ## 들어가며
 

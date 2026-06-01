@@ -1,0 +1,25 @@
+---
+layout: post
+# published: false = 미발행 / true = 발행
+published: false
+title: 서블릿 컨테이너란? (Servlet Container)
+date: 2024-03-17
+tags: []
+stage: seed
+---
+## 연관 개념
+
+- 
+
+---
+
+## 배경
+- 자바 
+- 웹 어플리케이션
+
+
+## 정의
+
+
+
+## 예시

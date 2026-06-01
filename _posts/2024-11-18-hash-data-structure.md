@@ -9,6 +9,7 @@ description: 해시 자료구조와 HashMap에서 해시 충돌을 해결하는 
 image:
   path: /assets/images/thumbnails/hash-data-structure.png
   alt: 해시 자료구조와 HashMap이 해시 충돌을 해결하는 방법
+stage: ready
 ---
 ## 🙋 **들어가며**
 

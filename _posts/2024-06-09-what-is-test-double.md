@@ -9,6 +9,7 @@ description: 테스트 더블에 대한 개념을 설명하고, Stub, Mock에 �
 image:
   path: /assets/images/thumbnails/test.png
   alt: 테스트 관련 포스트
+stage: ready
 ---
 ## 0. 들어가며
 

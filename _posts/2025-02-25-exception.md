@@ -11,6 +11,7 @@ tags:
   - unchecked-exception
 image:
   path: /assets/images/thumbnails/exception.png
+stage: ready
 ---
 ## 들어가며
 

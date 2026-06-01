@@ -10,6 +10,7 @@ tags:
   - 하이퍼바이저
   - 컨테이너
   - diveinto
+stage: ready
 ---
 ## 들어가며
 

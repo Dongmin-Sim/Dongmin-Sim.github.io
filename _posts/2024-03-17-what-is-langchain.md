@@ -8,6 +8,7 @@ tags:
   - ai
   - LangChain
   - 글또
+stage: ready
 ---
 ## 들어가며
 
