@@ -17,6 +17,10 @@ pre {
 
   code {
     display: block;
+    // 가로 스크롤 시 배경이 내용 폭 끝까지 따라가도록 (컨테이너 폭에서 끊기지 않게)
+    width: max-content;
+    min-width: 100%;
+    box-sizing: border-box;
     padding: 1em;
     background-color: $color-surface;
     color: inherit;

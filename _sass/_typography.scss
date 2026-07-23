@@ -59,3 +59,17 @@ ul, ol {
     margin-bottom: 0.35em;
   }
 }
+
+// 각주 (kramdown이 본문 끝에 .footnotes 로 렌더)
+.footnotes {
+  font-size: 0.85em;
+  color: $color-muted;
+
+  p {
+    display: inline; // 각주 항목 안 p 가 줄을 새로 만들지 않게
+  }
+
+  li {
+    margin-bottom: 0.5em;
+  }
+}
