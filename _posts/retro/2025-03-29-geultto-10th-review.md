@@ -1,7 +1,7 @@
 ---
 layout: post
 # published: false = 미발행 / true = 발행
-published: false
+published: true
 title: 나의 전환점 글또
 date: 2025-03-29
 tags: []

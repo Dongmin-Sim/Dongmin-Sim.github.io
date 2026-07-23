@@ -1,7 +1,7 @@
 ---
 layout: post
 # published: false = 미발행 / true = 발행
-published: false
+published: true
 title: "자바 멀티쓰레드 All in One 9문답:(Part 1)"
 description: 스레드의 개념과 필요성, 자바에서 스레드를 생성하고 종료하는 방법을 문답 형식으로 정리한 글입니다.
 date: 2024-02-01

@@ -1,7 +1,7 @@
 ---
 layout: post
 # published: false = 미발행 / true = 발행
-published: false
+published: true
 title: 글또 9기를 마무리하며, KPT 회고
 date: 2024-05-19
 tags:

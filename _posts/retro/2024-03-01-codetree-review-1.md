@@ -1,7 +1,7 @@
 ---
 layout: post
 # published: false = 미발행 / true = 발행
-published: false
+published: true
 title: 코드트리, 코테 공포증을 몰입의 시간으로 바꾸는 방법
 description: 코딩테스트 준비가 어려운 이유를 짚어보고, 코드트리로 몰입 환경을 만든 경험을 담았습니다.
 date: 2024-03-01

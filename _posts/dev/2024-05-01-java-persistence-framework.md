@@ -1,7 +1,7 @@
 ---
 layout: post
 # published: false = 미발행 / true = 발행
-published: false
+published: true
 title: Java 진영의 영속성 프레임워크(Persistence Framework)
 description: Java 진영의 영속성 프레임워크를 SQL Mapper와 ORM으로 나누어 비교하며 정리한 글입니다.
 date: 2024-05-01

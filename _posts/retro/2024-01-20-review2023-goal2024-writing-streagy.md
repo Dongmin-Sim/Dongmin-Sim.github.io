@@ -1,7 +1,7 @@
 ---
 layout: post
 # published: false = 미발행 / true = 발행
-published: false
+published: true
 title: "2023 회고 & 2024 목표 (+글쓰기 전략, 파이프라인 v0.1)"
 description: 2023년을 회고하고 2024년의 목표와 글쓰기 전략을 정리한 글입니다.
 date: 2024-01-20

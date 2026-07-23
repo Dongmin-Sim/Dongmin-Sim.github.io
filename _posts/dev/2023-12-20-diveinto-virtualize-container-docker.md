@@ -1,7 +1,7 @@
 ---
 layout: post
 # published: false = 미발행 / true = 발행
-published: false
+published: true
 title: Dive INTO 가상화 그리고 컨테이너 기술부터 도커까지
 description: 가상화와 하이퍼바이저, 컨테이너 기술의 등장 배경부터 도커까지의 흐름을 정리한 글입니다.
 date: 2023-12-20

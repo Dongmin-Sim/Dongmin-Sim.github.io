@@ -1,7 +1,7 @@
 ---
 layout: post
 # published: false = 미발행 / true = 발행
-published: false
+published: true
 title: Spring Web MVC 구조 이해
 description: 서블릿 컨테이너와 스프링 컨테이너, 애플리케이션 컨텍스트를 중심으로 Spring Web MVC의 전체 구조를 설명합니다.
 date: 2024-03-17
