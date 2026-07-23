@@ -27,6 +27,16 @@ defaults:
       path: "_pages"
     values:
       layout: default
+  # _posts/{dev,retro}/ 폴더 = 카테고리. Jekyll은 _posts 안쪽 하위 폴더를
+  # 카테고리로 흡수하지 않으므로 여기서 경로 기준으로 부여한다.
+  - scope:
+      path: "_posts/dev"
+    values:
+      categories: [dev]
+  - scope:
+      path: "_posts/retro"
+    values:
+      categories: [retro]
 
 exclude:
   - Gemfile

@@ -3,6 +3,7 @@ layout: post
 # published: false = 미발행 / true = 발행
 published: false
 title: 2023 삶의 지도
+description: 보건의료 현장에서 개발자로 향하기까지, 지금의 나를 만들어온 길을 돌아본 글입니다.
 date: 2023-11-11
 tags:
   - 회고

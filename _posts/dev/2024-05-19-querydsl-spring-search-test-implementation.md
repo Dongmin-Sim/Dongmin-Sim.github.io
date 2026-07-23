@@ -3,6 +3,7 @@ layout: post
 # published: false = 미발행 / true = 발행
 published: false
 title: QueryDSL을 활용한 검색 기능의 구현, TDD를 곁들인
+description: QueryDSL과 Spring Custom Repository로 검색 기능을 TDD로 구현하며 Spring Data JPA가 동작하는 방식을 살펴봅니다.
 date: 2024-05-19
 tags: []
 stage: ready

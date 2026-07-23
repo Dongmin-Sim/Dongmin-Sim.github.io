@@ -3,6 +3,7 @@ layout: post
 # published: false = 미발행 / true = 발행
 published: false
 title: 서블릿이란? (Servlet)
+description: 서블릿의 의미와 정의, 연관 개념에 대해 정리한 글입니다.
 date: 2024-03-17
 tags:
   - servlet

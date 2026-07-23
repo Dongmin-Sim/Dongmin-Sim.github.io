@@ -10,6 +10,8 @@ layout: default
   {% assign sorted_posts = site.posts | sort: "date" | reverse %}
   {% comment %} preview.sh ready 모드에서만 stage 로 거른다. 평소 빌드는 preview_stage 미설정이라 전체 노출. {% endcomment %}
   {% if site.preview_stage %}{% assign sorted_posts = sorted_posts | where: "stage", site.preview_stage %}{% endif %}
+  {% comment %} 카테고리 페이지(_pages/dev.html 등)가 layout: home + category 로 재사용. _posts/{dev,retro}/ 폴더명이 카테고리가 된다. {% endcomment %}
+  {% if page.category %}{% assign sorted_posts = sorted_posts | where_exp: "p", "p.categories contains page.category" %}{% endif %}
   {% for post in sorted_posts %}
   <li class="post-list__item">
     <div class="post-list__title">

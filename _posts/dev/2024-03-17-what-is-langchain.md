@@ -3,6 +3,7 @@ layout: post
 # published: false = 미발행 / true = 발행
 published: false
 title: 랭체인(LangChain Framework)과 핵심 개념(Core Concept)
+description: LangChain 프레임워크의 개요와 LLM, 모듈, Agent 등 핵심 개념에 대해 알아봅니다.
 date: 2024-03-17
 tags:
   - ai

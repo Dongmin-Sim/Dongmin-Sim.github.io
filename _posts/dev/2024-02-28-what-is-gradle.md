@@ -3,6 +3,7 @@ layout: post
 # published: false = 미발행 / true = 발행
 published: false
 title: Gradle, 든든한 코끼리
+description: 빌드와 빌드툴의 개념부터 Gradle의 핵심 컨셉과 디렉토리 구조까지 정리한 글입니다.
 date: 2024-02-28
 tags:
   - gradle
