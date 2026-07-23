@@ -34,7 +34,7 @@ stage: ready
 
 > **nga za‘u ftu peseng?**
 
-<!-- ![Desktop View](/assets/meme/same-picture.jpg){: width="972" height="589" .w-50}_???_ -->
+<!-- ![Desktop View](/assets/images/what-is-gradle/same-picture.jpg){: width="972" height="589" .w-50}_???_ -->
 
 어느날 외계인이 지구에 도착해 다음과 같은 말을 뱉었을 때, 우리는 이를 이해할 수 없다. 기껏해야 비슷한 발음의 단어를 찾아보겠지만, 그것은 그들이 의도하는 의미와는 매우 다를 확률이 높다.
 
@@ -66,7 +66,7 @@ stage: ready
 
 앞서 설명한 실행 가능한 소프트웨어가 되려면 소스코드가 단순히 번역 뿐 아니라 코드들 간의 서로 의존하고 있는 순서가 올바른지, 해당 소스코드가 에러를 발생시키지는 않는지 이를 확인하고 테스트하는 과정도 필요하다. 그렇지 않으면 이는 실행 가능한 소프트웨어가 될 수 없기 때문이다.
 
-<!-- ![Desktop View](/assets/meme/right.jpg){: width="972" height="589" .w-50}_좋은 대화였어_ -->
+<!-- ![Desktop View](/assets/images/what-is-gradle/right.jpg){: width="972" height="589" .w-50}_좋은 대화였어_ -->
 
 만일 외계인이 "당신들은 위험한 존재입니까?" 라는 질문을 뱉었는데, 단순한 단어(위험)의 번역과 나열로 잘못 오해하고 그들에게 위험하고 무례한 대답을 해버린다면 어쩌면 친구가 되었을지도 모르는 외계인은 거대한 우주선으로 올라가 정수리에 무자비한 빔을 때려버리는 극단적인 상황이 벌어질 수 있다.
 

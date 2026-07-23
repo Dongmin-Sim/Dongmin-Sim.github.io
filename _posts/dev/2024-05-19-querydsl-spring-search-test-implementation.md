@@ -393,7 +393,7 @@ assertion 메서드는 파라미터를 봣을때 어느정도 의미 전달이 �
 왜냐하면 그래야 코드가 점진적으로 구현될 수 있기때문이다.
 만약에 테스트하기 너무 큰 테스트의 경우 한번에 구현해야하는 양이 많기 때문에 , 각을 잡기 어려울 수 있다.
 
-<!-- ![Desktop View](/assets/meme/mathmatics.gif){: width="972" height="589"}_어디부터 손대야지...?_ -->
+<!-- ![Desktop View](/assets/images/querydsl-spring-search-test-implementation/mathmatics.gif){: width="972" height="589"}_어디부터 손대야지...?_ -->
 
 지금 예시에서는 다음과 같은 순서로 테스트 코드 실행하고 구현했다.
 
