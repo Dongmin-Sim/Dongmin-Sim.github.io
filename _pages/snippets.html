@@ -1,0 +1,20 @@
+---
+layout: default
+title: 조각
+permalink: /snippets/
+---
+
+<ul class="post-list">
+  {% assign docs = site.snippets | sort: "title" %}
+  {% for doc in docs %}
+  <li class="post-list__item">
+    <div class="post-list__title">
+      <a href="{{ doc.url | relative_url }}">{{ doc.title }}</a>
+      {% if doc.stage == 'seed' or doc.stage == 'draft' %}<span class="draft-badge">초안</span>{% endif %}
+    </div>
+    {% if doc.description %}
+    <div class="post-list__desc">{{ doc.description }}</div>
+    {% endif %}
+  </li>
+  {% endfor %}
+</ul>

@@ -6,7 +6,9 @@ layout: default
   <article>
     <header class="post-header">
       <div class="post-meta">
-        <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%Y년 %m월 %d일" }}</time>
+        {% comment %} snippets 컬렉션 문서는 date가 없다 — 날짜 표시 생략 {% endcomment %}
+        {% if page.collection != 'snippets' %}<time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%Y년 %m월 %d일" }}</time>{% endif %}
+        {% if page.stage == 'seed' or page.stage == 'draft' %}<span class="draft-badge">초안 · 작성 중</span>{% endif %}
       </div>
       <h1 class="post-title">{{ page.title }}</h1>
     </header>

@@ -127,6 +127,17 @@
   margin-bottom: 0.5em;
 }
 
+.draft-badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  color: $color-muted;
+  border: 1px solid $color-border;
+  border-radius: 4px;
+  padding: 0.1em 0.5em;
+  margin-left: 0.5em;
+  vertical-align: middle;
+}
+
 .post-title {
   margin-bottom: 0;
 }

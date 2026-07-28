@@ -16,6 +16,7 @@ layout: default
   <li class="post-list__item">
     <div class="post-list__title">
       <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+      {% if post.stage == 'seed' or post.stage == 'draft' %}<span class="draft-badge">초안</span>{% endif %}
     </div>
     {% if post.description %}
     <div class="post-list__desc">{{ post.description }}</div>
