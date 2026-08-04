@@ -123,5 +123,6 @@ assets/
   images/orphan/         # Unreferenced images
 series/                  # Individual series page files
 404.html                 # Custom 404
+BOOKMARKS.md             # 글 근거·참고용 링크 모음 (exclude 처리 — 사이트에 안 올라감)
 .interface-design/system.md # Design system reference
 ```
