@@ -41,6 +41,9 @@ layout: default
   </aside>
 </div>
 
+{% comment %} mermaid 다이어그램이 실제로 있는 글에서만 스크립트를 싣는다 {% endcomment %}
+{% if content contains 'language-mermaid' %}{% include mermaid.html %}{% endif %}
+
 <script>
 (function () {
   var headings = document.querySelectorAll('.post-content h2, .post-content h3');

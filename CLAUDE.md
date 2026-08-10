@@ -33,6 +33,7 @@ Build output in `_site/` (gitignored).
 - Tags page
 - Maturity workflow: `_drafts/` (in-progress) → `_posts/` (ready/published), with a
   `stage:` front matter field (`seed` / `draft` / `ready`) — see "Post Maturity Model"
+- Mermaid diagrams — ```` ```mermaid ```` fences render as diagrams (see "Mermaid Diagrams")
 
 ### Styling
 - Syntax highlighting (Rouge, warm neutral theme)
@@ -84,6 +85,21 @@ filter in `_layouts/home.html` is guarded by `site.preview_stage`, set only by
 > sentences), then refined by hand as posts get opened. Treat a single post's `stage`
 > as a hint until reviewed.
 
+## Mermaid Diagrams
+
+Write a ```` ```mermaid ```` fence in any post and it renders as a diagram.
+
+- kramdown emits the fence as `<pre><code class="language-mermaid">`. `_includes/mermaid.html`
+  rewrites it to `<pre class="mermaid">` inside a `.mermaid-figure` box, then renders it.
+- The script is included **only when the rendered page actually contains a mermaid fence**
+  (`_layouts/post.html` checks `content contains 'language-mermaid'`). Other pages load nothing.
+- mermaid comes from the jsDelivr CDN, pinned to a version. It is not vendored: the ESM
+  entry lazy-loads ~30 chunk files, so vendoring would mean committing a whole dist tree.
+- Diagram colors come from `_sass/_mermaid.scss`, which re-exports `_variables.scss` tokens as
+  `--mermaid-*` CSS variables that the script reads. Never put hex in the script or the theme config.
+- A diagram renders at its natural size; if it is wider than the column, `.mermaid-figure`
+  scrolls horizontally on its own (same as code blocks and tables). The page never does.
+
 ## Known Issues / TODO
 
 - 34 posts have dates derived from file mtime (may not reflect actual writing date)
@@ -99,7 +115,9 @@ filter in `_layouts/home.html` is guarded by `site.preview_stage`, set only by
 _config.yml              # Jekyll config, kramdown + Rouge
 _data/series.yml         # Series definitions
 _drafts/                 # In-progress posts: stage seed+draft (not built unless --drafts)
-_includes/series-nav.html # Post series navigation
+_includes/
+  series-nav.html        # Post series navigation
+  mermaid.html           # Mermaid renderer (loaded only on posts with a mermaid fence)
 _layouts/
   default.html           # Base layout with header/footer
   home.html              # Post list with descriptions
@@ -115,6 +133,7 @@ _sass/
   _typography.scss       # Headings, paragraphs, lists
   _code.scss             # Inline code and code blocks
   _syntax.scss           # Rouge syntax highlighting theme
+  _mermaid.scss          # Mermaid palette tokens (as CSS vars) + diagram container
   _layout.scss           # All layout components
 assets/
   css/main.scss          # Sass entry point

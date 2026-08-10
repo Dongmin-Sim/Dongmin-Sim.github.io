@@ -1,0 +1,54 @@
+@use "sass:meta";
+@use "variables" as *;
+
+// mermaid 다이어그램
+//
+// 색은 mermaid 가 JS 설정으로만 받기 때문에, _variables.scss 의 토큰을
+// CSS 변수로 한 번 노출하고 스크립트(_includes/mermaid.html)가 그걸 읽어 간다.
+// hex 는 여기서도 스크립트에서도 쓰지 않는다 — 원본은 _variables.scss 하나뿐.
+:root {
+  --mermaid-bg: #{$color-bg};
+  --mermaid-surface: #{$color-surface};
+  --mermaid-surface-alt: #{$color-code-inline-bg};
+  --mermaid-border: #{$color-muted};
+  --mermaid-line: #{$color-muted};
+  --mermaid-heading: #{$color-heading};
+  --mermaid-body: #{$color-body};
+  --mermaid-muted: #{$color-muted};
+  --mermaid-font: #{meta.inspect($font-body)};
+  --mermaid-font-size: 14px;
+}
+
+// 다이어그램 한 장을 감싸는 상자. 좁은 화면에서 다이어그램이 넘치면
+// 본문이 아니라 이 상자가 가로 스크롤을 갖는다.
+.mermaid-figure {
+  margin-bottom: 1.5em;
+  padding: 1.25em 1em;
+  border: 1px solid $color-border;
+  border-radius: 4px;
+  background-color: $color-bg;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+
+  pre.mermaid {
+    margin: 0;
+    padding: 0;
+    overflow: visible; // 스크롤은 바깥 상자가 담당
+    background: none;
+    font-family: $font-code;
+    font-size: 0.84em;
+    line-height: 1.6;
+  }
+
+  svg {
+    display: block;
+    margin: 0 auto; // 다이어그램이 상자보다 좁으면 가운데 정렬
+    height: auto;
+  }
+}
+
+// 렌더 전 원본 텍스트가 잠깐 보이는 것을 막는다. 렌더가 끝나거나
+// 실패하면 스크립트가 이 클래스를 떼므로 영구히 감춰지지 않는다.
+.mermaid-figure--pending {
+  visibility: hidden;
+}

@@ -1,0 +1,135 @@
+{%- comment -%}
+mermaid 다이어그램 렌더러.
+
+```mermaid 펜스가 있는 글에서만 불린다 (_layouts/post.html 이 렌더된 content 를 검사).
+kramdown 은 mermaid 펜스를 <pre><code class="language-mermaid"> 로 뱉으므로
+mermaid 가 알아보는 <pre class="mermaid"> 로 바꾼 뒤 렌더한다.
+
+앞쪽 스크립트는 동기로 돌며 원본 코드 블록이 잠깐 보이는 것을 막고,
+뒤쪽 모듈이 CDN 에서 mermaid 를 받아 실제로 그린다.
+
+색·글꼴은 _sass/_mermaid.scss 가 :root 에 노출한 디자인 토큰을 읽어 쓴다.
+이 파일에는 색 값을 적지 않는다.
+{%- endcomment -%}
+<script>
+  // 본문 뒤에서 동기로 실행 — 첫 렌더 전에 코드 블록을 다이어그램 자리로 바꾼다.
+  window.blogMermaid = (function () {
+    var figures = [];
+
+    document.querySelectorAll("pre > code.language-mermaid").forEach(function (code) {
+      var figure = document.createElement("div");
+      figure.className = "mermaid-figure mermaid-figure--pending";
+
+      var target = document.createElement("pre");
+      target.className = "mermaid";
+      target.textContent = code.textContent;
+
+      figure.appendChild(target);
+      code.parentNode.replaceWith(figure);
+      figures.push(figure);
+    });
+
+    function reveal() {
+      figures.forEach(function (figure) {
+        figure.classList.remove("mermaid-figure--pending");
+      });
+    }
+
+    // CDN 이 막히거나 늦으면 원본 소스라도 보이게 한다 (영구히 감춰지지 않도록).
+    var fallback = figures.length ? setTimeout(reveal, 8000) : null;
+
+    return {
+      figures: figures,
+      reveal: function () {
+        if (fallback) clearTimeout(fallback);
+        reveal();
+      },
+    };
+  })();
+</script>
+<script type="module">
+  import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.16.1/dist/mermaid.esm.min.mjs";
+
+  const figures = window.blogMermaid.figures;
+  if (figures.length) {
+    const css = getComputedStyle(document.documentElement);
+    const token = (name) => css.getPropertyValue(name).trim();
+
+    const bg = token("--mermaid-bg");
+    const surface = token("--mermaid-surface");
+    const surfaceAlt = token("--mermaid-surface-alt");
+    const border = token("--mermaid-border");
+    const line = token("--mermaid-line");
+    const heading = token("--mermaid-heading");
+    const body = token("--mermaid-body");
+    const muted = token("--mermaid-muted");
+
+    mermaid.initialize({
+      startOnLoad: false,
+      securityLevel: "strict",
+      theme: "base",
+      fontFamily: token("--mermaid-font"),
+      themeVariables: {
+        fontSize: token("--mermaid-font-size"),
+        background: bg,
+        mainBkg: surface,
+        primaryColor: surface,
+        primaryTextColor: heading,
+        primaryBorderColor: border,
+        secondaryColor: surfaceAlt,
+        secondaryTextColor: heading,
+        secondaryBorderColor: border,
+        tertiaryColor: bg,
+        tertiaryTextColor: body,
+        tertiaryBorderColor: border,
+        lineColor: line,
+        textColor: body,
+        nodeBorder: border,
+        titleColor: heading,
+        edgeLabelBackground: bg,
+        clusterBkg: bg,
+        clusterBorder: border,
+        noteBkgColor: surfaceAlt,
+        noteTextColor: body,
+        noteBorderColor: border,
+        actorBkg: surface,
+        actorBorder: border,
+        actorTextColor: heading,
+        actorLineColor: muted,
+        signalColor: body,
+        signalTextColor: body,
+        labelBoxBkgColor: surface,
+        labelBoxBorderColor: border,
+        labelTextColor: heading,
+        loopTextColor: body,
+        activationBkgColor: surfaceAlt,
+        activationBorderColor: border,
+        sequenceNumberColor: bg,
+      },
+    });
+
+    mermaid
+      .run({ nodes: figures.map((figure) => figure.firstElementChild) })
+      .catch((error) => {
+        console.error("[mermaid] 렌더 실패", error);
+      })
+      .finally(() => {
+        figures.forEach((figure) => {
+          const svg = figure.querySelector("svg");
+          if (!svg) return;
+
+          // 자연 크기로 고정한다. 상자보다 넓으면 상자가 가로 스크롤을 갖고,
+          // 좁으면 억지로 늘어나지 않는다.
+          const box = svg.viewBox && svg.viewBox.baseVal;
+          if (box && box.width) {
+            svg.style.width = box.width + "px";
+            svg.style.maxWidth = "none";
+          }
+        });
+
+        window.blogMermaid.reveal();
+      });
+  } else {
+    window.blogMermaid.reveal();
+  }
+</script>
