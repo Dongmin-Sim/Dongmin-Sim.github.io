@@ -1,11 +1,11 @@
 ---
 layout: post
 # published: false = 미발행 / true = 발행
-published: false
+published: true
 title: 메시지 전달 보장 수준
 description:
 tags: [messaging, pubsub]
-stage: seed
+stage: draft
 ---
 
 
