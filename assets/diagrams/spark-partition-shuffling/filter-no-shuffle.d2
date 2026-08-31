@@ -1,0 +1,38 @@
+# 「파티션과 셔플링」 — 파티션 안에서 끝나는 연산 (filter)
+#   d2 --layout=elk assets/diagrams/spark-partition-shuffling/filter-no-shuffle.d2 \
+#      assets/images/spark-partition-shuffling/filter-no-shuffle.svg
+
+vars: {
+  d2-config: {
+    theme-id: 105
+    sketch: true
+  }
+}
+
+direction: right
+
+ex1: "Executor 1" {
+  style.fill: "#f5f4f0"
+  p: "Partition 1\n\nA, 1\nB, 2"
+  q: "Partition 1'\n\nB, 2"
+  p -> q: "filter(값이 짝수)"
+}
+
+ex2: "Executor 2" {
+  style.fill: "#f5f4f0"
+  p: "Partition 2\n\nA, 3\nB, 4"
+  q: "Partition 2'\n\nB, 4"
+  p -> q: "filter(값이 짝수)"
+}
+
+ex3: "Executor 3" {
+  style.fill: "#f5f4f0"
+  p: "Partition 3\n\nA, 5\nB, 6"
+  q: "Partition 3'\n\nB, 6"
+  p -> q: "filter(값이 짝수)"
+}
+
+note: "파티션 내부의 데이터가 변환되거나 사라질 수는 있지만,\n새로운 파티션을 만들지는 않는다" {
+  shape: text
+  style.font-size: 20
+}

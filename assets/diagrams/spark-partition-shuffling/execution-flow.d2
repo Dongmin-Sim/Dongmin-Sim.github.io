@@ -1,0 +1,42 @@
+# 「파티션과 셔플링」 — 태스크와 파티션의 대응
+# 고친 뒤 다시 뽑기:
+#   d2 --layout=elk assets/diagrams/spark-partition-shuffling/execution-flow.d2 \
+#      assets/images/spark-partition-shuffling/execution-flow.svg
+
+vars: {
+  d2-config: {
+    theme-id: 105
+    sketch: true
+  }
+}
+
+direction: right
+
+df: "DataFrame — 논리적으로는 하나" {
+  style.fill: "#f5f4f0"
+  p1: Partition 1
+  p2: Partition 2
+  p3: Partition 3
+}
+
+# Executor 1·2 를 위아래로 세우기 위한 껍데기. 테두리와 배경은 안 보이게 한다.
+executors: "" {
+  direction: down
+  style.fill: transparent
+  style.stroke: transparent
+
+  ex1: "Executor 1 — JVM 프로세스 (코어 2개)" {
+    style.fill: "#f5f4f0"
+    t1: Task
+    t2: Task
+  }
+
+  ex2: "Executor 2 — JVM 프로세스 (코어 1개)" {
+    style.fill: "#f5f4f0"
+    t3: Task
+  }
+}
+
+df.p1 -> executors.ex1.t1
+df.p2 -> executors.ex1.t2
+df.p3 -> executors.ex2.t3: "태스크 하나가\n파티션 하나를 맡는다"

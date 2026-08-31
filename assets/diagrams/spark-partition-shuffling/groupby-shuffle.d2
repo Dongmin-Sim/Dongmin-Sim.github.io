@@ -1,0 +1,71 @@
+# 「파티션과 셔플링」 — 파티션을 건너야 하는 연산 (group by), 키 A 하나만 따라간 그림
+#   d2 --layout=elk assets/diagrams/spark-partition-shuffling/groupby-shuffle.d2 \
+#      assets/images/spark-partition-shuffling/groupby-shuffle.svg
+
+vars: {
+  d2-config: {
+    theme-id: 105
+    sketch: true
+  }
+}
+
+direction: right
+
+ex1: "Executor 1" {
+  style.fill: "#f5f4f0"
+  p: |md
+    Partition 1
+
+    **A, 1**
+
+    B, 2
+  | {
+    shape: rectangle
+    style.fill: "#FFF0D1"
+    style.stroke: "#312102"
+  }
+}
+
+ex2: "Executor 2" {
+  style.fill: "#f5f4f0"
+  p: |md
+    Partition 2
+
+    **A, 3**
+
+    B, 4
+  | {
+    shape: rectangle
+    style.fill: "#FFF0D1"
+    style.stroke: "#312102"
+  }
+}
+
+ex3: "Executor 3" {
+  style.fill: "#f5f4f0"
+  p: |md
+    Partition 3
+
+    **A, 5**
+
+    B, 6
+  | {
+    shape: rectangle
+    style.fill: "#FFF0D1"
+    style.stroke: "#312102"
+  }
+}
+
+target: "Executor 1 — 키 A를 맡은 태스크" {
+  style.fill: "#f5f4f0"
+  q: "새 Partition (키 A)\n\nA, 1\nA, 3\nA, 5"
+}
+
+ex1.p -> target.q
+ex2.p -> target.q
+ex3.p -> target.q
+
+note: "키 A를 한곳에 모으려면 모든 파티션을 다 확인해야 한다.\n키 B도 똑같은 일이 따로 일어난다" {
+  shape: text
+  style.font-size: 20
+}

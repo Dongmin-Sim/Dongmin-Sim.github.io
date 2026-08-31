@@ -1,0 +1,50 @@
+# 「파티션과 셔플링」 — 데이터 스큐 (연산 전 → group by → 연산 후)
+#   d2 --layout=elk assets/diagrams/spark-partition-shuffling/data-skew.d2 \
+#      assets/images/spark-partition-shuffling/data-skew.svg
+
+vars: {
+  d2-config: {
+    theme-id: 105
+    sketch: true
+  }
+}
+
+direction: right
+
+before: "group by 실행 전" {
+  style.fill: "#faf9f7"
+  e1: "Executor 1" {
+    style.fill: "#f5f4f0"
+    p: "Partition 1\n\nA, 1\nA, 2\nB, 1"
+  }
+  e2: "Executor 2" {
+    style.fill: "#f5f4f0"
+    p: "Partition 2\n\nA, 3\nA, 4\nC, 1"
+  }
+  e3: "Executor 3" {
+    style.fill: "#f5f4f0"
+    p: "Partition 3\n\nA, 5\nA, 6\nA, 7"
+  }
+}
+
+op: "group by(키)" {
+  shape: hexagon
+}
+
+after: "group by 실행 후" {
+  style.fill: "#faf9f7"
+  e1: "Executor 1 — 혼자 계속 처리 중" {
+    style.fill: "#f5f4f0"
+    p: "새 Partition (키 A)\n\nA, 1\nA, 2\nA, 3\nA, 4\nA, 5\nA, 6\nA, 7"
+  }
+  e2: "Executor 2 — 일이 끝나 놀고 있음" {
+    style.fill: "#f5f4f0"
+    p: "새 Partition (키 B)\n\nB, 1"
+  }
+  e3: "Executor 3 — 일이 끝나 놀고 있음" {
+    style.fill: "#f5f4f0"
+    p: "새 Partition (키 C)\n\nC, 1"
+  }
+}
+
+before -> op -> after
