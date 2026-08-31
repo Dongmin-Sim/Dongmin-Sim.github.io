@@ -51,6 +51,25 @@ blockquote {
   }
 }
 
+// 보충 설명 상자. 인용문과 구분해서 쓴다 — 남의 말을 옮기는 것이 아니라
+// 본문 흐름에서 잠깐 비켜 두는 설명. 글에서는 블록 뒤에 {: .note} 를 붙인다.
+// 첫 줄을 굵게 쓰면 상자의 제목이 된다.
+blockquote.note {
+  border: 1px solid $color-border;
+  border-left: 2px solid $color-border;
+  background: $color-surface;
+  padding: 1.1em 1.25em;
+  font-size: 0.88rem;
+  font-style: normal;
+  color: $color-body;
+
+  > p:first-child > strong:only-child {
+    display: block;
+    margin-bottom: 0.6em;
+    color: $color-heading;
+  }
+}
+
 ul, ol {
   margin-bottom: 1.5em;
   padding-left: 1.5em;
